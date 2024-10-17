@@ -25,7 +25,7 @@ Dynamic E-Commerce Scraper is a Python-based web scraping tool designed to effic
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/yourusername/dynamic-ecommerce-scraper.git
+   git clone https://github.com/Yukselcsgn/dynamic_web_scraper.git
    cd dynamic-ecommerce-scraper
    ```
 
