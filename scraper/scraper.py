@@ -8,8 +8,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.firefox.options import Options
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
-from scraper.utils import UserAgentHelper, PriceExtractor, human_like_wait
-from scraper.proxy_manager import ProxyManager
+from scraper.utils.utils import UserAgentHelper, PriceExtractor, human_like_wait
+from scraper.proxy_manager.proxy_manager import ProxyManager
 from bs4 import BeautifulSoup
 
 class DynamicECommerceScraper:

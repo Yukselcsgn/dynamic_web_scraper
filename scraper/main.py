@@ -1,6 +1,6 @@
 import json
 from scraper.scraper import DynamicECommerceScraper
-from scraper.logging_config import setup_logging
+from scraper.logging_manager.logging_config import setup_logging
 
 def load_config():
     with open('config.json') as f:
