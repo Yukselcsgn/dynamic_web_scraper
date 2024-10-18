@@ -1,9 +1,17 @@
-import random
-import time
-import logging
+from time import sleep
+from random import uniform
 
-def human_like_wait(min_wait=1, max_wait=5):
-    """İnsan benzeri rastgele bekleme süresi uygula."""
-    wait_time = random.uniform(min_wait, max_wait)
-    logging.info(f"{wait_time:.2f} saniye bekleniyor.")
-    time.sleep(wait_time)
+def sleep_random(min_time, max_time):
+    """
+    Rastgele bir süre bekler.
+    
+    Args:
+        min_time (float): Minimum bekleme süresi (saniye).
+        max_time (float): Maksimum bekleme süresi (saniye).
+    
+    Usage:
+        sleep_random(2, 5)  # 2 ile 5 saniye arasında rastgele bekler.
+    """
+    wait_time = uniform(min_time, max_time)
+    print(f"{wait_time:.2f} saniye bekleniyor...")
+    sleep(wait_time)

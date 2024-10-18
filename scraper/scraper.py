@@ -1,42 +1,117 @@
 import requests
-from scraper.utils.request_utils import get_random_user_agent, get_proxies
-from scraper.utils.parse_utils import parse_html
+from random import choice
+import time
+from .html_parser import parse_html
+from .data_parsers import save_data
+from .logging_manager import log_message
+from .exceptions.scraper_exceptions import ProxyError, UserAgentError
+from requests.exceptions import HTTPError, Timeout
 
 class Scraper:
-    def __init__(self, settings):
-        self.settings = settings
-        self.proxies = get_proxies(self.settings.get("proxies"))
-        self.user_agents = get_random_user_agent(self.settings.get("user_agents"))
-
-    def run(self):
-        for site in self.settings["target_sites"]:
-            print(f"Scraping site: {site['name']}")
-            html_content = self.fetch_page(site["url"])
-            
-            if html_content:
-                parsed_data = parse_html(html_content, site["selectors"])
-                self.save_data(parsed_data)
-            else:
-                print(f"Failed to fetch page for {site['name']}")
-
-    def fetch_page(self, url):
-        """Belirtilen URL'yi proxy ve user agent kullanarak getirir."""
+    def __init__(self, url, config, max_retries=3, retry_delay=2):
+        """
+        Scraper nesnesini başlatır.
+        
+        Args:
+            url (str): Kazınacak sitenin URL'si.
+            config (dict): Kazıma işlemi için gerekli konfigürasyon ayarları.
+            max_retries (int): Yeniden deneme sayısı.
+            retry_delay (int): Hatalardan sonra bekleme süresi (saniye).
+        """
+        self.url = url
+        self.config = config
+        self.logger = None
+        self.proxies = config.get('proxies', [])
+        self.user_agents = config.get('user_agents', [])
+        self.max_retries = max_retries
+        self.retry_delay = retry_delay
+    
+    def get_headers(self):
+        """
+        Dinamik kullanıcı ajanı döndürür.
+        
+        Returns:
+            dict: Kullanıcı ajanı ile birlikte HTTP başlıkları.
+        """
+        if not self.user_agents:
+            raise UserAgentError("Kullanıcı ajanı listesi boş!")
+        
         headers = {
-            "User-Agent": self.user_agents
+            'User-Agent': choice(self.user_agents)
         }
-        proxies = self.proxies
+        return headers
+    
+    def get_proxy(self):
+        """
+        Rastgele bir proxy döndürür.
+        
+        Returns:
+            dict: Proxy ayarları.
+        """
+        if not self.proxies:
+            raise ProxyError("Proxy listesi boş!")
+        
+        proxy = choice(self.proxies)
+        return {
+            'http': proxy,
+            'https': proxy
+        }
 
-        try:
-            response = requests.get(url, headers=headers, proxies=proxies, timeout=self.settings["request_timeout"])
-            response.raise_for_status()  # HTTP hata varsa istisna fırlat
-            return response.text
-        except requests.exceptions.RequestException as e:
-            print(f"Error fetching the URL {url}: {e}")
-            return None
+    def fetch_data(self):
+        """
+        Veriyi çeker ve işlemek için gerekli fonksiyonları tetikler.
+        Hatalarda belirli bir sayıda yeniden deneme yapar.
+        """
+        for attempt in range(self.max_retries):
+            try:
+                headers = self.get_headers()
+                proxies = self.get_proxy() if self.config.get('use_proxy') else None
+                response = requests.get(self.url, headers=headers, proxies=proxies, timeout=10)
+                response.raise_for_status()  # HTTP hatalarını yakala
+                
+                log_message(self.logger, 'INFO', f"Veri başarıyla çekildi: {self.url}")
+                self.parse_response(response.text)
+                return
+            except (HTTPError, Timeout) as e:
+                log_message(self.logger, 'WARNING', f"İstek başarısız oldu: {str(e)}. Deneme {attempt + 1}/{self.max_retries}")
+                time.sleep(self.retry_delay * (attempt + 1))  # Exponential Backoff
+            except ProxyError as pe:
+                log_message(self.logger, 'ERROR', f"Proxy hatası: {str(pe)}")
+            except UserAgentError as uae:
+                log_message(self.logger, 'ERROR', f"Kullanıcı ajanı hatası: {str(uae)}")
 
-    def save_data(self, data):
-        """Elde edilen verileri CSV formatında kaydeder."""
-        with open("data/all_listings.csv", "a") as f:
-            for entry in data:
-                f.write(f"{entry['product_name']},{entry['price']},{entry['availability']}\n")
-        print("Data saved successfully.")
+        log_message(self.logger, 'ERROR', f"Veri çekme başarısız oldu: {self.url} için maksimum deneme sayısına ulaşıldı.")
+
+    def parse_response(self, response):
+        """
+        Yanıtı işler ve gerekli bilgileri çıkarır.
+        
+        Args:
+            response (str): HTML içeriği.
+        """
+        html_structure = parse_html(response)
+        self.extract_product_info(html_structure)
+
+    def extract_product_info(self, html):
+        """
+        HTML içeriğinden ürün bilgilerini çıkarır ve kaydeder.
+        
+        Args:
+            html (BeautifulSoup): Analiz edilmiş HTML içeriği.
+        """
+        products = []
+        
+        # Örnek: Ürün adlarını ve fiyatlarını çıkar
+        product_names = html.select(self.config['selectors']['product_name'])
+        product_prices = html.select(self.config['selectors']['product_price'])
+        
+        for name, price in zip(product_names, product_prices):
+            product_data = {
+                'name': name.get_text().strip(),
+                'price': price.get_text().strip()
+            }
+            products.append(product_data)
+        
+        # Veriyi kaydet
+        save_data(products)
+        log_message(self.logger, 'INFO', f"Toplam {len(products)} ürün çıkarıldı ve kaydedildi.")
