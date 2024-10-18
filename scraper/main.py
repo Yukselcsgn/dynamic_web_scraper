@@ -1,29 +1,17 @@
-import logging
-from scraper.config import Config
-from scraper.scraper import DynamicECommerceScraper
+from scraper.scraper import Scraper
+from scraper.config import SCRAPER_SETTINGS
 
 def main():
-    # Logging ayarları
-    logging.basicConfig(filename='logs/scraper.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    
-    # Konfigürasyonu yükle
-    config = Config()
+    # Scraper ayarlarını yükle
+    scraper_settings = SCRAPER_SETTINGS
 
     # Scraper'ı başlat
-    scraper = DynamicECommerceScraper(
-        url=config.URL,
-        headless=config.HEADLESS,
-        proxies=config.PROXIES
-    )
-
-    # Site yapısını algıla ve verileri topla
-    if scraper.fetch_data():
-        scraper.parse_listings()
-    else:
-        logging.error("Veri çekme başarısız oldu.")
-
-    # Scraper'ı kapat
-    scraper.close_driver()
+    scraper = Scraper(scraper_settings)
+    
+    try:
+        scraper.run()
+    except Exception as e:
+        print(f"Error occurred during scraping: {e}")
 
 if __name__ == "__main__":
     main()
