@@ -1,10 +1,10 @@
 import requests
 from random import choice
 import time
-from .html_parser import parse_html
-from .data_parsers import save_data
-from .logging_manager import log_message
-from .exceptions.scraper_exceptions import ProxyError, UserAgentError
+from data_parsers.html_parser import parse_html
+from data_parsers.data_parser import save_data
+from logging_manager.logging_manager import log_message
+from exceptions.scraper_exceptions import ProxyError, UserAgentError
 from requests.exceptions import HTTPError, Timeout
 
 class Scraper:
