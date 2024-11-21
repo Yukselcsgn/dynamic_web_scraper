@@ -1,0 +1,516 @@
+[2024-10-27 17:38:21] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-27 17:39:56] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-27 17:39:56] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-27 17:53:37] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-27 17:53:37] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 18:37:08] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 18:37:08] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 18:52:42] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 18:52:42] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 18:53:10] [ERROR]: data/user_agents.txt bulunamadý.
+[2024-10-28 18:53:10] [ERROR]: Kullanýcý ajanlarý yüklenirken hata: Yüklenen kullanýcý ajaný listesi boþ!
+[2024-10-28 18:53:37] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 18:53:37] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 19:03:17] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 19:03:17] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 19:04:10] [ERROR]: data/user_agents.txt bulunamadý.
+[2024-10-28 19:04:10] [ERROR]: Kullanýcý ajanlarý yüklenirken hata: Yüklenen kullanýcý ajaný listesi boþ!
+[2024-10-28 21:15:10] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 21:15:10] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 21:15:32] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 21:15:32] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 21:15:52] [ERROR]: C:/Users/LenovoU/PycharmProjects/dynamic_web_scraper/config.json bulunamadý.
+[2024-10-28 21:15:52] [ERROR]: Kullanýcý ajanlarý yüklenirken hata: Yüklenen kullanýcý ajaný listesi boþ!
+[2024-10-28 22:09:08] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 22:09:08] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 22:09:23] [ERROR]: Geçersiz URL: "https://www.teknosa.com/akilli-saat-c-100004001". URL 'http://' veya 'https://' ile baþlamalý.
+[2024-10-28 22:09:42] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 22:09:42] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 22:10:07] [ERROR]: C:/Users/LenovoU/PycharmProjects/dynamic_web_scraper/config.json.proxies bulunamadý.
+[2024-10-28 22:10:07] [ERROR]: Kullanýcý ajanlarý yüklenirken hata: Yüklenen kullanýcý ajaný listesi boþ!
+[2024-10-28 22:13:32] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 22:13:32] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 22:13:52] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 22:13:52] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:08:06] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:08:06] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:18:04] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:18:04] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:18:28] [ERROR]: C:/Users/LenovoU/PycharmProjects/dynamic_web_scraper/config.json.user_agents bulunamadý.
+[2024-10-28 23:18:28] [ERROR]: Kullanýcý ajanlarý yüklenirken hata: Yüklenen kullanýcý ajaný listesi boþ!
+[2024-10-28 23:23:19] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:23:19] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:24:04] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:24:04] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:24:24] [ERROR]: Kullanýcý ajanlarý yüklenirken hata: Geçersiz kullanýcý ajaný kaynaðý.
+[2024-10-28 23:25:22] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:25:22] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:25:39] [ERROR]: C:/Users/LenovoU/PycharmProjects/dynamic_web_scraper/config.json.proxies bulunamadý.
+[2024-10-28 23:25:39] [ERROR]: Kullanýcý ajanlarý yüklenirken hata: Yüklenen kullanýcý ajaný listesi boþ!
+[2024-10-28 23:28:24] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:28:24] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:28:38] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-10-28 23:28:38] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-10-28 23:28:38] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-10-28 23:28:38] [INFO]: Kullanýcý ajaný seçildi: "Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1",
+[2024-10-28 23:30:38] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:30:38] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:30:45] [ERROR]: Geçersiz URL: import random. URL 'http://' veya 'https://' ile baþlamalý.
+[2024-10-28 23:30:57] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:30:57] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:31:08] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-10-28 23:31:08] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-10-28 23:31:08] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-10-28 23:31:08] [INFO]: Kullanýcý ajaný seçildi: ],
+[2024-10-28 23:31:08] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-10-28 23:32:09] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:32:09] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:32:11] [ERROR]: Geçersiz URL: C:\Users\Lenovo\PycharmProjects\dynamic_web_scraper\env\Scripts\python.exe C:\Users\Lenovo\PycharmProjects\dynamic_web_scraper\scraper\main.py . URL 'http://' veya 'https://' ile baþlamalý.
+[2024-10-28 23:32:15] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:32:15] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:32:26] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-10-28 23:32:26] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-10-28 23:32:26] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-10-28 23:32:26] [INFO]: Kullanýcý ajaný seçildi: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0",
+[2024-10-28 23:32:26] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-10-28 23:32:26] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0",
+[2024-10-28 23:32:26] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Scraper.__init__() got an unexpected keyword argument 'user_agent'
+[2024-10-28 23:40:02] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:40:03] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:40:13] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-10-28 23:40:13] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-10-28 23:40:13] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-10-28 23:40:13] [INFO]: Kullanýcý ajaný seçildi: "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36",
+[2024-10-28 23:40:13] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-10-28 23:40:13] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36",
+[2024-10-28 23:40:13] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: 'str' object has no attribute 'get'
+[2024-10-28 23:41:57] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:42:10] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:42:10] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:42:22] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-10-28 23:42:22] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-10-28 23:42:22] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-10-28 23:42:22] [INFO]: Kullanýcý ajaný seçildi: "http://103.151.30.25:6969"
+[2024-10-28 23:42:22] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-10-28 23:42:22] [INFO]: Yeni proxy seçildi: "user_agents": [
+[2024-10-28 23:42:22] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: 'str' object has no attribute 'get'
+[2024-10-28 23:42:31] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:42:31] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:42:44] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-10-28 23:42:44] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-10-28 23:42:44] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-10-28 23:42:44] [INFO]: Kullanýcý ajaný seçildi: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36",
+[2024-10-28 23:42:44] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-10-28 23:42:44] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/601.7.7 (KHTML, like Gecko) Version/9.1.2 Safari/601.7.7",
+[2024-10-28 23:42:44] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: 'str' object has no attribute 'get'
+[2024-10-28 23:44:04] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:44:12] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:44:12] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:44:23] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-10-28 23:44:23] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-10-28 23:44:23] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-10-28 23:44:23] [INFO]: Kullanýcý ajaný seçildi: "Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Mobile Safari/537.36",
+[2024-10-28 23:44:23] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-10-28 23:44:23] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Mobile Safari/537.36",
+[2024-10-28 23:44:23] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Scraper.__init__() got an unexpected keyword argument 'user_agent'
+[2024-10-28 23:46:11] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:46:11] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:46:20] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-10-28 23:46:20] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-10-28 23:46:20] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-10-28 23:46:20] [INFO]: Kullanýcý ajaný seçildi: "user_agents": [
+[2024-10-28 23:46:20] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-10-28 23:46:20] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Edge/18.18362"
+[2024-10-28 23:46:20] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-10-28 23:46:20] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-10-28 23:46:20] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-10-28 23:51:04] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:51:04] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:51:23] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-10-28 23:51:23] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-10-28 23:51:23] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-10-28 23:51:23] [INFO]: Kullanýcý ajaný seçildi: {
+[2024-10-28 23:51:23] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-10-28 23:51:23] [INFO]: Yeni proxy seçildi: "http://103.105.76.10:3125",
+[2024-10-28 23:51:23] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-10-28 23:51:23] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-10-28 23:51:23] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-10-28 23:53:43] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:54:05] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:54:05] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:54:18] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-10-28 23:54:18] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-10-28 23:54:18] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-10-28 23:54:18] [INFO]: Kullanýcý ajaný seçildi: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36",
+[2024-10-28 23:54:18] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-10-28 23:54:18] [INFO]: Yeni proxy seçildi: "https://www.teknosa.com/akilli-saat-c-100004001"
+[2024-10-28 23:54:18] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-10-28 23:54:18] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-10-28 23:54:18] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-10-28 23:55:09] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:55:09] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:55:17] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-10-28 23:55:17] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-10-28 23:55:17] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-10-28 23:55:17] [INFO]: Kullanýcý ajaný seçildi: ]
+[2024-10-28 23:55:17] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-10-28 23:55:17] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (X11; Linux i686; rv:90.0) Gecko/20100101 Firefox/90.0",
+[2024-10-28 23:55:17] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-10-28 23:55:17] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-10-28 23:55:17] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-10-28 23:56:07] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:56:07] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:56:24] [ERROR]: C:/Users/Lenovo/PycharmProjects/dynamic_web_scraper/config.json[user_agents] bulunamadý.
+[2024-10-28 23:56:24] [ERROR]: Kullanýcý ajanlarý yüklenirken hata: Yüklenen kullanýcý ajaný listesi boþ!
+[2024-10-28 23:56:36] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:56:36] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-28 23:56:41] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-10-28 23:56:41] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-10-28 23:56:41] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-10-28 23:56:41] [INFO]: Kullanýcý ajaný seçildi: "https://www.teknosa.com/akilli-saat-c-100004001"
+[2024-10-28 23:56:41] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-10-28 23:56:41] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36",
+[2024-10-28 23:56:41] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-10-28 23:56:41] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-10-28 23:56:41] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-10-30 16:19:53] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-30 16:19:54] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-30 16:20:09] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-10-30 16:20:09] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-10-30 16:20:09] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-10-30 16:20:09] [INFO]: Kullanýcý ajaný seçildi: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36",
+[2024-10-30 16:20:09] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-10-30 16:20:09] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0",
+[2024-10-30 16:20:09] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-10-30 16:20:09] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-10-30 16:20:09] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-10-30 16:30:29] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-30 16:30:29] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-30 16:30:55] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-10-30 16:30:55] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-10-30 16:30:55] [INFO]: Kullanýcý ajaný seçildi: "proxies": [
+[2024-10-30 16:30:55] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-10-30 16:30:55] [INFO]: Yeni proxy seçildi: "http://133.18.234.13:80",
+[2024-10-30 16:30:55] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-10-30 16:30:55] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-10-30 16:30:55] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-10-30 16:32:16] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-30 16:32:16] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-30 16:33:40] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-10-30 16:33:40] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-10-30 16:33:40] [INFO]: Kullanýcý ajaný seçildi: "http://103.105.76.10:3125",
+[2024-10-30 16:33:40] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-10-30 16:33:40] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:88.0) Gecko/20100101 Firefox/88.0",
+[2024-10-30 16:33:40] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-10-30 16:33:40] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-10-30 16:33:40] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-10-30 16:36:12] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-30 16:36:12] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-30 16:36:39] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-10-30 16:36:39] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-10-30 16:36:39] [INFO]: Kullanýcý ajaný seçildi: "urls": [
+[2024-10-30 16:36:39] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-10-30 16:36:39] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36",
+[2024-10-30 16:36:39] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-10-30 16:36:39] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-10-30 16:36:39] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-10-30 16:38:10] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-30 16:38:10] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-30 16:38:48] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-10-30 16:38:48] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-10-30 16:38:48] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36
+[2024-10-30 16:38:48] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-10-30 16:38:48] [INFO]: Yeni proxy seçildi: {
+[2024-10-30 16:38:48] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-10-30 16:38:48] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-10-30 16:38:48] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-10-30 16:48:50] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-30 16:48:50] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-30 16:49:07] [INFO]: Configuration loaded successfully.
+[2024-10-30 16:49:07] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-10-30 16:49:07] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-10-30 16:49:07] [INFO]: Kullanýcý ajaný seçildi: "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36",
+[2024-10-30 16:49:07] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-10-30 16:49:07] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/601.7.7 (KHTML, like Gecko) Version/9.1.2 Safari/601.7.7",
+[2024-10-30 16:49:07] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-10-30 16:49:07] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-10-30 16:49:07] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-10-30 17:00:17] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-30 17:00:17] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-30 17:00:30] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-10-30 17:00:30] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-10-30 17:00:30] [INFO]: Kullanýcý ajaný seçildi: {
+[2024-10-30 17:00:30] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-10-30 17:00:30] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Mobile Safari/537.36",
+[2024-10-30 17:00:30] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-10-30 17:00:30] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-10-30 17:00:30] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-10-30 17:01:09] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-30 17:01:09] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-30 17:01:25] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-10-30 17:01:25] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-10-30 17:01:25] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-10-30 17:01:25] [INFO]: Kullanýcý ajaný seçildi: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:89.0) Gecko/20100101 Firefox/89.0",
+[2024-10-30 17:01:25] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-10-30 17:01:25] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Edge/12.10240",
+[2024-10-30 17:01:25] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-10-30 17:01:25] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-10-30 17:01:25] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-10-30 17:02:24] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-30 17:02:24] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-30 17:02:34] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-10-30 17:02:34] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-10-30 17:02:34] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-10-30 17:02:34] [INFO]: Kullanýcý ajaný seçildi: "urls": [
+[2024-10-30 17:02:34] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-10-30 17:02:34] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Edge/12.10240",
+[2024-10-30 17:02:34] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-10-30 17:02:34] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-10-30 17:02:34] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-10-30 22:07:55] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-10-30 22:07:56] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-04 20:37:44] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-04 20:37:44] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-04 20:37:50] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-04 20:37:50] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-04 20:38:17] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-04 20:38:17] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-04 20:38:17] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-04 20:38:17] [INFO]: Kullanýcý ajaný seçildi: "http://103.105.76.10:3125",
+[2024-11-04 20:38:17] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-11-04 20:38:17] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0",
+[2024-11-04 20:38:17] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-11-04 20:38:17] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-11-04 20:38:17] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-11-04 21:14:38] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-04 21:14:38] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-04 21:14:51] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-04 21:14:51] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-04 21:14:51] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-04 21:14:51] [INFO]: Kullanýcý ajaný seçildi: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Edge/18.18362"
+[2024-11-04 21:14:51] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-11-04 21:14:51] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36",
+[2024-11-04 21:14:51] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-11-04 21:14:51] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-11-04 21:14:51] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-11-04 21:17:04] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-04 21:17:04] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-04 21:17:18] [INFO]: 24 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-04 21:17:18] [INFO]: 24 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-04 21:17:18] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-04 21:17:18] [INFO]: Kullanýcý ajaný seçildi: # Eski tarayÄ±cÄ±lar
+[2024-11-04 21:17:18] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-11-04 21:17:18] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36",
+[2024-11-04 21:17:18] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-11-04 21:17:18] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-11-04 21:17:18] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-11-05 15:18:48] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:18:48] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:21:55] [INFO]: 24 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-05 15:21:55] [INFO]: 24 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-05 15:21:55] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-05 15:21:55] [INFO]: Kullanýcý ajaný seçildi: "Mozilla/5.0 (iPad; CPU OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1",
+[2024-11-05 15:21:55] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-11-05 15:21:55] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Edge/18.18362"
+[2024-11-05 15:21:55] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-11-05 15:21:55] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-11-05 15:21:55] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-11-05 15:22:11] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:22:11] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:22:39] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-05 15:22:39] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-05 15:22:39] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-05 15:22:39] [INFO]: Kullanýcý ajaný seçildi: "Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Mobile Safari/537.36",
+[2024-11-05 15:22:39] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-11-05 15:22:39] [INFO]: Yeni proxy seçildi: ]
+[2024-11-05 15:22:39] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-11-05 15:22:39] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-11-05 15:22:39] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-11-05 15:25:33] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:25:33] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:25:48] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-05 15:25:48] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-05 15:25:48] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-05 15:25:48] [INFO]: Kullanýcý ajaný seçildi: "user_agents": [
+[2024-11-05 15:25:48] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-11-05 15:25:48] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0",
+[2024-11-05 15:25:48] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-11-05 15:25:48] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-11-05 15:25:48] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-11-05 15:28:06] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:28:42] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:29:34] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-05 15:29:34] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-05 15:29:34] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-05 15:29:37] [INFO]: Kullanýcý ajaný seçildi: "urls": [
+[2024-11-05 15:29:40] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-11-05 15:29:41] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/601.7.7 (KHTML, like Gecko) Version/9.1.2 Safari/601.7.7",
+[2024-11-05 15:30:48] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-11-05 15:30:50] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-11-05 15:31:56] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:31:56] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:32:58] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-05 15:32:58] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-05 15:32:58] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-05 15:32:58] [INFO]: Kullanýcý ajaný seçildi: }
+[2024-11-05 15:35:01] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:35:01] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:35:06] [INFO]: 30 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-05 15:35:06] [INFO]: 30 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-05 15:35:06] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-05 15:41:46] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:41:46] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:42:09] [ERROR]: Kullanýcý ajanlarý dosyasýndan yüklenirken hata: Expecting value: line 1 column 1 (char 0)
+[2024-11-05 15:42:09] [ERROR]: Kullanýcý ajanlarý yüklenirken hata: Yüklenen kullanýcý ajaný listesi boþ!
+[2024-11-05 15:42:52] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:42:52] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:42:56] [ERROR]: Kullanýcý ajanlarý dosyasýndan yüklenirken hata: Expecting value: line 1 column 1 (char 0)
+[2024-11-05 15:42:56] [ERROR]: Kullanýcý ajanlarý yüklenirken hata: Yüklenen kullanýcý ajaný listesi boþ!
+[2024-11-05 15:43:19] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:43:19] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:46:10] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:46:10] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:49:46] [ERROR]: Kullanýcý ajanlarý dosyasýndan yüklenirken hata: Expecting value: line 1 column 1 (char 0)
+[2024-11-05 15:53:03] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:53:03] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:53:29] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:53:29] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:53:51] [ERROR]: Kullanýcý ajanlarý dosyasýndan yüklenirken hata: Expecting value: line 1 column 1 (char 0)
+[2024-11-05 15:53:51] [ERROR]: Kullanýcý ajanlarý yüklenirken hata: Yüklenen kullanýcý ajaný listesi boþ!
+[2024-11-05 15:54:08] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:54:08] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:58:13] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 15:58:13] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 16:02:40] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 16:02:40] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 16:03:28] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 16:03:28] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 16:04:52] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 16:04:52] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 16:05:00] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-05 16:05:00] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-05 16:05:00] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-05 16:05:00] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1
+[2024-11-05 16:05:00] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-11-05 16:05:00] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Firefox/90.0",
+[2024-11-05 16:05:00] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-11-05 16:05:00] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-11-05 16:05:00] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-11-05 20:59:44] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 20:59:44] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:00:20] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-05 21:00:20] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-05 21:00:20] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-05 21:00:20] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (X11; Linux i686; rv:90.0) Gecko/20100101 Firefox/90.0
+[2024-11-05 21:00:20] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-11-05 21:00:20] [INFO]: Yeni proxy seçildi: ],
+[2024-11-05 21:00:20] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-11-05 21:00:20] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-11-05 21:00:20] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-11-05 21:05:15] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:05:15] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:06:31] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:06:31] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:09:45] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:09:45] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:09:52] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-05 21:09:52] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-05 21:09:52] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-05 21:09:52] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Firefox/90.0
+[2024-11-05 21:09:52] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-11-05 21:09:52] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36",
+[2024-11-05 21:09:52] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu.
+[2024-11-05 21:09:52] [ERROR]: UserAgentError: Kullanýcý ajaný hatasý oluþtu. | Kullanýcý Ajaný: Kullanýcý ajaný listesi boþ!
+[2024-11-05 21:09:52] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-11-05 21:10:05] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:10:05] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:10:32] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:10:32] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:14:28] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:14:28] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:14:38] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-05 21:14:38] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-05 21:14:38] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-05 21:14:38] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0
+[2024-11-05 21:14:38] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-11-05 21:14:38] [INFO]: Yeni proxy seçildi: ],
+[2024-11-05 21:14:38] [ERROR]: Kullanýcý ajanlarý yüklenirken hata: Geçersiz kullanýcý ajaný kaynaðý.
+[2024-11-05 21:14:38] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Geçersiz kullanýcý ajaný kaynaðý.
+[2024-11-05 21:15:59] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:15:59] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:26:51] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:26:51] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:27:21] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:27:21] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:27:25] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-05 21:27:25] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-05 21:27:25] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-05 21:27:25] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36
+[2024-11-05 21:27:25] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-11-05 21:27:25] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36",
+[2024-11-05 21:27:25] [ERROR]: Kullanýcý ajanlarý yüklenirken hata: Geçersiz kullanýcý ajaný kaynaðý.
+[2024-11-05 21:27:25] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Geçersiz kullanýcý ajaný kaynaðý.
+[2024-11-05 21:27:55] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:27:55] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:28:44] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-05 21:28:51] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-05 21:28:51] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-05 21:28:51] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36
+[2024-11-05 21:28:51] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-11-05 21:28:51] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:89.0) Gecko/20100101 Firefox/89.0",
+[2024-11-05 21:29:00] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:29:01] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:40:20] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 21:40:20] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 22:27:01] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 22:27:53] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 22:27:53] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 22:28:03] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 22:28:03] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 22:28:07] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-05 22:28:07] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-05 22:28:07] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-05 22:28:07] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Edge/18.18362
+[2024-11-05 22:28:07] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-11-05 22:28:07] [INFO]: Yeni proxy seçildi: "user_agents":[
+[2024-11-05 22:28:07] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: 'module' object is not callable
+[2024-11-05 22:30:03] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 22:30:04] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 22:30:37] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-05 22:30:56] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 22:30:56] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 22:31:02] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-05 22:31:02] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-05 22:31:02] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-05 22:31:02] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Firefox/90.0
+[2024-11-05 22:31:02] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-11-05 22:31:02] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Safari/605.1.15",
+[2024-11-05 22:31:02] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: 'module' object is not callable
+[2024-11-05 22:32:47] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 22:32:47] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 22:32:56] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-05 22:32:56] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-05 22:32:56] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-05 22:32:56] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36
+[2024-11-05 22:32:56] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-11-05 22:32:56] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Mobile Safari/537.36",
+[2024-11-05 22:32:56] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: 'module' object is not callable
+[2024-11-05 22:38:38] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 22:38:38] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 22:38:46] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-05 22:38:46] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-05 22:38:46] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-05 22:38:46] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36
+[2024-11-05 22:38:46] [INFO]: 30 proxy dosyadan yüklendi.
+[2024-11-05 22:38:46] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0",
+[2024-11-05 22:38:46] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: 'module' object is not callable
+[2024-11-05 23:00:43] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 23:00:43] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-05 23:01:05] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-05 23:01:05] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-05 23:01:05] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-05 23:01:05] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:88.0) Gecko/20100101 Firefox/88.0
+[2024-11-05 23:01:05] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-11-05 23:01:05] [INFO]: Yeni proxy seçildi: "http://109.227.6.197",
+[2024-11-05 23:01:05] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: 'module' object is not callable
+[2024-11-22 00:50:32] [INFO]: Loglama baþarýyla ayarlandý.

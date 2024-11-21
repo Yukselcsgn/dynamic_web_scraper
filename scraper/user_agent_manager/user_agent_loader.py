@@ -1,5 +1,6 @@
 import requests
 import logging
+import json
 
 def load_user_agents_from_file(file_path):
     """
@@ -8,8 +9,9 @@ def load_user_agents_from_file(file_path):
     :return: Kullanıcı ajanı listesi (liste şeklinde).
     """
     try:
-        with open(file_path, 'r') as file:
-            user_agents = [line.strip() for line in file.readlines() if line.strip()]
+        with open(file_path, 'r', encoding='utf-8') as file:
+            data = json.loads(file.read())
+        user_agents = data['user_agents']
         logging.info(f"{len(user_agents)} kullanıcı ajanı dosyadan yüklendi.")
         return user_agents
     except FileNotFoundError:

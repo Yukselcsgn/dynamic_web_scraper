@@ -1,15 +1,12 @@
 import random
 import logging
 from .user_agent_loader import load_user_agents_from_file, load_user_agents_from_api
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 class UserAgentManager:
     def __init__(self, source='file', file_path=None, api_url=None):
-        """
-        UserAgentManager sınıfı, kullanıcı ajanlarını yönetir.
-        :param source: Kullanıcı ajanı kaynağı ('file' veya 'api').
-        :param file_path: Dosyadan kullanıcı ajanı yüklemek için dosya yolu.
-        :param api_url: API'den kullanıcı ajanı yüklemek için URL.
-        """
         self.user_agents = []
         self.source = source
         self.file_path = file_path
@@ -20,9 +17,7 @@ class UserAgentManager:
         logging.info(f"UserAgentManager başlatıldı: Kaynak - {self.source}")
 
     def load_user_agents(self):
-        """
-        Kullanıcı ajanlarını belirlenen kaynaktan yükler (dosya veya API).
-        """
+        """Kullanıcı ajanlarını belirlenen kaynaktan yükler (dosya veya API)."""
         try:
             if self.source == 'file' and self.file_path:
                 self.user_agents = load_user_agents_from_file(self.file_path)
@@ -40,10 +35,7 @@ class UserAgentManager:
             raise
 
     def get_user_agent(self):
-        """
-        Rastgele bir kullanıcı ajanı seçer ve döner.
-        :return: Rastgele bir kullanıcı ajanı (string).
-        """
+        """Rastgele bir kullanıcı ajanı seçer ve döner."""
         try:
             if not self.user_agents:
                 raise ValueError("Kullanıcı ajanı listesi boş!")

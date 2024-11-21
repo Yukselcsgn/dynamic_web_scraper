@@ -7,5 +7,5 @@ Modules:
 """
 
 # Import parsers for easier access
-from .data_parser import DataParser
-from .html_parser import HTMLParser
+from .data_parser import save_data
+from .html_parser import parse_html
