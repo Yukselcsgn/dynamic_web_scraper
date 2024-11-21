@@ -3,3 +3,4 @@ webdriver-manager
 bs4
 pandas
 fake_useragent
+MagicMock
