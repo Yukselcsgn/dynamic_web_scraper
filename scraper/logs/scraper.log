@@ -514,3 +514,76 @@
 [2024-11-05 23:01:05] [INFO]: Yeni proxy seçildi: "http://109.227.6.197",
 [2024-11-05 23:01:05] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: 'module' object is not callable
 [2024-11-22 00:50:32] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-22 01:23:37] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-22 01:25:25] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-22 01:27:00] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-22 01:27:00] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-22 01:27:00] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-22 01:27:00] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-22 01:27:20] [ERROR]: C:/Users/Lenovo/PycharmProjects/dynamic_web_scraper/config.json bulunamadý.
+[2024-11-22 01:27:20] [ERROR]: Kullanýcý ajanlarý yüklenirken hata: Yüklenen kullanýcý ajaný listesi boþ!
+[2024-11-22 01:31:12] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-22 01:31:12] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-22 01:31:20] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-22 01:31:20] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-22 01:31:20] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-22 01:31:20] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36
+[2024-11-22 01:31:20] [ERROR]: Proxy dosyasý bulunamadý: C:\Users\Lenovo\PycharmProjects\dynamic_web_scraper\config.json
+[2024-11-22 01:31:20] [ERROR]: Proxy seçimi baþarýsýz oldu: Proxy listesi boþ!
+[2024-11-22 01:31:20] [ERROR]: Proxy seçimi baþarýsýz oldu: Proxy listesi boþ!
+[2024-11-22 01:31:20] [ERROR]: Proxy seçimi baþarýsýz oldu: Proxy listesi boþ!
+[2024-11-22 01:32:21] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-22 01:32:21] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-22 01:32:29] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-22 01:32:29] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-22 01:32:29] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-22 01:32:29] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:89.0) Gecko/20100101 Firefox/89.0
+[2024-11-22 01:32:29] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-11-22 01:32:29] [INFO]: Yeni proxy seçildi: "http://194.26.224.250",
+[2024-11-22 01:32:29] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: 'module' object is not callable
+[2024-11-22 01:41:52] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-22 01:41:52] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-22 01:42:03] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-22 01:42:03] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-22 01:42:03] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-22 01:42:03] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36
+[2024-11-22 01:42:03] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-11-22 01:42:03] [INFO]: Yeni proxy seçildi: "http://162.240.147.147",
+[2024-11-22 01:42:04] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-11-22 01:51:43] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-22 01:51:43] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-22 01:51:52] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-22 01:51:52] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-22 01:51:52] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-22 01:51:52] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36
+[2024-11-22 01:51:52] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-11-22 01:51:52] [INFO]: Yeni proxy seçildi: "http://67.43.227.227",
+[2024-11-22 01:51:53] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: log_message() takes 2 positional arguments but 3 were given
+[2024-11-22 01:52:48] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-22 01:52:48] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-22 01:52:55] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-22 01:52:55] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-22 01:52:55] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-22 01:52:55] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Mobile Safari/537.36
+[2024-11-22 01:52:55] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-11-22 01:52:55] [INFO]: Yeni proxy seçildi: "http://103.36.35.251",
+[2024-11-22 01:52:55] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: 'NoneType' object has no attribute 'info'
+[2024-11-22 01:53:39] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-22 01:53:39] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-22 01:53:43] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-22 01:53:43] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-22 01:53:43] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-22 01:53:43] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:88.0) Gecko/20100101 Firefox/88.0
+[2024-11-22 01:53:43] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-11-22 01:53:43] [INFO]: Yeni proxy seçildi: "http://144.202.62.103",
+[2024-11-22 01:53:44] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: 'NoneType' object has no attribute 'info'
+[2024-11-22 01:58:27] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-22 01:58:27] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-22 01:58:32] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-22 01:58:32] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-22 01:58:32] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-22 01:58:32] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Edge/18.18362
+[2024-11-22 01:58:32] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-11-22 01:58:32] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:89.0) Gecko/20100101 Firefox/89.0",
+[2024-11-22 01:58:33] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-22 01:58:34] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: ResultSet object has no attribute 'select'. You're probably treating a list of elements like a single element. Did you call find_all() when you meant to call find()?

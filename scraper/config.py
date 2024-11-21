@@ -3,7 +3,7 @@ import os
 import sqlite3
 import requests
 
-CONFIG_FILE = 'C:/Users/Lenovo/Desktop/AI/Web_scraping/dynamic_scraper/config.json'
+CONFIG_FILE = 'D:\\Users\\Lenovo\\PycharmProjects\\dynamic_web_scraper\\config.json'
 DB_FILE = 'scraper_data.db'
 
 
