@@ -587,3 +587,15 @@
 [2024-11-22 01:58:32] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:89.0) Gecko/20100101 Firefox/89.0",
 [2024-11-22 01:58:33] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
 [2024-11-22 01:58:34] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: ResultSet object has no attribute 'select'. You're probably treating a list of elements like a single element. Did you call find_all() when you meant to call find()?
+[2024-11-26 02:48:16] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 02:48:16] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 02:48:27] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 02:48:27] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 02:48:34] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 02:48:34] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 02:48:34] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 02:48:34] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36
+[2024-11-26 02:48:34] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-11-26 02:48:34] [INFO]: Yeni proxy seçildi: "http://149.202.27.17",
+[2024-11-26 02:48:35] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-26 02:48:35] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: ResultSet object has no attribute 'select'. You're probably treating a list of elements like a single element. Did you call find_all() when you meant to call find()?
