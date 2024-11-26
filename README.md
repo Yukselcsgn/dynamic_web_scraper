@@ -1,171 +1,184 @@
-<<<<<<< HEAD
 
-# Dynamic E-Commerce Scraper
+# Dynamic Web Scraper
 
 ## Overview
+**Dynamic Web Scraper** is a Python-based tool designed to extract data from dynamic websites, especially e-commerce platforms. It utilizes features such as rotating user-agents and proxies, and integrates with **Selenium** for handling JavaScript-heavy content. This tool can be customized for scraping different types of web pages and is capable of saving scraped data in multiple formats.
 
-Dynamic E-Commerce Scraper is a Python-based web scraping tool designed to efficiently extract product data from various e-commerce websites. Utilizing Selenium, BeautifulSoup, and concurrent threading, this scraper adapts to different site structures dynamically, making it versatile for various e-commerce platforms.
+---
 
 ## Features
+- **User-Agent Rotation**: Mimic real user behavior by cycling through different user-agents to avoid detection.
+- **Proxy Support**: Avoid IP blocks by using rotating proxies.
+- **Dynamic Content Handling**: Uses Selenium to render JavaScript-heavy pages before scraping.
+- **Data Storage**: Save the scraped data in CSV format for easy access and further processing.
+- **Logging**: Comprehensive logging of every step to track progress and troubleshoot.
 
-- **Dynamic Selector Detection**: Automatically identifies the structure of different e-commerce sites to locate product listings, prices, and titles.
-- **Human-Like Interaction**: Simulates user behavior to avoid detection and CAPTCHA challenges.
-- **Parallel Scraping**: Utilizes threading to scrape multiple URLs concurrently, increasing efficiency.
-- **Proxy Support**: Supports the use of proxies for anonymity and to bypass potential restrictions.
-- **Robust Error Handling**: Logs errors and warnings to a file for debugging and performance monitoring.
-- **CSV Export**: Saves extracted data in a CSV format for easy analysis and sharing.
+---
+
+## Requirements
+
+- **Python 3.8 or later**: Ensure you have a compatible Python version installed.
+- **Google Chrome** or **Firefox**: You need one of these browsers installed.
+- **Required Python Libraries**: The libraries required to run the scraper are listed in the `requirements.txt` file.
+
+---
 
 ## Installation
 
-### Prerequisites
+### Clone the Repository
+To get started, clone the repository to your local machine:
 
-- Python 3.1.2
-- pip (Python package installer)
+```bash
+git clone https://github.com/Yukselcsgn/dynamic_web_scraper.git
+cd dynamic_web_scraper
+```
 
-### Steps
-
-1. **Clone the Repository**:
+### Set up Virtual Environment
+1. **Create a virtual environment** to isolate project dependencies:
    ```bash
-   git clone https://github.com/Yukselcsgn/dynamic_web_scraper.git
-   cd dynamic-ecommerce-scraper
+   python -m venv .venv
    ```
+2. **Activate the environment**:
+   - **Windows**: `.venv\Scriptsctivate`
+   - **Mac/Linux**: `source .venv/bin/activate`
 
-2. **Create a Virtual Environment**:
-   ```bash
-   python -m venv env
-   ```
+### Install Dependencies
+Install the required libraries by running the following command:
 
-3. **Activate the Virtual Environment**:
-   - **Windows**:
-     ```bash
-     .\env\Scripts\activate
-     ```
-   - **macOS/Linux**:
-     ```bash
-     source env/bin/activate
-     ```
+```bash
+pip install -r requirements.txt
+```
 
-4. **Install Dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+---
 
 ## Usage
 
-To use the scraper, modify the `urls_to_scrape` list in the `main.py` file with the URLs of the e-commerce pages you want to scrape. You can also specify proxies if needed.
+### Running the Scraper
 
-Run the scraper using the following command:
+To run the scraper, use the following command:
+
 ```bash
-python main.py
+python scraper/main.py
 ```
 
-### Example URLs
-```python
-urls_to_scrape = ['https://example.com/page1', 'https://example.com/page2']
-proxies = ['http://proxy1', 'http://proxy2', 'http://proxy3']
+### Input Prompts
+When the script runs, you will be prompted to enter the following:
+1. **URL to scrape**: Provide the URL of the product or page you want to extract data from.
+2. **Output file path**: Specify the location where the scraped data will be saved. By default, the scraper saves to `data/all_listings.csv`. Press `Enter` to accept the default.
+
+### Example Workflow
+
+1. **Run the Script**:
+   ```bash
+   python scraper/main.py
+   ```
+
+2. **Enter the URL** of the page you want to scrape:
+   ```bash
+   https://www.teknosa.com/akilli-saat-c-100004001
+   ```
+
+3. **Specify the Output File**:
+   Press `Enter` to save the data in `data/all_listings.csv` or provide a custom file path.
+
+4. The scraper will extract data and save it to the specified file.
+
+---
+
+## Example Output
+
+After the scraper finishes running, you will have a CSV file with the extracted data. The file will contain details like product names, prices, descriptions, and other relevant information from the page.
+
+---
+
+## Project Structure
+
 ```
+dynamic_web_scraper/
+│
+├── scraper/                      # Core scraper code
+│   ├── main.py                   # Main entry point
+│   ├── user_agent_manager.py     # Manages random user-agent selection
+│   ├── proxy_manager.py          # Handles proxy loading and rotation
+│   ├── utils/                    # Utility functions
+│   │   ├── html_parser.py        # Extracts and parses the content
+│   │   ├── logger.py             # Sets up logging for the script
+│   │   └── file_manager.py       # Manages output file saving
+│
+├── data/                         # Stores resources and output
+│   ├── user_agents.txt           # List of user-agent strings
+│   ├── proxies.txt               # List of proxy URLs
+│   └── all_listings.csv          # Default output file
+│
+├── tests/                        # Tests for verifying functionality
+│   ├── test_user_agent_manager.py
+│   ├── test_proxy_manager.py
+│   └── test_main.py
+│
+├── requirements.txt              # Python dependencies
+├── README.md                     # Project overview and usage
+└── LICENSE                       # Project license
+```
+
+---
+
+## Customization
+
+You can customize the scraper by modifying several configuration files:
+
+- **User-Agent Rotation**:
+  - Open `data/user_agents.txt` and add more user-agent strings (one per line) to improve scraping mimicry.
+
+- **Proxy Rotation**:
+  - Add proxy URLs to `data/proxies.txt`. The scraper will use these proxies to avoid detection and prevent IP bans.
+
+- **Scraping Logic**:
+  - If you want to scrape different types of data, modify the `scraper/utils/html_parser.py` file to suit your needs. This file contains the logic for selecting and extracting data from web pages.
+
+---
 
 ## Logging
 
-The scraper logs important actions and errors in `scraper.log`, allowing you to review the scraping process and troubleshoot any issues.
+The scraper includes a detailed logging mechanism to track every important action, including:
+
+- **User-Agent and Proxy Selections**: Logs each time a new user-agent or proxy is selected.
+- **Scraping Progress**: Logs the scraping process, including the number of elements found on the page.
+- **Errors**: Logs any issues or errors during scraping.
+
+Logs are displayed in the terminal and can also be saved to a file for future reference.
+
+---
+
+## Troubleshooting
+
+### Common Issues
+
+#### `ResultSet object has no attribute 'select'`
+- **Cause**: This error occurs if you try to use the `select()` method on a list of elements (a `ResultSet` object) instead of a single element.
+- **Solution**: Use `find()` for single elements and `find_all()` for multiple elements.
+
+#### WebDriver Issues
+- **Cause**: Missing or incompatible browser driver.
+- **Solution**: Make sure `webdriver-manager` is installed and that the browser driver matches your installed browser version.
+
+---
 
 ## Contributing
 
-Contributions are welcome! If you have suggestions or improvements, please open an issue or submit a pull request.
+Contributions to the project are welcome! If you have any improvements or bug fixes, feel free to fork the repository and submit a pull request.
+
+### Steps for Contributing:
+1. Fork the repository.
+2. Create a new branch.
+3. Implement your changes.
+4. Submit a pull request with a detailed description of the changes.
+
+---
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
+---
 
-- [Selenium](https://www.selenium.dev/) for web automation.
-- [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/) for parsing HTML and XML documents.
-- [Fake UserAgent](https://github.com/helixdragon/fake-useragent) for generating random user agents.
-- [Webdriver Manager](https://github.com/SergeyPirogov/webdriver_manager) for managing browser drivers.
-=======
-
-# Dynamic E-Commerce Scraper
-
-## Overview
-
-Dynamic E-Commerce Scraper is a Python-based web scraping tool designed to efficiently extract product data from various e-commerce websites. Utilizing Selenium, BeautifulSoup, and concurrent threading, this scraper adapts to different site structures dynamically, making it versatile for various e-commerce platforms.
-
-## Features
-
-- **Dynamic Selector Detection**: Automatically identifies the structure of different e-commerce sites to locate product listings, prices, and titles.
-- **Human-Like Interaction**: Simulates user behavior to avoid detection and CAPTCHA challenges.
-- **Parallel Scraping**: Utilizes threading to scrape multiple URLs concurrently, increasing efficiency.
-- **Proxy Support**: Supports the use of proxies for anonymity and to bypass potential restrictions.
-- **Robust Error Handling**: Logs errors and warnings to a file for debugging and performance monitoring.
-- **CSV Export**: Saves extracted data in a CSV format for easy analysis and sharing.
-
-## Installation
-
-### Prerequisites
-
-- Python 3.1.2
-- pip (Python package installer)
-
-### Steps
-
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/Yukselcsgn/dynamic_web_scraper.git
-   cd dynamic-ecommerce-scraper
-   ```
-
-2. **Create a Virtual Environment**:
-   ```bash
-   python -m venv env
-   ```
-
-3. **Activate the Virtual Environment**:
-   - **Windows**:
-     ```bash
-     .\env\Scripts\activate
-     ```
-   - **macOS/Linux**:
-     ```bash
-     source env/bin/activate
-     ```
-
-4. **Install Dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## Usage
-
-To use the scraper, modify the `urls_to_scrape` list in the `main.py` file with the URLs of the e-commerce pages you want to scrape. You can also specify proxies if needed.
-
-Run the scraper using the following command:
-```bash
-python main.py
-```
-
-### Example URLs
-```python
-urls_to_scrape = ['https://example.com/page1', 'https://example.com/page2']
-proxies = ['http://proxy1', 'http://proxy2', 'http://proxy3']
-```
-
-## Logging
-
-The scraper logs important actions and errors in `scraper.log`, allowing you to review the scraping process and troubleshoot any issues.
-
-## Contributing
-
-Contributions are welcome! If you have suggestions or improvements, please open an issue or submit a pull request.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- [Selenium](https://www.selenium.dev/) for web automation.
-- [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/) for parsing HTML and XML documents.
-- [Fake UserAgent](https://github.com/helixdragon/fake-useragent) for generating random user agents.
-- [Webdriver Manager](https://github.com/SergeyPirogov/webdriver_manager) for managing browser drivers.
->>>>>>> 04bf58d0f1f55e8093b7757c4c23fb21eb44e1ea
+For more information, visit the [GitHub repository](https://github.com/Yukselcsgn/dynamic_web_scraper).
