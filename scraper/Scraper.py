@@ -1,23 +1,23 @@
 import requests
 from random import choice
 import time
-from data_parsers.html_parser import parse_html
-from data_parsers.data_parser import save_data
+from bs4 import BeautifulSoup
 from logging_manager.logging_manager import log_message
 from exceptions.scraper_exceptions import ProxyError, UserAgentError
 from requests.exceptions import HTTPError, Timeout
 
+from scraper.data_parsers import save_data
 
 class Scraper:
     def __init__(self, url, config, max_retries=3, retry_delay=2):
         """
-        Scraper sınıfı, belirli bir URL'den veri çekmek ve işlemek için kullanılır.
+        Scraper class for fetching and processing data from a URL.
 
         Args:
-            url (str): Veri çekilecek URL.
-            config (dict): Kullanıcı ajanları, proxyler ve seçiciler gibi yapılandırmalar.
-            max_retries (int): Maksimum deneme sayısı. Varsayılan: 3.
-            retry_delay (int): Her deneme arasındaki bekleme süresi (saniye). Varsayılan: 2.
+            url (str): Target URL for data fetching.
+            config (dict): Configuration for user agents, proxies, and selectors.
+            max_retries (int): Maximum retry attempts. Default: 3.
+            retry_delay (int): Delay between retries in seconds. Default: 2.
         """
         self.url = url
         self.config = config
@@ -27,44 +27,48 @@ class Scraper:
 
     def get_headers(self):
         """
-        Kullanıcı ajanını config'ten alarak HTTP başlıklarını oluşturur.
+        Generate HTTP headers using a random user agent from the configuration.
 
         Returns:
-            dict: HTTP başlıkları.
+            dict: HTTP headers.
+
+        Raises:
+            UserAgentError: If no user agents are available.
         """
         try:
-            user_agent = choice(self.config.get('user_agents', []))
-            if not user_agent:
-                raise UserAgentError("Kullanıcı ajanı bulunamadı.")
+            user_agents = self.config.get('user_agents', [])
+            if not user_agents:
+                raise UserAgentError("No user agents available.")
+            user_agent = choice(user_agents)
             return {'User-Agent': user_agent}
         except UserAgentError as e:
-            log_message('ERROR', f"Kullanıcı ajanı hatası: {str(e)}")
+            log_message('ERROR', f"User agent error: {str(e)}")
             raise
 
     def get_proxy(self):
         """
-        Proxy listesinden rastgele bir proxy seçer.
+        Select a random proxy from the configuration.
 
         Returns:
-            dict: HTTP ve HTTPS proxy adresleri.
+            dict: Proxy settings for HTTP and HTTPS.
 
         Raises:
-            ProxyError: Eğer proxy listesi boşsa.
+            ProxyError: If no proxies are available.
         """
         if not self.proxies:
-            raise ProxyError("Proxy listesi boş!")
+            raise ProxyError("Proxy list is empty!")
         proxy = choice(self.proxies)
         return {'http': f'http://{proxy}', 'https': f'https://{proxy}'}
 
     def fetch_data(self):
         """
-        URL'den veri çeker ve yanıtı işler.
+        Fetch data from the URL and process the response.
 
         Returns:
-            list: Çıkarılan ürün bilgileri.
+            list: Extracted product information.
 
         Raises:
-            Exception: Veri çekme işlemi başarısız olursa hata fırlatır.
+            Exception: If data fetching fails after maximum retries.
         """
         for attempt in range(self.max_retries):
             try:
@@ -73,53 +77,90 @@ class Scraper:
                 response = requests.get(self.url, headers=headers, proxies=proxies, timeout=10)
                 response.raise_for_status()
 
-                log_message('INFO', f"Veri başarıyla çekildi: {self.url}")
+                log_message('INFO', f"Data successfully fetched from: {self.url}")
                 return self.parse_response(response.text)
             except (HTTPError, Timeout) as e:
-                log_message('WARNING', f"İstek başarısız oldu: {str(e)}. Deneme {attempt + 1}/{self.max_retries}")
-                time.sleep(self.retry_delay * (attempt + 1))  # Exponential Backoff
+                log_message('WARNING', f"Request failed: {str(e)}. Attempt {attempt + 1}/{self.max_retries}")
+                time.sleep(self.retry_delay * (attempt + 1))  # Exponential backoff
             except ProxyError as pe:
-                log_message('ERROR', f"Proxy hatası: {str(pe)}")
+                log_message('ERROR', f"Proxy error: {str(pe)}")
             except UserAgentError as uae:
-                log_message('ERROR', f"Kullanıcı ajanı hatası: {str(uae)}")
+                log_message('ERROR', f"User agent error: {str(uae)}")
 
-        log_message('ERROR', f"Veri çekme başarısız oldu: {self.url} için maksimum deneme sayısına ulaşıldı.")
-        raise Exception("Veri çekme işlemi başarısız oldu.")
+        log_message('ERROR', f"Failed to fetch data: Maximum retries reached for {self.url}.")
+        raise Exception("Data fetching failed.")
 
-    def parse_response(self, response):
+    def parse_response(self, response_text):
         """
-        HTTP yanıtını işler ve ürün bilgilerini çıkarır.
+        Process the HTTP response and extract product information.
 
         Args:
-            response (str): HTTP yanıtı (HTML metni).
+            response_text (str): HTML content of the response.
 
         Returns:
-            list: Çıkarılan ürün bilgileri.
+            list: Extracted product information.
+
+        Raises:
+            ValueError: If HTML parsing or data extraction fails.
         """
-        html_structure = parse_html(response)
+        html_structure = self.parse_html(response_text)
+        if not html_structure:
+            log_message('ERROR', "Invalid result during HTML parsing.")
+            raise ValueError("HTML parsing returned invalid result.")
+
+        try:
+            with open("response.html", "w", encoding="utf-8") as file:
+                file.write(response_text)
+            log_message('INFO', "HTML response successfully saved to 'response.html'.")
+        except Exception as e:
+            log_message('ERROR', f"Error saving HTML file: {str(e)}")
+            raise
+
         return self.extract_product_info(html_structure)
+
+    def parse_html(self, response_text):
+        """
+        Parse the HTML response using BeautifulSoup.
+
+        Args:
+            response_text (str): HTML content.
+
+        Returns:
+            BeautifulSoup: Parsed HTML structure.
+        """
+        return BeautifulSoup(response_text, 'html.parser')
 
     def extract_product_info(self, html):
         """
-        HTML yapısından ürün bilgilerini çıkarır.
+        Extract product information from the parsed HTML.
 
         Args:
-            html (BeautifulSoup): İşlenmiş HTML yapısı.
+            html (BeautifulSoup): Parsed HTML structure.
 
         Returns:
-            list: Ürün bilgileri.
+            list: Product information as a list of dictionaries.
         """
         products = []
-        product_names = html.select(self.config['selectors']['product_name'])
-        product_prices = html.select(self.config['selectors']['product_price'])
+        product_names = html.find_all('span', {'class': 'product-name'})
+        product_prices = html.find_all('span', {'class': 'price'})
+
+        if not product_names or not product_prices:
+            log_message('ERROR', "Product names or prices not found.")
+            raise ValueError("Product names or prices are missing.")
+
+        log_message('DEBUG', f"Found product names: {len(product_names)}")
+        log_message('DEBUG', f"Found product prices: {len(product_prices)}")
 
         for name, price in zip(product_names, product_prices):
-            product_data = {
-                'name': name.get_text().strip(),
-                'price': price.get_text().strip()
-            }
-            products.append(product_data)
+            try:
+                product_data = {
+                    'name': name.get_text(strip=True) if name else "Name not found",
+                    'price': price.get_text(strip=True) if price else "Price not found"
+                }
+                products.append(product_data)
+            except AttributeError as e:
+                log_message('ERROR', f"Error extracting product info: {str(e)}")
 
         save_data(products)
-        log_message('INFO', f"Toplam {len(products)} ürün çıkarıldı ve kaydedildi.")
+        log_message('INFO', f"Extracted and saved {len(products)} products.")
         return products

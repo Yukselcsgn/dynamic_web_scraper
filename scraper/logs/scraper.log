@@ -599,3 +599,690 @@
 [2024-11-26 02:48:34] [INFO]: Yeni proxy seçildi: "http://149.202.27.17",
 [2024-11-26 02:48:35] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
 [2024-11-26 02:48:35] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: ResultSet object has no attribute 'select'. You're probably treating a list of elements like a single element. Did you call find_all() when you meant to call find()?
+[2024-11-26 03:22:22] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 03:22:22] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 03:22:40] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 03:22:40] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 03:22:40] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 03:22:40] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36
+[2024-11-26 03:22:40] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-11-26 03:22:40] [INFO]: Yeni proxy seçildi: "http://212.126.5.242",
+[2024-11-26 03:22:40] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-26 03:22:41] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: ResultSet object has no attribute 'select'. You're probably treating a list of elements like a single element. Did you call find_all() when you meant to call find()?
+[2024-11-26 15:51:14] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 15:51:14] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 15:51:23] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 15:51:23] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 15:51:23] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 15:51:23] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:89.0) Gecko/20100101 Firefox/89.0
+[2024-11-26 15:51:23] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-11-26 15:51:23] [INFO]: Yeni proxy seçildi: "http://119.13.78.93",
+[2024-11-26 15:51:28] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-26 15:51:28] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: ResultSet object has no attribute 'select'. You're probably treating a list of elements like a single element. Did you call find_all() when you meant to call find()?
+[2024-11-26 15:58:23] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 15:58:23] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 16:00:20] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 16:00:20] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 16:01:57] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 16:01:57] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 16:04:30] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 16:04:30] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 16:04:35] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 16:04:35] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 16:04:35] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 16:04:35] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Firefox/90.0
+[2024-11-26 16:04:35] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-11-26 16:04:35] [INFO]: Yeni proxy seçildi: "http://85.239.121.172",
+[2024-11-26 16:04:35] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-26 16:04:36] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: ResultSet object has no attribute 'select'. You're probably treating a list of elements like a single element. Did you call find_all() when you meant to call find()?
+[2024-11-26 16:06:11] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 16:06:11] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 16:06:20] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 16:06:20] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 16:06:20] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 16:06:20] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36
+[2024-11-26 16:06:20] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-11-26 16:06:20] [INFO]: Yeni proxy seçildi: "http://85.239.121.172",
+[2024-11-26 16:06:21] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-26 16:06:21] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: ResultSet object has no attribute 'select'. You're probably treating a list of elements like a single element. Did you call find_all() when you meant to call find()?
+[2024-11-26 16:07:18] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 16:07:18] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 16:07:27] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 16:07:27] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 16:07:27] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 16:07:27] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Firefox/90.0
+[2024-11-26 16:07:27] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-11-26 16:07:27] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36",
+[2024-11-26 16:07:28] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-26 16:07:28] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: ResultSet object has no attribute 'select'. You're probably treating a list of elements like a single element. Did you call find_all() when you meant to call find()?
+[2024-11-26 16:09:37] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 16:09:37] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 16:09:43] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 16:09:43] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 16:09:43] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 16:09:43] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/601.7.7 (KHTML, like Gecko) Version/9.1.2 Safari/601.7.7
+[2024-11-26 16:09:43] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-11-26 16:09:43] [INFO]: Yeni proxy seçildi: "http://212.174.171.22",
+[2024-11-26 16:09:44] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-26 16:09:45] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: ResultSet object has no attribute 'select'. You're probably treating a list of elements like a single element. Did you call find_all() when you meant to call find()?
+[2024-11-26 16:43:32] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 16:43:32] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 16:43:37] [INFO]: 17 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 16:43:37] [INFO]: 17 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 16:43:37] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 16:43:37] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Edge/12.10240
+[2024-11-26 16:43:37] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-11-26 16:43:37] [INFO]: Yeni proxy seçildi: "http://103.214.156.254",
+[2024-11-26 16:43:38] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-26 16:43:39] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: 'selectors'
+[2024-11-26 16:49:49] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 16:49:49] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 16:49:58] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 16:49:58] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 16:49:58] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 16:49:58] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36
+[2024-11-26 16:49:58] [INFO]: 127 proxy dosyadan yüklendi.
+[2024-11-26 16:49:58] [INFO]: Yeni proxy seçildi: "http://199.58.185.9",
+[2024-11-26 16:49:59] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-26 16:50:00] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: list indices must be integers or slices, not str
+[2024-11-26 16:57:55] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 16:57:55] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 16:58:06] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 16:58:06] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 16:58:06] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 16:58:06] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Firefox/90.0
+[2024-11-26 16:58:06] [INFO]: 127 proxy dosyadan yüklendi.
+[2024-11-26 16:58:06] [INFO]: Yeni proxy seçildi: "http://103.106.216.161",
+[2024-11-26 16:58:17] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: HTTPSConnectionPool(host='www.teknosa.com', port=443): Max retries exceeded with url: /akilli-saat-c-100004001 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000002314F997A10>: Failed to resolve 'www.teknosa.com' ([Errno 11001] getaddrinfo failed)"))
+[2024-11-26 17:10:31] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 17:10:31] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 17:10:36] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 17:10:36] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 17:10:36] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 17:10:36] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36
+[2024-11-26 17:10:36] [INFO]: 127 proxy dosyadan yüklendi.
+[2024-11-26 17:10:36] [INFO]: Yeni proxy seçildi: "http://178.132.0.73",
+[2024-11-26 17:10:37] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-26 17:10:39] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: list indices must be integers or slices, not str
+[2024-11-26 17:12:23] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 17:12:23] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 17:12:25] [ERROR]: Geçersiz URL: Microsoft Windows [Version 10.0.19045.5131]. URL 'http://' veya 'https://' ile baþlamalý.
+[2024-11-26 17:12:33] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 17:12:33] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 17:12:43] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 17:12:43] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 17:12:43] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 17:12:43] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Mobile Safari/537.36
+[2024-11-26 17:12:43] [INFO]: 127 proxy dosyadan yüklendi.
+[2024-11-26 17:12:43] [INFO]: Yeni proxy seçildi: "https://www.teknosa.com/akilli-saat-c-100004001"
+[2024-11-26 17:12:43] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-26 17:12:44] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: list indices must be integers or slices, not str
+[2024-11-26 17:16:20] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 17:16:20] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 17:16:25] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 17:16:25] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 17:16:25] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 17:16:25] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36
+[2024-11-26 17:16:25] [INFO]: 127 proxy dosyadan yüklendi.
+[2024-11-26 17:16:25] [INFO]: Yeni proxy seçildi: {
+[2024-11-26 17:16:27] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-26 17:16:27] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: list indices must be integers or slices, not str
+[2024-11-26 22:38:20] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 22:38:20] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 22:38:43] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 22:38:43] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 22:38:43] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 22:38:43] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36
+[2024-11-26 22:38:43] [INFO]: 127 proxy dosyadan yüklendi.
+[2024-11-26 22:38:43] [INFO]: Yeni proxy seçildi: "http://103.127.97.187",
+[2024-11-26 22:38:44] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-26 22:38:45] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: list indices must be integers or slices, not str
+[2024-11-26 22:47:51] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 22:47:51] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 22:48:04] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 22:48:04] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 22:48:04] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 22:48:04] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/601.7.7 (KHTML, like Gecko) Version/9.1.2 Safari/601.7.7
+[2024-11-26 22:48:04] [INFO]: 137 proxy dosyadan yüklendi.
+[2024-11-26 22:48:04] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Safari/605.1.15",
+[2024-11-26 22:48:05] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-26 22:48:14] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-11-26 22:48:14] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-11-26 22:53:11] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 22:53:11] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 22:53:19] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 22:53:19] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 22:53:19] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 22:53:19] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36
+[2024-11-26 22:53:19] [INFO]: 137 proxy dosyadan yüklendi.
+[2024-11-26 22:53:19] [INFO]: Yeni proxy seçildi: "http://185.173.106.113",
+[2024-11-26 22:53:20] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-26 22:53:27] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-11-26 22:53:27] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-11-26 22:54:50] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 22:54:50] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 22:54:55] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 22:54:55] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 22:54:55] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 22:54:55] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36
+[2024-11-26 22:54:55] [INFO]: 137 proxy dosyadan yüklendi.
+[2024-11-26 22:54:55] [INFO]: Yeni proxy seçildi: "http://103.36.35.251",
+[2024-11-26 22:54:56] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-26 22:54:56] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-11-26 22:54:56] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-11-26 22:56:34] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 22:56:34] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 22:56:38] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 22:56:38] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 22:56:38] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 22:56:38] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36
+[2024-11-26 22:56:38] [INFO]: 137 proxy dosyadan yüklendi.
+[2024-11-26 22:56:38] [INFO]: Yeni proxy seçildi: "http://149.202.27.17",
+[2024-11-26 22:56:39] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-26 22:56:39] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-11-26 22:56:39] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-11-26 22:57:25] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 22:57:25] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 22:57:32] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 22:57:32] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 22:57:32] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 22:57:32] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Mobile Safari/537.36
+[2024-11-26 22:57:32] [INFO]: 137 proxy dosyadan yüklendi.
+[2024-11-26 22:57:32] [INFO]: Yeni proxy seçildi: "http://47.243.114.192",
+[2024-11-26 22:57:32] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-26 22:57:33] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-11-26 22:57:33] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-11-26 22:59:25] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 22:59:25] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 22:59:39] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 22:59:39] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 22:59:39] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 22:59:39] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:88.0) Gecko/20100101 Firefox/88.0
+[2024-11-26 22:59:39] [INFO]: 137 proxy dosyadan yüklendi.
+[2024-11-26 22:59:39] [INFO]: Yeni proxy seçildi: "user_agents":[
+[2024-11-26 22:59:39] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-26 22:59:40] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-11-26 22:59:40] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-11-26 23:04:19] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 23:04:19] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 23:04:45] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 23:04:45] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 23:04:45] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 23:04:45] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1
+[2024-11-26 23:04:45] [INFO]: 137 proxy dosyadan yüklendi.
+[2024-11-26 23:04:45] [INFO]: Yeni proxy seçildi: "http://109.234.39.199",
+[2024-11-26 23:04:45] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-26 23:04:53] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-11-26 23:05:01] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-11-26 23:05:23] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 23:05:23] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-26 23:06:04] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-26 23:06:08] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-26 23:06:08] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-26 23:06:08] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (X11; CrOS x86_64 14388.76.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36
+[2024-11-26 23:06:08] [INFO]: 137 proxy dosyadan yüklendi.
+[2024-11-26 23:06:08] [INFO]: Yeni proxy seçildi: "http://114.218.86.78",
+[2024-11-26 23:06:09] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-27 18:40:40] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-27 18:40:40] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-27 18:42:50] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-27 18:42:50] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-27 18:42:50] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-27 18:42:50] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36
+[2024-11-27 18:42:50] [INFO]: 137 proxy dosyadan yüklendi.
+[2024-11-27 18:42:50] [INFO]: Yeni proxy seçildi: "http://85.214.107.177",
+[2024-11-27 18:42:51] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-27 18:42:52] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-11-27 18:42:52] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-11-27 18:47:51] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-27 18:47:51] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-27 18:47:57] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-27 18:47:57] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-27 18:47:57] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-27 18:47:57] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36
+[2024-11-27 18:47:57] [INFO]: 137 proxy dosyadan yüklendi.
+[2024-11-27 18:47:57] [INFO]: Yeni proxy seçildi: "https://www.teknosa.com/akilli-saat-c-100004001"
+[2024-11-27 18:47:58] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-27 18:47:59] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-11-27 18:47:59] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-11-27 18:52:41] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-27 18:52:41] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-27 18:52:51] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-27 18:52:51] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-27 18:52:51] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-27 18:52:51] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (X11; Linux i686; rv:90.0) Gecko/20100101 Firefox/90.0
+[2024-11-27 18:52:51] [INFO]: 137 proxy dosyadan yüklendi.
+[2024-11-27 18:52:51] [INFO]: Yeni proxy seçildi: "http://172.67.7.11",
+[2024-11-27 18:52:52] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-27 18:52:53] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-11-27 18:52:53] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-11-27 18:58:44] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-27 18:58:44] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-27 18:58:51] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-27 18:58:51] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-27 18:58:51] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-27 18:58:51] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Edge/12.10240
+[2024-11-27 18:58:51] [INFO]: 137 proxy dosyadan yüklendi.
+[2024-11-27 18:58:51] [INFO]: Yeni proxy seçildi: "http://202.180.23.42",
+[2024-11-27 18:58:52] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-11-27 18:58:53] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-11-27 18:58:53] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-11-27 19:01:00] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-27 19:01:00] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-27 19:01:05] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-27 19:01:05] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-27 19:01:05] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-27 19:01:05] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/601.7.7 (KHTML, like Gecko) Version/9.1.2 Safari/601.7.7
+[2024-11-27 19:01:05] [INFO]: 138 proxy dosyadan yüklendi.
+[2024-11-27 19:01:05] [INFO]: Yeni proxy seçildi: "http://85.113.93.166",
+[2024-11-27 19:01:05] [INFO]: Veri baþarýyla çekildi: https://www.vatanbilgisayar.com/ekran-kartlari/?srt=PU
+[2024-11-27 19:01:05] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-11-27 19:01:05] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-11-27 19:02:03] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-27 19:02:03] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-27 19:04:39] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-27 19:04:39] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-27 19:04:51] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-27 19:04:51] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-27 19:04:51] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-27 19:04:51] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:88.0) Gecko/20100101 Firefox/88.0
+[2024-11-27 19:04:51] [INFO]: 138 proxy dosyadan yüklendi.
+[2024-11-27 19:04:51] [INFO]: Yeni proxy seçildi: }
+[2024-11-27 19:04:51] [INFO]: Veri baþarýyla çekildi: https://www.vatanbilgisayar.com/ekran-kartlari/?srt=PU
+[2024-11-27 19:04:52] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-11-27 19:04:52] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-11-27 19:05:24] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-27 19:05:24] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-27 19:05:28] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-11-27 19:05:28] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-11-27 19:05:28] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-11-27 19:05:28] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (X11; Linux i686; rv:90.0) Gecko/20100101 Firefox/90.0
+[2024-11-27 19:05:28] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-11-27 19:05:28] [INFO]: Yeni proxy seçildi: "http://184.178.172.5",
+[2024-11-27 19:05:29] [INFO]: Veri baþarýyla çekildi: https://www.vatanbilgisayar.com/ekran-kartlari/?srt=PU
+[2024-11-27 19:05:30] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-11-27 19:05:30] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-11-27 20:47:46] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-27 20:47:46] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-11-27 20:47:46] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-01 21:44:16] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-01 21:44:39] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-01 21:44:39] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-01 21:44:39] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-01 21:44:39] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (X11; CrOS x86_64 14388.76.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36
+[2024-12-01 21:44:39] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-01 21:44:39] [INFO]: Yeni proxy seçildi: "http://77.93.220.68",
+[2024-12-01 21:44:40] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-12-01 21:44:41] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-01 21:44:41] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-01 21:49:06] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-01 21:49:29] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-01 21:49:29] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-01 21:49:29] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-01 21:49:29] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (X11; Linux i686; rv:90.0) Gecko/20100101 Firefox/90.0
+[2024-12-01 21:49:29] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-01 21:49:29] [INFO]: Yeni proxy seçildi: ],
+[2024-12-01 21:49:30] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-12-01 21:49:30] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-01 21:49:30] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-01 22:09:43] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-01 22:09:55] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-01 22:09:55] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-01 22:09:55] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-01 22:09:55] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Mobile Safari/537.36
+[2024-12-01 22:09:55] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-01 22:09:55] [INFO]: Yeni proxy seçildi: "http://197.234.13.34",
+[2024-12-01 22:09:56] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-12-01 22:09:56] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-01 22:09:56] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-07 21:41:48] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-07 21:42:05] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-07 21:42:05] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-07 21:42:05] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-07 21:42:05] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (X11; CrOS x86_64 14388.76.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36
+[2024-12-07 21:42:05] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-07 21:42:05] [INFO]: Yeni proxy seçildi: "urls":[
+[2024-12-07 21:42:06] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-12-07 21:42:06] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-07 21:42:06] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-07 21:54:59] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-07 21:55:11] [INFO]: 16 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-07 21:55:11] [INFO]: 16 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-07 21:55:11] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-07 21:55:11] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:89.0) Gecko/20100101 Firefox/89.0
+[2024-12-07 21:55:11] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-07 21:55:11] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36",
+[2024-12-07 21:55:11] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-12-07 21:55:12] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-07 21:55:12] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-07 22:00:11] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-07 22:00:31] [ERROR]: Kullanýcý ajanlarý dosyasýndan yüklenirken hata: Expecting value: line 1 column 1 (char 0)
+[2024-12-07 22:00:31] [ERROR]: Kullanýcý ajanlarý yüklenirken hata: Yüklenen kullanýcý ajaný listesi boþ!
+[2024-12-07 22:08:03] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-07 22:08:14] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-07 22:08:14] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-07 22:08:14] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-07 22:08:14] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko
+[2024-12-07 22:08:14] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-07 22:08:14] [INFO]: Yeni proxy seçildi: ],
+[2024-12-07 22:08:15] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-12-07 22:08:15] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-07 22:08:15] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-07 22:12:15] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-07 22:12:22] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-07 22:12:22] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-07 22:12:22] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-07 22:12:22] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1
+[2024-12-07 22:12:22] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-07 22:12:22] [INFO]: Yeni proxy seçildi: "http://103.76.13.142",
+[2024-12-07 22:12:23] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-12-07 22:12:23] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-07 22:12:23] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-07 22:12:39] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-07 22:12:44] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-07 22:12:44] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-07 22:12:44] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-07 22:12:44] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+[2024-12-07 22:12:44] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-07 22:12:44] [INFO]: Yeni proxy seçildi: "http://185.6.10.191",
+[2024-12-07 22:12:46] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-12-07 22:12:46] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-07 22:12:46] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-07 22:20:04] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-07 22:20:09] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-07 22:20:09] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-07 22:20:09] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-07 22:20:09] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Mobile Safari/537.36
+[2024-12-07 22:20:09] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-07 22:20:09] [INFO]: Yeni proxy seçildi: "http://194.5.248.191",
+[2024-12-07 22:20:10] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-12-07 22:20:10] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-07 22:20:10] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-08 01:18:31] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-08 01:18:35] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-08 01:18:35] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-08 01:18:35] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-08 01:18:35] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1
+[2024-12-08 01:18:35] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-08 01:18:35] [INFO]: Yeni proxy seçildi: "http://104.17.62.87",
+[2024-12-08 01:18:36] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-12-08 01:18:36] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-08 01:18:36] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-08 01:18:43] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-08 01:18:48] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-08 01:18:48] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-08 01:18:48] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-08 01:18:48] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)
+[2024-12-08 01:18:48] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-08 01:18:48] [INFO]: Yeni proxy seçildi: ]
+[2024-12-08 01:18:48] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-12-08 01:18:49] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-08 01:18:49] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-08 01:19:06] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-08 01:19:11] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-08 01:19:11] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-08 01:19:11] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-08 01:19:11] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0
+[2024-12-08 01:19:11] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-08 01:19:11] [INFO]: Yeni proxy seçildi: "http://43.157.50.206",
+[2024-12-08 01:19:12] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-12-08 01:19:12] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-08 01:19:12] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-08 15:39:06] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-08 15:39:56] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-08 15:39:56] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-08 15:39:56] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-08 15:39:56] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Mobile Safari/537.36
+[2024-12-08 15:39:56] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-08 15:39:56] [INFO]: Yeni proxy seçildi: "http://194.147.33.5",
+[2024-12-08 15:39:57] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-12-08 15:39:58] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-08 15:39:58] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-09 17:40:47] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-09 17:40:59] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-09 17:40:59] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-09 17:40:59] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-09 17:40:59] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Mobile Safari/537.36
+[2024-12-09 17:40:59] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-09 17:40:59] [INFO]: Yeni proxy seçildi: "http://191.97.68.42",
+[2024-12-09 17:41:00] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-12-09 17:41:00] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-09 17:41:00] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-09 17:56:05] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-09 17:56:17] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-09 17:56:17] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-09 17:56:17] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-09 17:56:17] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
+[2024-12-09 17:56:17] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-09 17:56:17] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36",
+[2024-12-09 17:56:17] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-12-09 17:56:18] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-09 17:56:18] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-09 17:59:06] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-09 17:59:11] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-09 17:59:11] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-09 17:59:11] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-09 17:59:11] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0
+[2024-12-09 17:59:11] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-09 17:59:11] [INFO]: Yeni proxy seçildi: "http://85.113.93.166",
+[2024-12-09 17:59:12] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-12-09 17:59:12] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-09 17:59:12] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-09 18:18:46] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-09 18:18:55] [ERROR]: Geçersiz URL: import requests. URL 'http://' veya 'https://' ile baþlamalý.
+[2024-12-09 18:19:01] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-09 18:19:17] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-09 18:19:17] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-09 18:19:17] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-09 18:19:17] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+[2024-12-09 18:19:17] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-09 18:19:17] [INFO]: Yeni proxy seçildi: "http://67.43.236.18",
+[2024-12-09 18:19:28] [WARNING]: Ýstek baþarýsýz oldu: HTTPSConnectionPool(host='www.teknosa.com', port=443): Read timed out. (read timeout=10). Deneme 1/3
+[2024-12-09 18:19:37] [INFO]: Veri baþarýyla çekildi: https://www.teknosa.com/akilli-saat-c-100004001
+[2024-12-09 18:19:37] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-09 18:19:37] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-09 18:21:53] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-09 18:22:02] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-09 18:22:02] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-09 18:22:02] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-09 18:22:02] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1
+[2024-12-09 18:22:02] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-09 18:22:02] [INFO]: Yeni proxy seçildi: "http://103.205.130.94",
+[2024-12-09 18:22:02] [INFO]: Veri baþarýyla çekildi: https://www.vatanbilgisayar.com/ekran-kartlari/?srt=PU
+[2024-12-09 18:22:03] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-09 18:22:03] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-09 18:26:59] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-09 18:27:09] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-09 18:27:09] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-09 18:27:09] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-09 18:27:09] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (iPad; CPU OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1
+[2024-12-09 18:27:09] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-09 18:27:09] [INFO]: Yeni proxy seçildi: "http://109.227.6.197",
+[2024-12-09 18:27:09] [INFO]: Veri baþarýyla çekildi: https://www.vatanbilgisayar.com/ekran-kartlari/?srt=PU
+[2024-12-09 18:27:10] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: write() argument must be str, not BeautifulSoup
+[2024-12-09 18:29:27] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-09 18:29:36] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-09 18:29:36] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-09 18:29:36] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-09 18:29:36] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
+[2024-12-09 18:29:36] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-09 18:29:36] [INFO]: Yeni proxy seçildi: "http://116.96.82.78",
+[2024-12-09 18:29:37] [INFO]: Veri baþarýyla çekildi: https://www.vatanbilgisayar.com/ekran-kartlari/?srt=PU
+[2024-12-09 18:29:37] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: write() argument must be str, not BeautifulSoup
+[2024-12-09 18:32:06] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-09 18:32:12] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-09 18:32:12] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-09 18:32:12] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-09 18:32:12] [INFO]: Kullanýcý ajaný seçildi: DuckDuckBot/1.0; (+http://duckduckgo.com/duckduckbot.html)
+[2024-12-09 18:32:12] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-09 18:32:12] [INFO]: Yeni proxy seçildi: "http://5.252.22.45",
+[2024-12-09 18:32:12] [INFO]: Veri baþarýyla çekildi: https://www.vatanbilgisayar.com/ekran-kartlari/?srt=PU
+[2024-12-09 18:32:12] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-09 18:32:12] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-09 18:33:49] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-09 18:33:59] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-09 18:33:59] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-09 18:33:59] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-09 18:33:59] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0
+[2024-12-09 18:33:59] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-09 18:33:59] [INFO]: Yeni proxy seçildi: "http://217.182.210.152",
+[2024-12-09 18:34:00] [INFO]: Veri baþarýyla çekildi: https://www.vatanbilgisayar.com/ekran-kartlari/?srt=PU
+[2024-12-09 18:34:00] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: write() argument must be str, not BeautifulSoup
+[2024-12-09 18:37:25] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-09 18:37:32] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-09 18:37:32] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-09 18:37:32] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-09 18:37:32] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)
+[2024-12-09 18:37:32] [INFO]: 126 proxy dosyadan yüklendi.
+[2024-12-09 18:37:32] [INFO]: Yeni proxy seçildi: "http://202.40.186.157",
+[2024-12-09 18:37:33] [INFO]: Veri baþarýyla çekildi: https://www.vatanbilgisayar.com/ekran-kartlari/?srt=PU
+[2024-12-09 18:37:33] [INFO]: HTML yanýtý 'response.html' dosyasýna baþarýyla kaydedildi.
+[2024-12-09 18:37:33] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-09 18:37:33] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-09 18:40:26] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-09 18:40:32] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-09 18:40:32] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-09 18:40:32] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-09 18:40:32] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko
+[2024-12-09 18:40:32] [INFO]: 127 proxy dosyadan yüklendi.
+[2024-12-09 18:40:32] [INFO]: Yeni proxy seçildi: "http://94.130.171.189",
+[2024-12-09 18:40:32] [WARNING]: Ýstek baþarýsýz oldu: 403 Client Error: Forbidden for url: https://www.sahibinden.com/alfa-romeo-giulietta. Deneme 1/3
+[2024-12-09 18:40:34] [WARNING]: Ýstek baþarýsýz oldu: 403 Client Error: Forbidden for url: https://www.sahibinden.com/alfa-romeo-giulietta. Deneme 2/3
+[2024-12-09 18:40:39] [WARNING]: Ýstek baþarýsýz oldu: 403 Client Error: Forbidden for url: https://www.sahibinden.com/alfa-romeo-giulietta. Deneme 3/3
+[2024-12-09 18:40:45] [ERROR]: Veri çekme baþarýsýz oldu: https://www.sahibinden.com/alfa-romeo-giulietta için maksimum deneme sayýsýna ulaþýldý.
+[2024-12-09 18:40:45] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Veri çekme iþlemi baþarýsýz oldu.
+[2024-12-09 18:40:52] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-09 18:40:57] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-09 18:40:57] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-09 18:40:57] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-09 18:40:57] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7; rv:89.0) Gecko/20100101 Firefox/89.0
+[2024-12-09 18:40:57] [INFO]: 127 proxy dosyadan yüklendi.
+[2024-12-09 18:40:57] [INFO]: Yeni proxy seçildi: "http://200.58.76.160",
+[2024-12-09 18:40:57] [WARNING]: Ýstek baþarýsýz oldu: 403 Client Error: Forbidden for url: https://www.sahibinden.com/alfa-romeo-giulietta. Deneme 1/3
+[2024-12-09 18:40:59] [WARNING]: Ýstek baþarýsýz oldu: 403 Client Error: Forbidden for url: https://www.sahibinden.com/alfa-romeo-giulietta. Deneme 2/3
+[2024-12-09 18:41:04] [WARNING]: Ýstek baþarýsýz oldu: 403 Client Error: Forbidden for url: https://www.sahibinden.com/alfa-romeo-giulietta. Deneme 3/3
+[2024-12-09 18:41:10] [ERROR]: Veri çekme baþarýsýz oldu: https://www.sahibinden.com/alfa-romeo-giulietta için maksimum deneme sayýsýna ulaþýldý.
+[2024-12-09 18:41:10] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Veri çekme iþlemi baþarýsýz oldu.
+[2024-12-09 18:41:31] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-09 18:41:36] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-09 18:41:36] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-09 18:41:36] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-09 18:41:36] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)
+[2024-12-09 18:41:36] [INFO]: 128 proxy dosyadan yüklendi.
+[2024-12-09 18:41:36] [INFO]: Yeni proxy seçildi: "http://216.117.195.93",
+[2024-12-09 18:41:38] [INFO]: Veri baþarýyla çekildi: https://www.arabam.com/ikinci-el/otomobil/alfa-romeo
+[2024-12-09 18:41:38] [INFO]: HTML yanýtý 'response.html' dosyasýna baþarýyla kaydedildi.
+[2024-12-09 18:41:38] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-09 18:41:38] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-09 18:47:16] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-09 18:47:27] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-09 18:47:27] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-09 18:47:27] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-09 18:47:27] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0
+[2024-12-09 18:47:27] [INFO]: 131 proxy dosyadan yüklendi.
+[2024-12-09 18:47:27] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0",
+[2024-12-09 18:47:29] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: ('Connection aborted.', ConnectionResetError(10054, 'Varolan bir baðlantý uzaktaki bir ana bilgisayar tarafýndan zorla kapatýldý', None, 10054, None))
+[2024-12-09 18:47:55] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-09 18:47:58] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-09 18:47:58] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-09 18:47:58] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-09 18:47:58] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:40.0) Gecko/20100101 Firefox/40.0
+[2024-12-09 18:47:58] [INFO]: 131 proxy dosyadan yüklendi.
+[2024-12-09 18:47:58] [INFO]: Yeni proxy seçildi: "https://www.trendyol.com/sr?wc=108443&os=1&sk=1",
+[2024-12-09 18:47:58] [WARNING]: Ýstek baþarýsýz oldu: 403 Client Error: Forbidden for url: https://www.trendyol.com/sr?wc=108443&os=1&sk=1. Deneme 1/3
+[2024-12-09 18:48:00] [WARNING]: Ýstek baþarýsýz oldu: 403 Client Error: Forbidden for url: https://www.trendyol.com/sr?wc=108443&os=1&sk=1. Deneme 2/3
+[2024-12-09 18:48:04] [WARNING]: Ýstek baþarýsýz oldu: 403 Client Error: Forbidden for url: https://www.trendyol.com/sr?wc=108443&os=1&sk=1. Deneme 3/3
+[2024-12-09 18:48:10] [ERROR]: Veri çekme baþarýsýz oldu: https://www.trendyol.com/sr?wc=108443&os=1&sk=1 için maksimum deneme sayýsýna ulaþýldý.
+[2024-12-09 18:48:10] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Veri çekme iþlemi baþarýsýz oldu.
+[2024-12-09 18:48:33] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-09 18:48:36] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-09 18:48:36] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-09 18:48:36] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-09 18:48:36] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0
+[2024-12-09 18:48:36] [INFO]: 131 proxy dosyadan yüklendi.
+[2024-12-09 18:48:36] [INFO]: Yeni proxy seçildi: "http://103.36.35.251",
+[2024-12-09 18:48:46] [WARNING]: Ýstek baþarýsýz oldu: HTTPSConnectionPool(host='www.hepsiburada.com', port=443): Read timed out. (read timeout=10). Deneme 1/3
+[2024-12-09 18:48:58] [WARNING]: Ýstek baþarýsýz oldu: HTTPSConnectionPool(host='www.hepsiburada.com', port=443): Read timed out. (read timeout=10). Deneme 2/3
+[2024-12-09 18:49:13] [WARNING]: Ýstek baþarýsýz oldu: HTTPSConnectionPool(host='www.hepsiburada.com', port=443): Read timed out. (read timeout=10). Deneme 3/3
+[2024-12-09 18:49:19] [ERROR]: Veri çekme baþarýsýz oldu: https://www.hepsiburada.com/ara?q=ekran+kart%C4%B1 için maksimum deneme sayýsýna ulaþýldý.
+[2024-12-09 18:49:19] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Veri çekme iþlemi baþarýsýz oldu.
+[2024-12-09 18:49:28] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-09 18:49:32] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-09 18:49:32] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-09 18:49:32] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-09 18:49:32] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (compatible; Bingbot/2.0; +http://www.bing.com/bingbot.htm)
+[2024-12-09 18:49:32] [INFO]: 131 proxy dosyadan yüklendi.
+[2024-12-09 18:49:32] [INFO]: Yeni proxy seçildi: "http://103.106.216.161",
+[2024-12-09 18:49:33] [INFO]: Veri baþarýyla çekildi: https://www.letgo.com/arabalar_c15706?query_text=honda
+[2024-12-09 18:49:33] [INFO]: HTML yanýtý 'response.html' dosyasýna baþarýyla kaydedildi.
+[2024-12-09 18:49:33] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-09 18:49:33] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-13 16:13:32] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-13 16:23:58] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-13 16:24:08] [ERROR]: Geçersiz URL: import requests. URL 'http://' veya 'https://' ile baþlamalý.
+[2024-12-13 16:24:13] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-13 16:24:22] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-13 16:24:22] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-13 16:24:22] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-13 16:24:22] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0
+[2024-12-13 16:24:22] [INFO]: 131 proxy dosyadan yüklendi.
+[2024-12-13 16:24:22] [INFO]: Yeni proxy seçildi: "https://www.arabam.com/ikinci-el/otomobil/alfa-romeo",
+[2024-12-13 16:24:23] [INFO]: Data successfully fetched from: https://www.vatanbilgisayar.com/ekran-kartlari/?srt=PU
+[2024-12-13 16:24:23] [INFO]: HTML response successfully saved to 'response.html'.
+[2024-12-13 16:24:23] [ERROR]: Product names or prices not found.
+[2024-12-13 16:24:23] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Product names or prices are missing.
+[2024-12-13 16:24:40] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-13 16:24:49] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-13 16:24:49] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-13 16:24:49] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-13 16:24:49] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (iPad; CPU OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1
+[2024-12-13 16:24:49] [INFO]: 131 proxy dosyadan yüklendi.
+[2024-12-13 16:24:49] [INFO]: Yeni proxy seçildi: "http://191.97.68.42",
+[2024-12-13 16:24:49] [INFO]: Data successfully fetched from: https://www.vatanbilgisayar.com/ekran-kartlari/?srt=PU
+[2024-12-13 16:24:49] [INFO]: HTML response successfully saved to 'response.html'.
+[2024-12-13 16:24:49] [ERROR]: Product names or prices not found.
+[2024-12-13 16:24:49] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Product names or prices are missing.
+[2024-12-13 16:27:10] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-13 16:27:15] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-13 16:27:15] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-13 16:27:15] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-13 16:27:15] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)
+[2024-12-13 16:27:15] [INFO]: 131 proxy dosyadan yüklendi.
+[2024-12-13 16:27:15] [INFO]: Yeni proxy seçildi: "http://83.17.222.146",
+[2024-12-13 16:27:15] [INFO]: Data successfully fetched from: https://www.vatanbilgisayar.com/ekran-kartlari/?srt=PU
+[2024-12-13 16:27:16] [INFO]: HTML response successfully saved to 'response.html'.
+[2024-12-13 16:27:16] [ERROR]: Product names or prices not found.
+[2024-12-13 16:27:16] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Product names or prices are missing.
+[2024-12-13 16:27:56] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-13 16:28:06] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-13 16:28:06] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-13 16:28:06] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-13 16:28:06] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+[2024-12-13 16:28:06] [INFO]: 131 proxy dosyadan yüklendi.
+[2024-12-13 16:28:06] [INFO]: Yeni proxy seçildi: "http://197.234.13.34",
+[2024-12-13 16:28:06] [INFO]: Veri baþarýyla çekildi: https://www.vatanbilgisayar.com/ekran-kartlari/?srt=PU
+[2024-12-13 16:28:06] [INFO]: HTML yanýtý 'response.html' dosyasýna baþarýyla kaydedildi.
+[2024-12-13 16:28:06] [ERROR]: Ürün isimleri veya fiyatlarý bulunamadý.
+[2024-12-13 16:28:06] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Ürün isimleri veya fiyatlarý eksik.
+[2024-12-13 16:29:10] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-13 16:29:22] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-13 16:29:22] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-13 16:29:22] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-13 16:29:22] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (compatible; Bingbot/2.0; +http://www.bing.com/bingbot.htm)
+[2024-12-13 16:29:22] [INFO]: 131 proxy dosyadan yüklendi.
+[2024-12-13 16:29:22] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36",
+[2024-12-13 16:29:23] [INFO]: Data successfully fetched from: https://www.vatanbilgisayar.com/ekran-kartlari/?srt=PU
+[2024-12-13 16:29:23] [INFO]: HTML response successfully saved to 'response.html'.
+[2024-12-13 16:29:23] [ERROR]: Product names or prices not found.
+[2024-12-13 16:29:23] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Product names or prices are missing.
+[2024-12-13 16:32:03] [INFO]: Loglama baþarýyla ayarlandý.
+[2024-12-13 16:32:11] [INFO]: 18 kullanýcý ajaný dosyadan yüklendi.
+[2024-12-13 16:32:11] [INFO]: 18 kullanýcý ajaný baþarýyla yüklendi.
+[2024-12-13 16:32:11] [INFO]: UserAgentManager baþlatýldý: Kaynak - file
+[2024-12-13 16:32:11] [INFO]: Kullanýcý ajaný seçildi: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1
+[2024-12-13 16:32:11] [INFO]: 131 proxy dosyadan yüklendi.
+[2024-12-13 16:32:11] [INFO]: Yeni proxy seçildi: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Safari/605.1.15",
+[2024-12-13 16:32:13] [INFO]: Data successfully fetched from: https://www.vatanbilgisayar.com/ekran-kartlari/?srt=PU
+[2024-12-13 16:32:13] [INFO]: HTML response successfully saved to 'response.html'.
+[2024-12-13 16:32:13] [ERROR]: Product names or prices not found.
+[2024-12-13 16:32:13] [ERROR]: Kazýma iþlemi sýrasýnda bir hata oluþtu: Product names or prices are missing.
