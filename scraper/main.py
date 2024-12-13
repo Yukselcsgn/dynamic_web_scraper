@@ -2,6 +2,7 @@ import sys
 import logging
 from config import load_config
 from scraper.Scraper import Scraper
+
 from logging_manager.logging_manager import setup_logging
 from proxy_manager.proxy_rotator import ProxyRotator
 from user_agent_manager.user_agent_manager import UserAgentManager
@@ -21,7 +22,8 @@ def main():
     # UserAgentManager örneği oluştur ve kullanıcı ajanı seç
     user_agent_manager = UserAgentManager(
         source='file',
-        file_path='D:\\Users\\Lenovo\\PycharmProjects\\dynamic_web_scraper\\config.json'
+        file_path='D:\\Users\\Lenovo\\PycharmProjects\\dynamic_web_scraper\\data\\user_agents.json'
+        #file_path='D:\\Users\\Lenovo\\PycharmProjects\\dynamic_web_scraper\\config.json'
     )
     user_agent = user_agent_manager.get_user_agent()  # Rastgele kullanıcı ajanı seç
 
@@ -39,7 +41,7 @@ def main():
     try:
         scraper = Scraper(url, config)
         product_data = scraper.fetch_data()
-
+        print("MAIN Try ilk")
         # Eğer veri varsa kaydet
         if product_data:
             scraper.save_data(product_data, output_file)
