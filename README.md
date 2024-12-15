@@ -96,28 +96,69 @@ After the scraper finishes running, you will have a CSV file with the extracted 
 ```
 dynamic_web_scraper/
 │
-├── scraper/                      # Core scraper code
-│   ├── main.py                   # Main entry point
-│   ├── user_agent_manager.py     # Manages random user-agent selection
-│   ├── proxy_manager.py          # Handles proxy loading and rotation
-│   ├── utils/                    # Utility functions
-│   │   ├── html_parser.py        # Extracts and parses the content
-│   │   ├── logger.py             # Sets up logging for the script
-│   │   └── file_manager.py       # Manages output file saving
+├── scraper/
+│   ├── __init__.py                # Makes this directory a package
+│   ├── main.py                     # Entry point for the scraper
+│   ├── config.py                   # Configuration settings (URLs, proxies, etc.)
+│   ├── scraper.py                  # Main scraper class and methods
+│   ├── utils/
+│   │   ├── __init__.py             # Makes this directory a package
+│   │   ├── request_utils.py        # Utility functions for HTTP requests
+│   │   ├── parse_utils.py          # Utility functions for parsing data
+│   │   ├── wait_utils.py           # Utility functions for human-like waiting
+│   │   ├── user_agent_utils.py     # Utility functions for managing user agents
+│   │   └── proxy_utils.py          # Utility functions for proxy handling
+│   ├── site_detection/              # Module for detecting site structures
+│   │   ├── __init__.py
+│   │   ├── site_detector.py         # Main logic for detecting site layouts
+│   │   └── site_config.py           # Site-specific configurations (e.g., CSS selectors)
+│   ├── data_parsers/               # Module for data extraction and parsing
+│   │   ├── __init__.py
+│   │   ├── data_parser.py           # Main data parsing logic
+│   │   └── html_parser.py           # Fallback HTML parsing methods using BeautifulSoup
+│   ├── proxy_manager/              # Module for managing proxy servers
+│   │   ├── __init__.py
+│   │   ├── proxy_manager.py         # Main logic for proxy management
+│   │   ├── proxy_loader.py          # Logic for loading proxies from files or APIs
+│   │   ├── proxy_rotator.py         # Logic for rotating proxies during scraping
+│   │   └── proxy_validator.py       # Logic for validating proxy functionality
+│   ├── user_agent_manager/         # Module for handling user agents
+│   │   ├── __init__.py
+│   │   ├── user_agent_manager.py    # Main logic for managing user agents
+│   │   └── user_agent_loader.py     # Logic for loading user agents from files or APIs
+│   ├── logging_manager/             # Module for handling logging
+│   │   ├── __init__.py
+│   │   └── logging_manager.py        # Centralized logging setup
+│   └── exceptions/                  # Custom exceptions
+│       ├── __init__.py
+│       └── scraper_exceptions.py     # Custom exceptions for scraper-related errors
 │
-├── data/                         # Stores resources and output
-│   ├── user_agents.txt           # List of user-agent strings
-│   ├── proxies.txt               # List of proxy URLs
-│   └── all_listings.csv          # Default output file
+├── tests/
+│   ├── __init__.py                 # Makes this directory a package
+│   ├── test_scraper.py             # Unit tests for scraper functionality
+│   ├── test_data_parser.py         # Unit tests for data parsing
+│   ├── test_proxy_manager.py        # Unit tests for proxy manager functionality
+│   ├── test_user_agent_manager.py   # Unit tests for user agent management
+│   ├── test_logging_manager.py      # Unit tests for logging management
+│   ├── test_utils.py               # Unit tests for utility functions
+│   └── test_site_detector.py        # Unit tests for site detection functionality
 │
-├── tests/                        # Tests for verifying functionality
-│   ├── test_user_agent_manager.py
-│   ├── test_proxy_manager.py
-│   └── test_main.py
+├── logs/
+│   ├── scraper.log                 # Log file for scraping activities
 │
-├── requirements.txt              # Python dependencies
-├── README.md                     # Project overview and usage
-└── LICENSE                       # Project license
+├── data/
+│   ├── all_listings.csv            # Output data file for scraped listings
+│   ├── raw_data/                   # Directory for storing raw HTML responses
+│   ├── processed_data/             # Directory for storing processed data (if needed)
+│   ├── proxies.txt                 # List of proxies (one proxy per line)
+│   └── user_agents.txt             # List of user agents (one user agent per line)
+│
+├── requirements.txt                # List of required packages for the project
+├── README.md                       # Project documentation and usage instructions
+├── CONTRIBUTING.md                 # Guidelines for contributing to the project
+├── LICENSE                          # License for the project
+└── .gitignore                      # Specifies files and directories to ignore in version control
+
 ```
 
 ---
