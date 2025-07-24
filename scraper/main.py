@@ -2,11 +2,9 @@ import sys
 import logging
 from config import load_config
 from scraper.Scraper import Scraper
-
 from logging_manager.logging_manager import setup_logging
 from proxy_manager.proxy_rotator import ProxyRotator
 from user_agent_manager.user_agent_manager import UserAgentManager
-
 
 def main():
     # Loglama ayarlarını yapılandır
@@ -21,15 +19,13 @@ def main():
 
     # UserAgentManager örneği oluştur ve kullanıcı ajanı seç
     user_agent_manager = UserAgentManager(
-        source='file',
-        file_path='D:\\Users\\Lenovo\\PycharmProjects\\dynamic_web_scraper\\data\\user_agents.json'
-        #file_path='D:\\Users\\Lenovo\\PycharmProjects\\dynamic_web_scraper\\config.json'
+        user_agents=config.get('user_agents', [])
     )
     user_agent = user_agent_manager.get_user_agent()  # Rastgele kullanıcı ajanı seç
 
     # Proxy rotatör oluştur ve proxy seç
     proxy_rotator = ProxyRotator(
-        file_path='D:\\Users\\Lenovo\\PycharmProjects\\dynamic_web_scraper\\config.json'
+        proxies=config.get('proxies', [])
     )
     proxy = proxy_rotator.rotate_proxy()  # Rastgele proxy seç
 

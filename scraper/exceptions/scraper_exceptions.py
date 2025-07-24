@@ -15,10 +15,12 @@ class ScraperException(Exception):
     Genel bir scraper hatası. Proje kapsamında tüm scraper işlemleri sırasında oluşabilecek genel hataları temsil eder.
     Aynı zamanda loglama ve çözüm önerileri içerir.
     """
-    def __init__(self, message="Scraper işleminde bir hata oluştu.", suggestion=None, *args):
+    def __init__(self, message=None, suggestion=None, *args):
+        message = message or "Scraper işleminde bir hata oluştu."
+        suggestion = suggestion or "Lütfen log dosyasına göz atarak detaylı bilgi edinin."
         super().__init__(message, *args)
         self.message = message
-        self.suggestion = suggestion or "Lütfen log dosyasına göz atarak detaylı bilgi edinin."
+        self.suggestion = suggestion
         logger.error(f"{self.__class__.__name__}: {self.message}")
 
     def __str__(self):
@@ -28,9 +30,10 @@ class ProxyError(ScraperException):
     """
     Proxy hatalarını temsil eden özel bir hata sınıfı. Proxy bağlantıları sırasında oluşabilecek sorunları ele alır.
     """
-    def __init__(self, proxy, message="Proxy hatası oluştu.", suggestion=None, *args):
-        self.proxy = proxy
+    def __init__(self, proxy=None, message=None, suggestion=None, *args):
+        message = message or "Proxy hatası oluştu."
         suggestion = suggestion or "Proxy ayarlarını kontrol edin veya yeni bir proxy deneyin."
+        self.proxy = proxy
         super().__init__(message, suggestion, *args)
         logger.error(f"ProxyError: {self.message} | Proxy: {self.proxy}")
 
@@ -41,9 +44,10 @@ class UserAgentError(ScraperException):
     """
     Kullanıcı ajanı ile ilgili hataları temsil eden özel bir hata sınıfı. Yanlış ya da geçersiz kullanıcı ajanı kullanımı durumlarında bu hata tetiklenir.
     """
-    def __init__(self, user_agent, message="Kullanıcı ajanı hatası oluştu.", suggestion=None, *args):
-        self.user_agent = user_agent
+    def __init__(self, user_agent=None, message=None, suggestion=None, *args):
+        message = message or "Kullanıcı ajanı hatası oluştu."
         suggestion = suggestion or "Geçerli bir kullanıcı ajanı kullanın veya listeyi güncelleyin."
+        self.user_agent = user_agent
         super().__init__(message, suggestion, *args)
         logger.error(f"UserAgentError: {self.message} | Kullanıcı Ajanı: {self.user_agent}")
 
@@ -54,9 +58,10 @@ class InvalidURLError(ScraperException):
     """
     Geçersiz URL hatasını temsil eder. İstenen web sitesine bağlanılamadığında veya URL yanlış olduğunda tetiklenir.
     """
-    def __init__(self, url, message="Geçersiz URL veya bağlantı hatası.", suggestion=None, *args):
-        self.url = url
+    def __init__(self, url=None, message=None, suggestion=None, *args):
+        message = message or "Geçersiz URL veya bağlantı hatası."
         suggestion = suggestion or "URL'nin doğruluğunu kontrol edin veya doğru URL ile tekrar deneyin."
+        self.url = url
         super().__init__(message, suggestion, *args)
         logger.error(f"InvalidURLError: {self.message} | URL: {self.url}")
 
@@ -67,9 +72,10 @@ class ParsingError(ScraperException):
     """
     Verinin çözümlenmesi veya ayrıştırılması sırasında oluşan hataları temsil eder. Bu hata, HTML veya JSON gibi formatlarda beklenen verinin alınamaması durumunda tetiklenir.
     """
-    def __init__(self, element, message="Veri ayrıştırma hatası.", suggestion=None, *args):
-        self.element = element
+    def __init__(self, element=None, message=None, suggestion=None, *args):
+        message = message or "Veri ayrıştırma hatası."
         suggestion = suggestion or "Veri yapısında bir sorun olabilir, doğru etiketleri ve formatları kontrol edin."
+        self.element = element
         super().__init__(message, suggestion, *args)
         logger.error(f"ParsingError: {self.message} | Hatalı Eleman: {self.element}")
 
@@ -80,9 +86,10 @@ class RateLimitExceededError(ScraperException):
     """
     İstek sınırının aşılması durumunda oluşan hata. API veya site tarafından belirlenen limitlerin ihlal edilmesi durumunda tetiklenir.
     """
-    def __init__(self, limit, message="İstek sınırı aşıldı.", suggestion=None, *args):
-        self.limit = limit
+    def __init__(self, limit=None, message=None, suggestion=None, *args):
+        message = message or "İstek sınırı aşıldı."
         suggestion = suggestion or "Bir süre bekleyip tekrar deneyin veya istek hızını düşürün."
+        self.limit = limit
         super().__init__(message, suggestion, *args)
         logger.error(f"RateLimitExceededError: {self.message} | Limit: {self.limit}")
 
@@ -93,9 +100,10 @@ class AuthenticationError(ScraperException):
     """
     Kimlik doğrulama ile ilgili hataları temsil eder. Özel API anahtarları veya giriş bilgileri gibi doğrulama gerektiren işlemlerde hata oluştuğunda tetiklenir.
     """
-    def __init__(self, credentials, message="Kimlik doğrulama hatası.", suggestion=None, *args):
-        self.credentials = credentials
+    def __init__(self, credentials=None, message=None, suggestion=None, *args):
+        message = message or "Kimlik doğrulama hatası."
         suggestion = suggestion or "Kimlik bilgilerinizi veya API anahtarınızı kontrol edin."
+        self.credentials = credentials
         super().__init__(message, suggestion, *args)
         logger.error(f"AuthenticationError: {self.message} | Kimlik Bilgileri: {self.credentials}")
 
@@ -106,10 +114,11 @@ class InvalidResponseError(ScraperException):
     """
     Sunucudan alınan geçersiz veya beklenmeyen yanıtları temsil eder. HTTP kodu dışında da yanlış formatlarda gelen verilerde tetiklenir.
     """
-    def __init__(self, status_code, response_body, message="Geçersiz yanıt alındı.", suggestion=None, *args):
+    def __init__(self, status_code=None, response_body=None, message=None, suggestion=None, *args):
+        message = message or "Geçersiz yanıt alındı."
+        suggestion = suggestion or "Sunucunun yanıtını kontrol edin, veya formatı doğru bir şekilde ele aldığınızdan emin olun."
         self.status_code = status_code
         self.response_body = response_body
-        suggestion = suggestion or "Sunucunun yanıtını kontrol edin, veya formatı doğru bir şekilde ele aldığınızdan emin olun."
         super().__init__(message, suggestion, *args)
         logger.error(f"InvalidResponseError: {self.message} | Durum Kodu: {self.status_code} | Yanıt: {self.response_body}")
 
@@ -120,9 +129,10 @@ class TimeoutError(ScraperException):
     """
     İsteklerin zaman aşımına uğraması durumunda oluşan hata. Web sitesiyle veya API ile bağlantı kurarken zaman aşımı meydana geldiğinde tetiklenir.
     """
-    def __init__(self, timeout_value, message="İstek zaman aşımına uğradı.", suggestion=None, *args):
-        self.timeout_value = timeout_value
+    def __init__(self, timeout_value=None, message=None, suggestion=None, *args):
+        message = message or "İstek zaman aşımına uğradı."
         suggestion = suggestion or "Bağlantı süresini artırın veya ağ bağlantınızı kontrol edin."
+        self.timeout_value = timeout_value
         super().__init__(message, suggestion, *args)
         logger.error(f"TimeoutError: {self.message} | Zaman Aşımı Değeri: {self.timeout_value}")
 

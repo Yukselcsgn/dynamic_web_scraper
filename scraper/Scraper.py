@@ -36,10 +36,9 @@ class Scraper:
             UserAgentError: If no user agents are available.
         """
         try:
-            user_agents = self.config.get('user_agents', [])
-            if not user_agents:
-                raise UserAgentError("No user agents available.")
-            user_agent = choice(user_agents)
+            user_agent = self.config.get('user_agent')
+            if not user_agent:
+                raise UserAgentError("No user agent available.")
             return {'User-Agent': user_agent}
         except UserAgentError as e:
             log_message('ERROR', f"User agent error: {str(e)}")
@@ -161,6 +160,10 @@ class Scraper:
             except AttributeError as e:
                 log_message('ERROR', f"Error extracting product info: {str(e)}")
 
-        save_data(products)
-        log_message('INFO', f"Extracted and saved {len(products)} products.")
         return products
+
+    def save_data(self, data, file_name, format='csv'):
+        """
+        Save the extracted data using the data parser's save_data function.
+        """
+        save_data(data, file_name, format)
