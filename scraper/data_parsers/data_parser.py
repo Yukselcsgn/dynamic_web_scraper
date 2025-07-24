@@ -5,15 +5,15 @@ import os
 def save_data(data, file_name, format='csv'):
     """
     Kazınan veriyi belirli bir formatta kaydeder. CSV ve JSON formatları desteklenir.
-    
     Args:
         data (list of dict): İşlenmiş veri. Her bir dict, bir veri kaydını temsil eder.
         file_name (str): Kaydedilecek dosyanın ismi.
         format (str): Kaydedilecek dosyanın formatı. 'csv' veya 'json' olabilir.
-    
     Raises:
-        ValueError: Desteklenmeyen bir format girilirse.
+        ValueError: Desteklenmeyen bir format girilirse veya eksik argüman varsa.
     """
+    if not data or not file_name:
+        raise ValueError("Hem data hem de file_name parametreleri gereklidir.")
     if format == 'csv':
         file_path = f"data/processed_data/{file_name}.csv"
         os.makedirs(os.path.dirname(file_path), exist_ok=True)

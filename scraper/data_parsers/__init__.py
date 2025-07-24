@@ -9,3 +9,5 @@ Modules:
 # Import parsers for easier access
 from .data_parser import save_data
 from .html_parser import parse_html
+
+__all__ = ['save_data', 'parse_html']

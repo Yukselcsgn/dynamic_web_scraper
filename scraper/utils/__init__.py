@@ -10,5 +10,7 @@ Modules:
 """
 
 # Import key utilities for easier access
-from request_utils import send_request
+from .request_utils import send_request
+
+__all__ = ['send_request']
 
