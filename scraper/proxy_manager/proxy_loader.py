@@ -1,24 +1,6 @@
 import requests
 import logging
 
-def load_proxies_from_file(file_path):
-    """
-    Dosyadan proxy bilgilerini yükler.
-    :param file_path: Proxy listesini içeren dosya yolu.
-    :return: Proxy listesi (liste şeklinde).
-    """
-    try:
-        with open(file_path, 'r') as file:
-            proxies = [line.strip() for line in file.readlines() if line.strip()]
-        logging.info(f"{len(proxies)} proxy dosyadan yüklendi.")
-        return proxies
-    except FileNotFoundError:
-        logging.error(f"{file_path} bulunamadı.")
-        return []
-    except Exception as e:
-        logging.error(f"Proxy dosyasından yüklenirken hata: {e}")
-        return []
-
 def load_proxies_from_api(api_url, timeout=10):
     """
     Bir API'den proxy bilgilerini yükler.

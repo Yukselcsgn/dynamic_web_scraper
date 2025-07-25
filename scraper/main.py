@@ -1,15 +1,16 @@
 import sys
 import logging
-from scraper.config import load_config
-from scraper.Scraper import Scraper
-from scraper.logging_manager.logging_manager import setup_logging
-from scraper.proxy_manager.proxy_rotator import ProxyRotator
-from scraper.user_agent_manager.user_agent_manager import UserAgentManager
+from .config import load_config
+from .Scraper import Scraper
+from .logging_manager.logging_manager import setup_logging, log_message
+from .proxy_manager.proxy_rotator import ProxyRotator
+from .user_agent_manager.user_agent_manager import UserAgentManager
 
 def main():
     # Loglama ayarlarını yapılandır
     log_file = "logs/scraper.log"
     setup_logging(log_file)
+    log_message('INFO', f"Logging initialized. Log file: {log_file}")
 
     # Kullanıcıdan URL alma
     url, output_file = get_user_input()
@@ -41,12 +42,12 @@ def main():
         # Eğer veri varsa kaydet
         if product_data:
             scraper.save_data(product_data, output_file)
-            logging.info("Kazıma işlemi başarıyla tamamlandı. Toplam ürün sayısı: %d", len(product_data))
+            log_message('INFO', f"Scraping completed successfully for URL: {url}. Total products: {len(product_data)}. Output file: {output_file}")
         else:
-            logging.warning("Kazıma işlemi sonucu ürün bulunamadı.")
+            log_message('WARNING', f"No products found for URL: {url}.")
 
     except Exception as e:
-        logging.error("Kazıma işlemi sırasında bir hata oluştu: %s", e)
+        log_message('ERROR', f"An error occurred during scraping for URL: {url}. Error: {e}")
         sys.exit(1)
 
 
@@ -65,7 +66,7 @@ def get_user_input():
 def validate_url(url):
     """Verilen URL'nin geçerli bir formatta olup olmadığını kontrol eder."""
     if not url.startswith(('http://', 'https://')):
-        logging.error("Geçersiz URL: %s. URL 'http://' veya 'https://' ile başlamalı.", url)
+        log_message('ERROR', f"Invalid URL: {url}. URL must start with 'http://' or 'https://'.")
         sys.exit(1)
 
 

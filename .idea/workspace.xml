@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="cd87d22e-22ef-4b56-8a4e-7c95fdd561e4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scraper/Scraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/scraper/Scraper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scraper/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/scraper/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scraper/proxy_manager/proxy_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/scraper/proxy_manager/proxy_loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scraper/user_agent_manager/user_agent_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/scraper/user_agent_manager/user_agent_loader.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Unit Test" />
+        <option value="Python Script" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform)); sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo, NoAppException&#10;for module in [&quot;main.py&quot;, &quot;wsgi.py&quot;, &quot;app.py&quot;]:&#10;    try: locals().update(ScriptInfo(app_import_path=module, create_app=None).load_app().make_shell_context()); print(&quot;\nFlask App: %s&quot; % app.import_name); break&#10;    except NoAppException: pass">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform)); sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo, NoAppException&#10;for module in [&quot;main.py&quot;, &quot;wsgi.py&quot;, &quot;app.py&quot;]:&#10;    try: locals().update(ScriptInfo(app_import_path=module, create_app=None).load_app().make_shell_context()); print(&quot;\nFlask App: %s&quot; % app.import_name); break&#10;    except NoAppException: pass" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2o1Zvg8Pi7QJDkHNd4PFhTHSBpb" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Python tests.Unittests in Test_User_Agent_Manager.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.pytest for Test_User_Agent_Manager.TestUserAgentManager.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.pytest for test_css_selectors_css_rules.TestCSSRuleManager.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.pytest for test_request_utils_unittest.TestRequestUtils.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.pytest for tests.Test_User_Agent_Manager.TestUserAgentManager.executor&quot;: &quot;Debug&quot;,
+    &quot;Python tests.pytest in Test_User_Agent_Manager.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.pytest in test_Scraper.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.pytest in test_utils_request_utils.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.scraper.executor&quot;: &quot;Run&quot;,
+    &quot;Python.user_agent_loader.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Users/Lenovo/PycharmProjects/dynamic_web_scraper&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Python tests.pytest for test_css_selectors_css_rules.TestCSSRuleManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="dynamic_web_scraper" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.13 (dynamic_scraper)" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scraper" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scraper/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest for test_css_selectors_css_rules.TestCSSRuleManager" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="dynamic_web_scraper" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_css_selectors_css_rules.TestCSSRuleManager&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest for test_request_utils_unittest.TestRequestUtils" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="dynamic_web_scraper" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_request_utils_unittest.TestRequestUtils&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest in test_Scraper.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="dynamic_web_scraper" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_Scraper.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest in test_utils_request_utils.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="dynamic_web_scraper" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_utils_request_utils.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python tests.pytest for test_css_selectors_css_rules.TestCSSRuleManager" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python tests.pytest in test_utils_request_utils.py" />
+        <item itemvalue="Python tests.pytest in test_Scraper.py" />
+        <item itemvalue="Python tests.pytest for test_request_utils_unittest.TestRequestUtils" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-PY-243.26053.29" />
+        <option value="bundled-python-sdk-b1dbf8ef85a6-4df51de95216-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.26053.29" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="cd87d22e-22ef-4b56-8a4e-7c95fdd561e4" name="Changes" comment="" />
+      <created>1730039276636</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1730039276636</updated>
+      <workItem from="1730039277710" duration="1888000" />
+      <workItem from="1730129685586" duration="7891000" />
+      <workItem from="1730293877217" duration="3059000" />
+      <workItem from="1730314441136" duration="1452000" />
+      <workItem from="1730741783748" duration="942000" />
+      <workItem from="1730742772639" duration="3111000" />
+      <workItem from="1730808975559" duration="2900000" />
+      <workItem from="1730826953857" duration="4546000" />
+      <workItem from="1730832978208" duration="3871000" />
+      <workItem from="1732139559504" duration="21000" />
+      <workItem from="1732139686848" duration="4000" />
+      <workItem from="1732225774094" duration="5771000" />
+      <workItem from="1732234254382" duration="73000" />
+      <workItem from="1732578359672" duration="3884000" />
+      <workItem from="1732624696888" duration="4375000" />
+      <workItem from="1732630188660" duration="428000" />
+      <workItem from="1732630997218" duration="256000" />
+      <workItem from="1732631847246" duration="619000" />
+      <workItem from="1732649870132" duration="1834000" />
+      <workItem from="1732721972060" duration="8948000" />
+      <workItem from="1732982393728" duration="1626000" />
+      <workItem from="1733078132227" duration="1771000" />
+      <workItem from="1733080176985" duration="61000" />
+      <workItem from="1733483213291" duration="437000" />
+      <workItem from="1733596825938" duration="4832000" />
+      <workItem from="1733661492982" duration="724000" />
+      <workItem from="1733752912787" duration="5178000" />
+      <workItem from="1734093500470" duration="5576000" />
+      <workItem from="1734265670543" duration="850000" />
+      <workItem from="1734286183250" duration="1101000" />
+      <workItem from="1735400750189" duration="242000" />
+      <workItem from="1736719406865" duration="17000" />
+      <workItem from="1752867803641" duration="521000" />
+      <workItem from="1752956296451" duration="73000" />
+      <workItem from="1753370791375" duration="5321000" />
+      <workItem from="1753393157722" duration="450000" />
+      <workItem from="1753394439284" duration="6852000" />
+      <workItem from="1753401607936" duration="138000" />
+      <workItem from="1753401808815" duration="1427000" />
+      <workItem from="1753403266386" duration="169000" />
+      <workItem from="1753440669638" duration="773000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/scraper/user_agent_manager/user_agent_manager.py</url>
+          <line>8</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/scraper/user_agent_manager/user_agent_loader.py</url>
+          <line>4</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/scraper/config.py</url>
+          <line>17</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="file_path" language="Python" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/dynamic_web_scraper$pytest_for_tests_Test_User_Agent_Manager_TestUserAgentManager.coverage" NAME="pytest for tests.Test_User_Agent_Manager.TestUserAgentManager Coverage Results" MODIFIED="1730833111082" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/.." />
+    <SUITE FILE_PATH="coverage/dynamic_web_scraper$pytest_for_test_css_selectors_css_rules_TestCSSRuleManager.coverage" NAME="pytest for test_css_selectors_css_rules.TestCSSRuleManager Coverage Results" MODIFIED="1753399563765" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/dynamic_web_scraper$user_agent_loader.coverage" NAME="user_agent_loader Coverage Results" MODIFIED="1730315329922" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scraper/user_agent_manager" />
+    <SUITE FILE_PATH="coverage/dynamic_web_scraper$main.coverage" NAME="main Coverage Results" MODIFIED="1753394470272" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scraper" />
+    <SUITE FILE_PATH="coverage/dynamic_web_scraper$scraper.coverage" NAME="scraper Coverage Results" MODIFIED="1730148242984" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scraper" />
+    <SUITE FILE_PATH="coverage/dynamic_web_scraper$Unittests_in_Test_User_Agent_Manager_py.coverage" NAME="Unittests in Test_User_Agent_Manager.py Coverage Results" MODIFIED="1730742692679" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/dynamic_web_scraper$pytest_in_test_Scraper_py.coverage" NAME="pytest in test_Scraper.py Coverage Results" MODIFIED="1732732298454" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/dynamic_web_scraper$pytest_in_test_utils_request_utils_py.coverage" NAME="pytest in test_utils_request_utils.py Coverage Results" MODIFIED="1732733050907" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/dynamic_web_scraper$pytest_for_Test_User_Agent_Manager_TestUserAgentManager.coverage" NAME="pytest for Test_User_Agent_Manager.TestUserAgentManager Coverage Results" MODIFIED="1730834460382" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/dynamic_web_scraper$pytest_for_test_request_utils_unittest_TestRequestUtils.coverage" NAME="pytest for test_request_utils_unittest.TestRequestUtils Coverage Results" MODIFIED="1732730132729" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/dynamic_web_scraper$pytest_in_Test_User_Agent_Manager_py.coverage" NAME="pytest in Test_User_Agent_Manager.py Coverage Results" MODIFIED="1730742487428" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+  </component>
+</project>

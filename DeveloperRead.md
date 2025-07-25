@@ -32,7 +32,7 @@ dynamic_web_scraper/
 ---
 
 ## Configuration
-- All user agents and proxies are managed in `config.json`.
+- All user agents and proxies are managed in `config.json` (JSON format only).
 - Example:
 ```json
 {
@@ -57,10 +57,12 @@ dynamic_web_scraper/
 ---
 
 ## Testing
-- All modules have unit tests in `tests/`.
+- All modules, including utilities, selectors, and site detection, have unit tests in `tests/`.
 - Integration tests cover the main scraping workflow.
 - Run all tests with:
 ```bash
+pytest
+# or
 python -m unittest discover tests
 ```
 
