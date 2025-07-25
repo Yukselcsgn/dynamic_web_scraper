@@ -2,8 +2,8 @@ import requests
 from random import choice
 import time
 from bs4 import BeautifulSoup
-from logging_manager.logging_manager import log_message
-from exceptions.scraper_exceptions import ProxyError, UserAgentError
+from .logging_manager.logging_manager import log_message
+from .exceptions.scraper_exceptions import ProxyError, UserAgentError
 from requests.exceptions import HTTPError, Timeout
 
 from scraper.data_parsers import save_data

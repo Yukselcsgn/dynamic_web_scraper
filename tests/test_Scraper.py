@@ -19,6 +19,7 @@ class TestScraper(unittest.TestCase):
         """Her test öncesi hazırlık"""
         self.config = {
             'user_agents': ['Mozilla/5.0 Test'],
+            'user_agent': 'Mozilla/5.0 Test',
             'proxy': ['192.168.1.1:8080', '10.0.0.1:3128'],
             'use_proxy': True
         }
@@ -30,7 +31,7 @@ class TestScraper(unittest.TestCase):
         headers = scraper.get_headers()
 
         self.assertIn('User-Agent', headers)
-        self.assertIn(headers['User-Agent'], self.config['user_agents'])
+        self.assertEqual(headers['User-Agent'], self.config['user_agent'])
 
     def test_get_headers_no_user_agent(self):
         """Kullanıcı ajanı olmadığında hata testi"""
@@ -117,8 +118,7 @@ class TestScraper(unittest.TestCase):
         self.assertEqual(product_name.text, 'Test Product')
         self.assertEqual(product_price.text, '10.00')
 
-    @patch('scraper.data_parsers.save_data')
-    def test_extract_product_info(self, mock_save_data):
+    def test_extract_product_info(self):
         """Ürün bilgisi çıkarma testi"""
         html_content = '''
         <html>
@@ -142,8 +142,14 @@ class TestScraper(unittest.TestCase):
         self.assertEqual(products[1]['name'], 'Product 2')
         self.assertEqual(products[1]['price'], '20.00')
 
-        # save_data çağrıldı mı kontrol et
-        mock_save_data.assert_called_once()
+    @patch('scraper.Scraper.save_data')
+    def test_save_data_calls_save_data_function(self, mock_save_data):
+        """save_data fonksiyonunun çağrıldığını test et"""
+        scraper = Scraper(self.test_url, self.config)
+        data = [{'name': 'Product 1', 'price': '15.00'}]
+        file_name = 'test_file'
+        scraper.save_data(data, file_name)
+        mock_save_data.assert_called_once_with(data, file_name, 'csv')
 
 
 if __name__ == '__main__':
