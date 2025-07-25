@@ -18,7 +18,7 @@ Dynamic Web Scraper is a Python-based tool for extracting data from dynamic webs
 ## Requirements
 - Python 3.8 or later
 - Google Chrome or Firefox
-- All dependencies are version-pinned in `requirements.txt`
+- All dependencies are version-pinned in `requirements.txt` for reproducibility and stability.
 
 ---
 
@@ -34,7 +34,7 @@ pip install -r requirements.txt
 ---
 
 ## Configuration
-All user agents and proxies are now managed in `config.json`:
+All user agents and proxies are managed in `config.json`:
 ```json
 {
   "user_agents": ["...", "..."],
@@ -43,7 +43,7 @@ All user agents and proxies are now managed in `config.json`:
 }
 ```
 - Edit `config.json` to add/remove user agents or proxies.
-- No more TXT files for user agents or proxies.
+- Do not use TXT files for user agents or proxies; only config.json is supported in the main workflow.
 
 ---
 
@@ -58,7 +58,6 @@ You will be prompted for:
 
 ---
 
-<<<<<<< HEAD
 ## Example Output
 
 After the scraper finishes running, you will have a CSV file with the extracted data. The file will contain details like product names, prices, descriptions, and other relevant information from the page.
@@ -122,26 +121,16 @@ dynamic_web_scraper/
 │
 ├── data/
 │   ├── all_listings.csv            # Output data file for scraped listings
-│   ├── raw_data/                   # Directory for storing raw HTML responses
-│   ├── processed_data/             # Directory for storing processed data (if needed)
-│   ├── proxies.txt                 # List of proxies (one proxy per line)
-│   └── user_agents.txt             # List of user agents (one user agent per line)
+│   ├── processed_data/             # Directory for storing processed data
+│   ├── user_agents.json            # User agents (JSON format, used in config.json)
+│   ├── proxies.txt                 # (Legacy, not used in main workflow)
+│   └── raw_data/                   # Directory for storing raw HTML responses
 │
 ├── requirements.txt                # List of required packages for the project
 ├── README.md                       # Project documentation and usage instructions
 ├── CONTRIBUTING.md                 # Guidelines for contributing to the project
 ├── LICENSE                          # License for the project
 └── .gitignore                      # Specifies files and directories to ignore in version control
-
-=======
-## Running Tests
-All modules are covered by unit and integration tests. To run all tests:
-```bash
-python -m unittest discover tests
-# or
-pytest
->>>>>>> 552bc3c (Phase 1 Complete: Refactor, Standardize, and Document Core Project)
-```
 
 ---
 

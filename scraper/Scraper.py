@@ -6,7 +6,7 @@ from .logging_manager.logging_manager import log_message
 from .exceptions.scraper_exceptions import ProxyError, UserAgentError
 from requests.exceptions import HTTPError, Timeout
 
-from scraper.data_parsers import save_data
+from .data_parsers import save_data
 
 class Scraper:
     def __init__(self, url, config, max_retries=3, retry_delay=2):
@@ -38,7 +38,7 @@ class Scraper:
         try:
             user_agent = self.config.get('user_agent')
             if not user_agent:
-                raise UserAgentError("No user agent available.")
+                raise UserAgentError(user_agent=None, message="No user agent available.", suggestion="Please check your config.json and ensure at least one user agent is provided.")
             return {'User-Agent': user_agent}
         except UserAgentError as e:
             log_message('ERROR', f"User agent error: {str(e)}")
@@ -55,7 +55,7 @@ class Scraper:
             ProxyError: If no proxies are available.
         """
         if not self.proxies:
-            raise ProxyError("Proxy list is empty!")
+            raise ProxyError(proxy=None, message="Proxy list is empty!", suggestion="Please check your config.json and ensure at least one proxy is provided, or disable proxy usage.")
         proxy = choice(self.proxies)
         return {'http': f'http://{proxy}', 'https': f'https://{proxy}'}
 
