@@ -1,10 +1,10 @@
 import sys
 import logging
-from config import load_config
+from scraper.config import load_config
 from scraper.Scraper import Scraper
-from logging_manager.logging_manager import setup_logging
-from proxy_manager.proxy_rotator import ProxyRotator
-from user_agent_manager.user_agent_manager import UserAgentManager
+from scraper.logging_manager.logging_manager import setup_logging
+from scraper.proxy_manager.proxy_rotator import ProxyRotator
+from scraper.user_agent_manager.user_agent_manager import UserAgentManager
 
 def main():
     # Loglama ayarlarını yapılandır

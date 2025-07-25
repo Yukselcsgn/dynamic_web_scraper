@@ -6,7 +6,7 @@
       <excludeFolder url="file://$MODULE_DIR$/env" />
       <excludePattern pattern="env*" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.13 (dynamic_web_scraper)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.11" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PyDocumentationSettings">

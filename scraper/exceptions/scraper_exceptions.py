@@ -1,9 +1,12 @@
 import logging
+import os
 
 # Scraper özel hata sınıfları için temel bir logger oluşturuyoruz
 logger = logging.getLogger("ScraperExceptions")
 logger.setLevel(logging.ERROR)
 
+# Ensure the logs directory exists
+os.makedirs("logs", exist_ok=True)
 # Logları bir dosyaya kaydetme
 file_handler = logging.FileHandler("logs/scraper_exceptions.log")
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')

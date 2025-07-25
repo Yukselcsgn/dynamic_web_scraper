@@ -16,29 +16,22 @@ def send_request(
 ):
     """
     HTTP isteği gönderir ve yanıtı döner.
-
-    Args:
-        url (str): İstek yapılacak URL.
-        method (str): HTTP metodu (GET, POST vs.). Varsayılan: 'GET'.
-        headers (dict): İstek başlıkları. Varsayılan: None.
-        params (dict): GET veya POST parametreleri. Varsayılan: None.
-        timeout (int): İstek için zaman aşımı süresi (saniye). Varsayılan: 10.
-        retries (int): Başarısız istekler için tekrar deneme sayısı. Varsayılan: 3.
-        proxies (dict): Proxy bilgileri. Varsayılan: None.
-        min_wait (int): Bekleme süresinin minimum değeri (saniye). Varsayılan: 1.
-        max_wait (int): Bekleme süresinin maksimum değeri (saniye). Varsayılan: 5.
-
-    Returns:
-        requests.Response: HTTP yanıtı.
-
-    Raises:
-        requests.RequestException: İstek başarısız olursa hata fırlatır.
     """
+    default_headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        "Accept-Language": "en-US,en;q=0.9",
+    }
     if headers is None:
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-            "Accept-Language": "en-US,en;q=0.9",
-        }
+        headers = default_headers.copy()
+    else:
+        # Merge default headers with custom headers, custom overrides default
+        merged = default_headers.copy()
+        merged.update(headers)
+        headers = merged
+
+    # Use default timeout if invalid
+    if not isinstance(timeout, (int, float)) or timeout <= 0:
+        timeout = 10
 
     attempt = 0
     while attempt < retries:
@@ -53,7 +46,8 @@ def send_request(
         except requests.RequestException as e:
             logging.warning(f"İstek başarısız oldu (deneme {attempt + 1}/{retries}): {e}")
             attempt += 1
-            sleep(randint(min_wait, max_wait))  # İnsan benzeri bir bekleme süresi
+            if attempt < retries:
+                sleep(randint(min_wait, max_wait))  # İnsan benzeri bir bekleme süresi
     raise requests.RequestException(f"{retries} deneme sonrasında istek başarısız oldu: {url}")
 
 
