@@ -6,4 +6,3 @@ Modules:
 """
 
 # Import custom exceptions for easier access
-from .scraper_exceptions import ScraperException

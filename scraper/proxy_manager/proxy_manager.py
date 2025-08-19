@@ -2,8 +2,9 @@ import logging
 from .proxy_loader import load_proxies_from_file, load_proxies_from_api
 from .proxy_validator import test_proxies
 
+
 class ProxyManager:
-    def __init__(self, source='file', file_path=None, api_url=None):
+    def __init__(self, source="file", file_path=None, api_url=None):
         """
         ProxyManager sınıfı, proxy havuzunu yönetir.
         :param source: Proxy yükleme kaynağı ('file' veya 'api').
@@ -16,7 +17,7 @@ class ProxyManager:
         self.api_url = api_url
         self.load_proxies()
 
-        logging.basicConfig(filename='logs/scraper.log', level=logging.INFO)
+        logging.basicConfig(filename="logs/scraper.log", level=logging.INFO)
         logging.info(f"ProxyManager başlatıldı: Kaynak - {self.source}")
 
     def load_proxies(self):
@@ -24,13 +25,13 @@ class ProxyManager:
         Proxy'leri belirlenen kaynaktan yükler (dosya veya API).
         """
         try:
-            if self.source == 'file' and self.file_path:
+            if self.source == "file" and self.file_path:
                 self.proxies = load_proxies_from_file(self.file_path)
-            elif self.source == 'api' and self.api_url:
+            elif self.source == "api" and self.api_url:
                 self.proxies = load_proxies_from_api(self.api_url)
             else:
                 raise ValueError("Geçersiz proxy kaynağı.")
-            
+
             if not self.proxies:
                 raise ValueError("Yüklenen proxy listesi boş!")
 
@@ -62,7 +63,9 @@ class ProxyManager:
             valid_proxies = test_proxies(self.proxies)
             invalid_count = len(self.proxies) - len(valid_proxies)
             self.proxies = valid_proxies
-            logging.info(f"{invalid_count} geçersiz proxy çıkarıldı. Kalan geçerli proxy sayısı: {len(self.proxies)}")
+            logging.info(
+                f"{invalid_count} geçersiz proxy çıkarıldı. Kalan geçerli proxy sayısı: {len(self.proxies)}"
+            )
         except Exception as e:
             logging.error(f"Geçersiz proxy'ler çıkarılırken hata: {e}")
             raise

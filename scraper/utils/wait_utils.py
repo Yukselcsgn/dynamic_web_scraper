@@ -1,14 +1,15 @@
 from time import sleep
 from random import uniform
 
+
 def sleep_random(min_time, max_time):
     """
     Rastgele bir süre bekler.
-    
+
     Args:
         min_time (float): Minimum bekleme süresi (saniye).
         max_time (float): Maksimum bekleme süresi (saniye).
-    
+
     Usage:
         sleep_random(2, 5)  # 2 ile 5 saniye arasında rastgele bekler.
     """

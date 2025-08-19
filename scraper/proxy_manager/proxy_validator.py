@@ -1,6 +1,7 @@
 import requests
 import logging
 
+
 def validate_proxy(proxy, timeout=5):
     """
     Bir proxy'nin geçerli olup olmadığını kontrol eder.
@@ -10,7 +11,9 @@ def validate_proxy(proxy, timeout=5):
     """
     try:
         proxies = {"http": proxy, "https": proxy}
-        response = requests.get('http://www.google.com', proxies=proxies, timeout=timeout)
+        response = requests.get(
+            "http://www.google.com", proxies=proxies, timeout=timeout
+        )
         if response.status_code == 200:
             logging.info(f"Proxy geçerli: {proxy}")
             return True
@@ -20,6 +23,7 @@ def validate_proxy(proxy, timeout=5):
     except requests.RequestException:
         logging.info(f"Proxy geçersiz: {proxy}")
         return False
+
 
 def test_proxies(proxies, max_threads=10):
     """

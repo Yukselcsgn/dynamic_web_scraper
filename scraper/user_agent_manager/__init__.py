@@ -9,4 +9,4 @@ Modules:
 # Import main user-agent functionalities
 from .user_agent_manager import UserAgentManager
 
-__all__ = ['UserAgentManager']
+__all__ = ["UserAgentManager"]

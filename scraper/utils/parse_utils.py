@@ -3,7 +3,10 @@ import re
 from bs4 import BeautifulSoup
 
 # Logging ayarları
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
 
 def clean_data(data):
     """
@@ -16,13 +19,15 @@ def clean_data(data):
         str: Temizlenmiş ve normalize edilmiş veri.
     """
     try:
-        cleaned_data = ' '.join(data.split())
-        cleaned_data = cleaned_data.replace('\n', '').replace('\r', '').strip()
-        cleaned_data = re.sub(r'[^\w\s,.₺€$]', '', cleaned_data)  # Özel karakterleri kaldır
+        cleaned_data = " ".join(data.split())
+        cleaned_data = cleaned_data.replace("\n", "").replace("\r", "").strip()
+        # Özel karakterleri kaldır
+        cleaned_data = re.sub(r"[^\w\s,.₺€$]", "", cleaned_data)
         return cleaned_data
     except Exception as e:
         logging.error(f"Veri temizleme sırasında hata: {e}")
         return data
+
 
 def extract_data(html_content, selectors, multiple=False):
     """
@@ -37,7 +42,7 @@ def extract_data(html_content, selectors, multiple=False):
         dict: Seçicilere göre çıkarılan veriler.
     """
     try:
-        soup = BeautifulSoup(html_content, 'html.parser')
+        soup = BeautifulSoup(html_content, "html.parser")
         extracted_data = {}
 
         for key, selector in selectors.items():
@@ -53,6 +58,7 @@ def extract_data(html_content, selectors, multiple=False):
         logging.error(f"Veri çıkarımı sırasında hata: {e}")
         return {}
 
+
 def extract_products(html_content, product_selector, title_selector, price_selector):
     """
     Ürün bilgilerini (başlıklar ve fiyatlar) çıkarır.
@@ -67,22 +73,25 @@ def extract_products(html_content, product_selector, title_selector, price_selec
         list: Her bir ürün için başlık ve fiyat bilgisi içeren sözlükler listesi.
     """
     try:
-        soup = BeautifulSoup(html_content, 'html.parser')
+        soup = BeautifulSoup(html_content, "html.parser")
         products = []
 
         containers = soup.select(product_selector)
         for container in containers:
             title = container.select_one(title_selector)
             price = container.select_one(price_selector)
-            products.append({
-                'title': clean_data(title.text) if title else 'Başlık Bulunamadı',
-                'price': clean_data(price.text) if price else 'Fiyat Bulunamadı'
-            })
+            products.append(
+                {
+                    "title": clean_data(title.text) if title else "Başlık Bulunamadı",
+                    "price": clean_data(price.text) if price else "Fiyat Bulunamadı",
+                }
+            )
 
         return products
     except Exception as e:
         logging.error(f"Ürün bilgisi çıkarımı sırasında hata: {e}")
         return []
+
 
 def parse_with_config(html_content, site_config):
     """
@@ -103,12 +112,13 @@ def parse_with_config(html_content, site_config):
         dict: Seçicilere göre çıkarılan veriler.
     """
     try:
-        selectors = site_config.get('selectors', {})
-        multiple = site_config.get('multiple', False)
+        selectors = site_config.get("selectors", {})
+        multiple = site_config.get("multiple", False)
         return extract_data(html_content, selectors, multiple=multiple)
     except Exception as e:
         logging.error(f"Siteye özel veri çıkarımı sırasında hata: {e}")
         return {}
+
 
 def extract_links(html_content):
     """
@@ -121,12 +131,17 @@ def extract_links(html_content):
         list: Tüm bağlantılar.
     """
     try:
-        soup = BeautifulSoup(html_content, 'html.parser')
-        links = [a['href'] for a in soup.find_all('a', href=True) if 'javascript' not in a['href'].lower()]
+        soup = BeautifulSoup(html_content, "html.parser")
+        links = [
+            a["href"]
+            for a in soup.find_all("a", href=True)
+            if "javascript" not in a["href"].lower()
+        ]
         return links
     except Exception as e:
         logging.error(f"Bağlantı çıkarımı sırasında hata: {e}")
         return []
+
 
 def extract_meta_info(html_content):
     """
@@ -139,16 +154,20 @@ def extract_meta_info(html_content):
         dict: Sayfa başlığı ve açıklaması.
     """
     try:
-        soup = BeautifulSoup(html_content, 'html.parser')
+        soup = BeautifulSoup(html_content, "html.parser")
         meta_info = {
-            'title': soup.title.string.strip() if soup.title else 'Başlık Bulunamadı',
-            'description': soup.find('meta', {'name': 'description'})['content'].strip()
-            if soup.find('meta', {'name': 'description'}) else 'Açıklama Bulunamadı'
+            "title": soup.title.string.strip() if soup.title else "Başlık Bulunamadı",
+            "description": (
+                soup.find("meta", {"name": "description"})["content"].strip()
+                if soup.find("meta", {"name": "description"})
+                else "Açıklama Bulunamadı"
+            ),
         }
         return meta_info
     except Exception as e:
         logging.error(f"Meta bilgi çıkarımı sırasında hata: {e}")
         return {}
+
 
 def extract_all_text(html_content):
     """
@@ -161,7 +180,7 @@ def extract_all_text(html_content):
         str: Sayfadaki tüm metin.
     """
     try:
-        soup = BeautifulSoup(html_content, 'html.parser')
+        soup = BeautifulSoup(html_content, "html.parser")
         return clean_data(soup.get_text())
     except Exception as e:
         logging.error(f"Tüm metni çıkarma sırasında hata: {e}")

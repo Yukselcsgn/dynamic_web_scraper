@@ -9,4 +9,4 @@ Modules:
 # Automatically import core detector functionality
 from .site_detector import detect_site_structure
 
-__all__ = ['detect_site_structure']
+__all__ = ["detect_site_structure"]

@@ -6,4 +6,3 @@ Modules:
 """
 
 # Doğrudan logging_manager'den fonksiyonları dışa aktar
-from .logging_manager import setup_logging, log_message
