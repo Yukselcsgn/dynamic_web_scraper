@@ -1,6 +1,6 @@
 import requests
 import logging
-import json
+
 
 def load_user_agents_from_api(api_url, timeout=10):
     """

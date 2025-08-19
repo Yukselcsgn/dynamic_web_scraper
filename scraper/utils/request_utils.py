@@ -3,16 +3,17 @@ from time import sleep
 from random import randint
 import logging
 
+
 def send_request(
     url,
-    method='GET',
+    method="GET",
     headers=None,
     params=None,
     timeout=10,
     retries=3,
     proxies=None,
     min_wait=1,
-    max_wait=5
+    max_wait=5,
 ):
     """
     HTTP isteği gönderir ve yanıtı döner.
@@ -38,17 +39,27 @@ def send_request(
         try:
             logging.info(f"İstek gönderiliyor: {url} (deneme {attempt + 1}/{retries})")
             response = requests.request(
-                method, url, headers=headers, params=params, timeout=timeout, proxies=proxies
+                method,
+                url,
+                headers=headers,
+                params=params,
+                timeout=timeout,
+                proxies=proxies,
             )
             response.raise_for_status()  # Hatalı statü kodları için hata fırlatır
             logging.info(f"Başarılı yanıt: {response.status_code} {url}")
             return response
         except requests.RequestException as e:
-            logging.warning(f"İstek başarısız oldu (deneme {attempt + 1}/{retries}): {e}")
+            logging.warning(
+                f"İstek başarısız oldu (deneme {attempt + 1}/{retries}): {e}"
+            )
             attempt += 1
             if attempt < retries:
-                sleep(randint(min_wait, max_wait))  # İnsan benzeri bir bekleme süresi
-    raise requests.RequestException(f"{retries} deneme sonrasında istek başarısız oldu: {url}")
+                # İnsan benzeri bir bekleme süresi
+                sleep(randint(min_wait, max_wait))
+    raise requests.RequestException(
+        f"{retries} deneme sonrasında istek başarısız oldu: {url}"
+    )
 
 
 def handle_response(response):
@@ -65,11 +76,11 @@ def handle_response(response):
         ValueError: Beklenen formatta olmayan yanıt için hata fırlatır.
     """
     try:
-        content_type = response.headers.get('Content-Type', '')
-        if 'application/json' in content_type:
+        content_type = response.headers.get("Content-Type", "")
+        if "application/json" in content_type:
             logging.info("Yanıt JSON formatında işleniyor.")
             return response.json()
-        elif 'text/html' in content_type:
+        elif "text/html" in content_type:
             logging.info("Yanıt HTML metni olarak işleniyor.")
             return response.text
         else:

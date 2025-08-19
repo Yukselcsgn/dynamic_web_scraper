@@ -1,11 +1,14 @@
 import random
 import logging
 
+
 class UserAgentManager:
     def __init__(self, user_agents=None):
         self.user_agents = user_agents or []
-        logging.basicConfig(filename='logs/scraper.log', level=logging.INFO)
-        logging.info(f"UserAgentManager başlatıldı. Toplam kullanıcı ajanı: {len(self.user_agents)}")
+        logging.basicConfig(filename="logs/scraper.log", level=logging.INFO)
+        logging.info(
+            f"UserAgentManager başlatıldı. Toplam kullanıcı ajanı: {len(self.user_agents)}"
+        )
 
     def get_user_agent(self):
         """Rastgele bir kullanıcı ajanı seçer ve döner."""

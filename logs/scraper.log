@@ -2,3 +2,20 @@
 2024-10-17 13:15:28,915 - INFO - Driver started. Proxy: http://proxy3
 2024-10-17 13:27:41,053 - INFO - Driver started. Proxy: http://103.151.30.25:6969
 2024-10-17 13:28:02,317 - INFO - Driver started. Proxy: http://133.18.234.13:80
+[2025-08-19 19:08:56] [INFO]: Loglama başarıyla ayarlandı (rotasyonlu).
+[2025-08-19 19:08:56] [INFO]: Logging initialized. Log file: logs/scraper.log
+[2025-08-19 19:33:56] [INFO]: UserAgentManager başlatıldı. Toplam kullanıcı ajanı: 8
+[2025-08-19 19:33:56] [INFO]: Kullanıcı ajanı seçildi: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
+[2025-08-19 19:33:56] [INFO]: Yeni proxy seçildi: 127.0.0.1:8081
+[2025-08-19 19:33:56] [INFO]: UserAgentManager başlatıldı. Toplam kullanıcı ajanı: 8
+[2025-08-19 19:33:56] [INFO]: Detecting site profile for: https://www.sahibinden.com/alfa-romeo-giuletta
+[2025-08-19 19:33:56] [INFO]: Kullanıcı ajanı seçildi: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
+[2025-08-19 19:33:57] [WARNING]: Site detection failed: 403 Client Error: Forbidden for url: https://www.sahibinden.com/alfa-romeo-giuletta. Using default profile.
+[2025-08-19 19:33:57] [INFO]: Kullanıcı ajanı seçildi: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:89.0) Gecko/20100101 Firefox/89.0
+[2025-08-19 19:33:57] [WARNING]: Request failed: 403 Client Error: Forbidden for url: https://www.sahibinden.com/alfa-romeo-giuletta. Attempt 1/3
+[2025-08-19 19:33:59] [INFO]: Kullanıcı ajanı seçildi: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36
+[2025-08-19 19:33:59] [WARNING]: Request failed: 403 Client Error: Forbidden for url: https://www.sahibinden.com/alfa-romeo-giuletta. Attempt 2/3
+[2025-08-19 19:34:03] [INFO]: Kullanıcı ajanı seçildi: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:89.0) Gecko/20100101 Firefox/89.0
+[2025-08-19 19:34:03] [WARNING]: Request failed: 403 Client Error: Forbidden for url: https://www.sahibinden.com/alfa-romeo-giuletta. Attempt 3/3
+[2025-08-19 19:34:11] [ERROR]: Failed to fetch data: Maximum retries reached for https://www.sahibinden.com/alfa-romeo-giuletta.
+[2025-08-19 19:34:11] [ERROR]: An error occurred during scraping for URL: https://www.sahibinden.com/alfa-romeo-giuletta. Error: Data fetching failed.

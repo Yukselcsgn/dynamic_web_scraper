@@ -1,0 +1,342 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Dynamic Web Scraper{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">
+        <i class="fas fa-tachometer-alt text-primary"></i> Dashboard
+    </h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{{ url_for('start_scraping') }}" class="btn btn-primary">
+            <i class="fas fa-play me-2"></i>Start New Scraping
+        </a>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row mb-4">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card stat-card h-100">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-white-50 text-uppercase mb-1">
+                            Total Jobs
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-white">{{ stats.total_jobs }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-list fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card stat-card success h-100">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-white-50 text-uppercase mb-1">
+                            Completed
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-white">{{ stats.completed_jobs }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-check-circle fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card stat-card warning h-100">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-white-50 text-uppercase mb-1">
+                            Failed
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-white">{{ stats.failed_jobs }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-exclamation-triangle fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card stat-card info h-100">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-white-50 text-uppercase mb-1">
+                            Total Results
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-white">{{ stats.total_results }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-database fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Row -->
+<div class="row mb-4">
+    <div class="col-xl-8 col-lg-7">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    <i class="fas fa-chart-line me-2"></i>Job Success Rate
+                </h6>
+            </div>
+            <div class="card-body">
+                <canvas id="successRateChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-lg-5">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    <i class="fas fa-chart-pie me-2"></i>Job Status Distribution
+                </h6>
+            </div>
+            <div class="card-body">
+                <canvas id="statusChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Jobs -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    <i class="fas fa-clock me-2"></i>Recent Jobs
+                </h6>
+            </div>
+            <div class="card-body">
+                {% if recent_jobs %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>URL</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Results</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for job in recent_jobs %}
+                            <tr>
+                                <td>#{{ job.id }}</td>
+                                <td>
+                                    <div class="text-truncate" style="max-width: 300px;" title="{{ job.url }}">
+                                        {{ job.url }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="status-badge status-{{ job.status }}">
+                                        {% if job.status == 'pending' %}
+                                            <i class="fas fa-clock me-1"></i>Pending
+                                        {% elif job.status == 'running' %}
+                                            <i class="fas fa-spinner fa-spin me-1"></i>Running
+                                        {% elif job.status == 'completed' %}
+                                            <i class="fas fa-check me-1"></i>Completed
+                                        {% elif job.status == 'failed' %}
+                                            <i class="fas fa-times me-1"></i>Failed
+                                        {% endif %}
+                                    </span>
+                                </td>
+                                <td>{{ job.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                <td>
+                                    {% if job.results_count %}
+                                        <span class="badge bg-success">{{ job.results_count }}</span>
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('job_status', job_id=job.id) }}" 
+                                       class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-eye"></i> View
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">No jobs yet</h5>
+                    <p class="text-muted">Start your first scraping job to see results here.</p>
+                    <a href="{{ url_for('start_scraping') }}" class="btn btn-primary">
+                        <i class="fas fa-play me-2"></i>Start Scraping
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Active Jobs -->
+{% if active_jobs %}
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    <i class="fas fa-spinner fa-spin me-2"></i>Active Jobs
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>URL</th>
+                                <th>Started</th>
+                                <th>Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for job_id, job in active_jobs.items() %}
+                            <tr>
+                                <td>#{{ job.id }}</td>
+                                <td>
+                                    <div class="text-truncate" style="max-width: 300px;" title="{{ job.url }}">
+                                        {{ job.url }}
+                                    </div>
+                                </td>
+                                <td>{{ job.created_at.strftime('%H:%M:%S') }}</td>
+                                <td>
+                                    <span class="text-info" id="duration-{{ job.id }}">
+                                        <i class="fas fa-spinner fa-spin"></i> Running...
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Success Rate Chart
+const successCtx = document.getElementById('successRateChart').getContext('2d');
+const successChart = new Chart(successCtx, {
+    type: 'line',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+            label: 'Success Rate (%)',
+            data: [85, 88, 92, 87, 90, {{ "%.1f"|format(stats.success_rate) }}],
+            borderColor: '#667eea',
+            backgroundColor: 'rgba(102, 126, 234, 0.1)',
+            tension: 0.4,
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                beginAtZero: true,
+                max: 100,
+                ticks: {
+                    callback: function(value) {
+                        return value + '%';
+                    }
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                display: false
+            }
+        }
+    }
+});
+
+// Status Distribution Chart
+const statusCtx = document.getElementById('statusChart').getContext('2d');
+const statusChart = new Chart(statusCtx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Completed', 'Failed', 'Running', 'Pending'],
+        datasets: [{
+            data: [
+                {{ stats.completed_jobs }},
+                {{ stats.failed_jobs }},
+                {{ stats.running_jobs }},
+                {{ stats.total_jobs - stats.completed_jobs - stats.failed_jobs - stats.running_jobs }}
+            ],
+            backgroundColor: [
+                '#28a745',
+                '#dc3545',
+                '#17a2b8',
+                '#ffc107'
+            ],
+            borderWidth: 0
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom'
+            }
+        }
+    }
+});
+
+// Auto-refresh for active jobs
+function updateDurations() {
+    const now = new Date();
+    {% for job_id, job in active_jobs.items() %}
+    const startTime = new Date('{{ job.created_at.isoformat() }}');
+    const duration = Math.floor((now - startTime) / 1000);
+    const minutes = Math.floor(duration / 60);
+    const seconds = duration % 60;
+    document.getElementById('duration-{{ job.id }}').textContent = 
+        `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    {% endfor %}
+}
+
+// Update durations every second
+setInterval(updateDurations, 1000);
+updateDurations();
+
+// Auto-refresh page every 30 seconds to update job statuses
+setTimeout(function() {
+    location.reload();
+}, 30000);
+</script>
+{% endblock %}

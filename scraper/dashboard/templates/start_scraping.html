@@ -1,0 +1,309 @@
+{% extends "base.html" %}
+
+{% block title %}Start Scraping - Dynamic Web Scraper{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">
+        <i class="fas fa-play text-primary"></i> Start New Scraping Job
+    </h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    <i class="fas fa-cog me-2"></i>Scraping Configuration
+                </h6>
+            </div>
+            <div class="card-body">
+                <form method="POST" id="scrapingForm">
+                    <div class="mb-3">
+                        <label for="url" class="form-label">
+                            <i class="fas fa-link me-2"></i>Target URL
+                        </label>
+                        <input type="url" class="form-control" id="url" name="url" 
+                               placeholder="https://example.com/products" required>
+                        <div class="form-text">
+                            Enter the URL of the website you want to scrape. The scraper will automatically detect the site structure.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="output_format" class="form-label">
+                            <i class="fas fa-file-export me-2"></i>Output Format
+                        </label>
+                        <select class="form-select" id="output_format" name="output_format">
+                            <option value="csv">CSV (Comma Separated Values)</option>
+                            <option value="json">JSON (JavaScript Object Notation)</option>
+                            <option value="excel">Excel (.xlsx)</option>
+                        </select>
+                        <div class="form-text">
+                            Choose the format for your scraped data output.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-magic me-2"></i>Advanced Options
+                        </label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="use_proxy" name="use_proxy">
+                                    <label class="form-check-label" for="use_proxy">
+                                        Use Proxy Rotation
+                                    </label>
+                                </div>
+                                <div class="form-text">Rotate through proxy servers to avoid detection</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="use_selenium" name="use_selenium">
+                                    <label class="form-check-label" for="use_selenium">
+                                        Use Selenium (JavaScript)
+                                    </label>
+                                </div>
+                                <div class="form-text">Use browser automation for dynamic content</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="button" class="btn btn-outline-secondary me-md-2" onclick="analyzeSite()">
+                            <i class="fas fa-search me-2"></i>Analyze Site First
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-play me-2"></i>Start Scraping
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <!-- Site Analysis Results -->
+        <div class="card" id="analysisCard" style="display: none;">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    <i class="fas fa-chart-bar me-2"></i>Site Analysis
+                </h6>
+            </div>
+            <div class="card-body">
+                <div id="analysisContent">
+                    <!-- Analysis results will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Tips -->
+        <div class="card">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    <i class="fas fa-lightbulb me-2"></i>Quick Tips
+                </h6>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <strong>E-commerce sites:</strong> The scraper automatically detects product listings
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <strong>Dynamic content:</strong> Enable Selenium for JavaScript-heavy sites
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <strong>Rate limiting:</strong> Built-in delays prevent overwhelming servers
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <strong>Proxy rotation:</strong> Automatically rotates user agents and proxies
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Supported Sites -->
+        <div class="card">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    <i class="fas fa-globe me-2"></i>Supported Sites
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <ul class="list-unstyled">
+                            <li><i class="fab fa-amazon text-primary me-2"></i>Amazon</li>
+                            <li><i class="fas fa-shopping-cart text-primary me-2"></i>eBay</li>
+                            <li><i class="fas fa-store text-primary me-2"></i>Walmart</li>
+                            <li><i class="fas fa-tags text-primary me-2"></i>Target</li>
+                        </ul>
+                    </div>
+                    <div class="col-6">
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-laptop text-primary me-2"></i>Best Buy</li>
+                            <li><i class="fas fa-mobile-alt text-primary me-2"></i>Newegg</li>
+                            <li><i class="fas fa-gem text-primary me-2"></i>Etsy</li>
+                            <li><i class="fas fa-plus text-primary me-2"></i>And more...</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading Modal -->
+<div class="modal fade" id="loadingModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center py-4">
+                <div class="spinner-border text-primary mb-3" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <h5 id="loadingTitle">Analyzing Site...</h5>
+                <p id="loadingMessage" class="text-muted">Please wait while we analyze the website structure.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function analyzeSite() {
+    const url = document.getElementById('url').value;
+    if (!url) {
+        alert('Please enter a URL first');
+        return;
+    }
+
+    // Show loading modal
+    const loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
+    loadingModal.show();
+
+    // Make API call to analyze site
+    fetch('/api/analyze_site', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ url: url })
+    })
+    .then(response => response.json())
+    .then(data => {
+        loadingModal.hide();
+        
+        if (data.error) {
+            alert('Error analyzing site: ' + data.error);
+            return;
+        }
+
+        // Display analysis results
+        displayAnalysis(data);
+    })
+    .catch(error => {
+        loadingModal.hide();
+        alert('Error analyzing site: ' + error.message);
+    });
+}
+
+function displayAnalysis(data) {
+    const analysisCard = document.getElementById('analysisCard');
+    const analysisContent = document.getElementById('analysisContent');
+    
+    const patterns = data.patterns;
+    const selectors = data.selectors;
+    
+    let html = `
+        <div class="mb-3">
+            <h6 class="text-primary">Site Type</h6>
+            <span class="badge bg-primary">${patterns.site_type || 'Unknown'}</span>
+        </div>
+        
+        <div class="mb-3">
+            <h6 class="text-primary">E-commerce Confidence</h6>
+            <div class="progress mb-2">
+                <div class="progress-bar" role="progressbar" 
+                     style="width: ${patterns.confidence_score}%" 
+                     aria-valuenow="${patterns.confidence_score}" 
+                     aria-valuemin="0" aria-valuemax="100">
+                    ${patterns.confidence_score}%
+                </div>
+            </div>
+        </div>
+    `;
+
+    if (patterns.shopping_cart) {
+        html += '<div class="mb-2"><i class="fas fa-check text-success me-2"></i>Shopping cart detected</div>';
+    }
+    if (patterns.product_listings) {
+        html += '<div class="mb-2"><i class="fas fa-check text-success me-2"></i>Product listings found</div>';
+    }
+    if (patterns.price_elements) {
+        html += '<div class="mb-2"><i class="fas fa-check text-success me-2"></i>Price elements detected</div>';
+    }
+    if (patterns.add_to_cart) {
+        html += '<div class="mb-2"><i class="fas fa-check text-success me-2"></i>Add to cart buttons found</div>';
+    }
+
+    if (selectors.best_selectors) {
+        html += `
+            <div class="mt-3">
+                <h6 class="text-primary">Detected Elements</h6>
+                <small class="text-muted">
+                    ${Object.keys(selectors.best_selectors).length} element types detected
+                </small>
+            </div>
+        `;
+    }
+
+    analysisContent.innerHTML = html;
+    analysisCard.style.display = 'block';
+}
+
+// Form validation
+document.getElementById('scrapingForm').addEventListener('submit', function(e) {
+    const url = document.getElementById('url').value;
+    if (!url) {
+        e.preventDefault();
+        alert('Please enter a URL');
+        return;
+    }
+
+    // Show loading state
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Starting...';
+    submitBtn.disabled = true;
+
+    // Re-enable after a delay (in case of error)
+    setTimeout(() => {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }, 5000);
+});
+
+// URL validation
+document.getElementById('url').addEventListener('input', function(e) {
+    const url = e.target.value;
+    const isValid = url && (url.startsWith('http://') || url.startsWith('https://'));
+    
+    if (url && !isValid) {
+        e.target.setCustomValidity('Please enter a valid URL starting with http:// or https://');
+    } else {
+        e.target.setCustomValidity('');
+    }
+});
+</script>
+{% endblock %}
