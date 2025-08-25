@@ -1,18 +1,33 @@
+# Simple Pre-commit configuration for Dynamic Web Scraper
+# Install with: pre-commit install
+
 repos:
+  # Code formatting
   - repo: https://github.com/psf/black
-    rev: 24.3.0
+    rev: 23.12.1
     hooks:
       - id: black
-        language_version: python3.11
-  - repo: https://github.com/pycqa/flake8
-    rev: 7.0.0
+        language_version: python3
+        args: [--line-length=88, --target-version=py38]
+
+  # Import sorting
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
     hooks:
-      - id: flake8
-        additional_dependencies: ["flake8"]
-        language_version: python3.11
-  - repo: https://github.com/PyCQA/autoflake
-    rev: v2.3.1
+      - id: isort
+        args: [--profile=black, --line-length=88]
+
+  # Basic pre-commit hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
     hooks:
-      - id: autoflake
-        args: [--in-place, --remove-unused-variables, --remove-all-unused-imports, -r, .]
-        language_version: python3.11 
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-merge-conflict
+      - id: debug-statements
+
+# Global settings
+default_language_version:
+  python: python3

@@ -1,14 +1,33 @@
 """
-Unit tests for the dynamic e-commerce scraper project.
+Dynamic Web Scraper Test Suite
 
-Modules:
-- test_scraper: Tests for the main scraper functionalities.
-- test_data_parser: Tests for data parsers.
-- test_proxy_manager: Tests for proxy management.
-- test_user_agent_manager: Tests for user-agent management.
-- test_logging_manager: Tests for logging configurations.
-- test_utils: Tests for utility functions.
-- test_site_detector: Tests for site detection.
+This package contains comprehensive tests for all scraper functionality.
+Organized by feature modules for easy navigation and maintenance.
 """
 
-# Optionally, initialization code or helper functions for test setup
+__version__ = "2.0.0"
+__author__ = "Dynamic Web Scraper Team"
+
+# Test categories
+__all__ = [
+    # Core functionality tests
+    "test_core",
+    # Feature-specific test modules
+    "test_analytics",
+    "test_anti_bot",
+    "test_comparison",
+    "test_dashboard",
+    "test_data_processing",
+    "test_distributed",
+    "test_export",
+    "test_plugins",
+    "test_reporting",
+    "test_site_detection",
+    "test_utils",
+    # Integration and end-to-end tests
+    "test_integration",
+    "test_e2e",
+    # Performance and stress tests
+    "test_performance",
+    "test_stress",
+]

@@ -1,24 +1,32 @@
-import requests
-import time
-from bs4 import BeautifulSoup
-import sys
 import os
-from typing import Optional
+import sys
+import time
 from datetime import datetime
+from typing import Optional
+
+import requests
+from bs4 import BeautifulSoup
 
 # Add the project root to the path for absolute imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from scraper.logging_manager.logging_manager import log_message
-from scraper.exceptions.scraper_exceptions import ProxyError, UserAgentError
 from requests.exceptions import HTTPError, Timeout
-from scraper.user_agent_manager.user_agent_manager import UserAgentManager
-from scraper.proxy_manager.proxy_rotator import ProxyRotator
 
-from scraper.data_parsers.data_parser import save_data
-from scraper.site_detection.smart_detector import SmartSiteDetector, SiteProfile
-from scraper.data_processing.data_enricher import DataEnricher
+from scraper.analytics import DataVisualizer
 from scraper.analytics.price_analyzer import PriceAnalyzer
+from scraper.anti_bot.stealth_manager import StealthManager
+from scraper.comparison import SiteComparator
+from scraper.data_parsers.data_parser import save_data
+from scraper.data_processing.data_enricher import DataEnricher
+from scraper.distributed import JobQueue, WorkerPool
+from scraper.exceptions.scraper_exceptions import ProxyError, UserAgentError
+from scraper.export import ExportConfig, ExportManager
+from scraper.logging_manager.logging_manager import log_message
+from scraper.plugins import PluginManager
+from scraper.proxy_manager.proxy_rotator import ProxyRotator
+from scraper.reporting import AlertConfig, AutomatedReporter, ReportConfig
+from scraper.site_detection.smart_detector import SiteProfile, SmartSiteDetector
+from scraper.user_agent_manager.user_agent_manager import UserAgentManager
 
 
 class Scraper:
@@ -46,6 +54,39 @@ class Scraper:
         self.smart_detector = SmartSiteDetector()
         self.data_enricher = DataEnricher()
         self.price_analyzer = PriceAnalyzer()
+        self.stealth_manager = StealthManager(config)
+
+        # Initialize export manager
+        export_config = ExportConfig(
+            export_directory="exports", default_format="json", include_metadata=True
+        )
+        self.export_manager = ExportManager("data", export_config)
+
+        # Initialize site comparator for cross-site analysis
+        self.site_comparator = SiteComparator("data")
+
+        # Initialize automated reporter
+        report_config = ReportConfig(
+            report_directory="reports",
+            include_charts=True,
+            include_recommendations=True,
+        )
+        alert_config = AlertConfig(
+            price_drop_threshold=10.0,
+            price_increase_threshold=15.0,
+            anomaly_threshold=2.0,
+        )
+        self.automated_reporter = AutomatedReporter("data", report_config, alert_config)
+
+        # Initialize data visualizer
+        self.data_visualizer = DataVisualizer("data/visualizations")
+
+        # Initialize plugin manager
+        self.plugin_manager = PluginManager("plugins")
+
+        # Initialize distributed scraping components
+        self.job_queue = JobQueue()
+        self.worker_pool = WorkerPool(max_workers=3)
 
         # Site profile (will be detected automatically)
         self.site_profile: Optional[SiteProfile] = None
@@ -53,6 +94,11 @@ class Scraper:
         # Analysis results
         self.enrichment_result = None
         self.price_analysis = None
+        self.comparison_analysis = None
+        self.reporting_results = None
+        self.visualization_results = None
+        self.plugin_results = None
+        self.distributed_results = None
 
         # Scraping statistics
         self.stats = {
@@ -202,6 +248,20 @@ class Scraper:
                 f"Data enrichment completed. Quality score: {self.enrichment_result.quality_score:.2f}",
             )
 
+        # Step 3.5: Plugin Processing
+        plugin_results = None
+        if enriched_data and len(enriched_data) > 0:
+            log_message("INFO", "Processing data through plugins...")
+            plugin_results = self.process_with_plugins(enriched_data)
+            if plugin_results and plugin_results.get("enhanced_data"):
+                enriched_data = plugin_results["enhanced_data"]
+
+        # Step 3.6: Distributed Processing
+        distributed_results = None
+        if enriched_data and len(enriched_data) > 0:
+            log_message("INFO", "Processing data with distributed workers...")
+            distributed_results = self.process_distributed(enriched_data)
+
         # Step 4: Price Analysis
         price_analysis = None
         if enable_analysis and enriched_data:
@@ -218,19 +278,56 @@ class Scraper:
         self.stats["processing_time"] = (datetime.now() - start_time).total_seconds()
         self.stats["data_items_extracted"] = len(raw_data)
 
+        # Step 5: Comparative Analysis (if we have data)
+        comparison_analysis = None
+        if enriched_data and len(enriched_data) > 0:
+            log_message("INFO", "Performing comparative analysis...")
+            comparison_analysis = self.perform_comparative_analysis(enriched_data)
+
+        # Step 6: Data Visualization
+        visualization_results = None
+        if enriched_data and len(enriched_data) > 0:
+            log_message("INFO", "Creating data visualizations...")
+            visualization_results = self.create_data_visualizations(enriched_data)
+
+        # Step 7: Automated Reporting
+        reporting_results = None
+        if enriched_data and len(enriched_data) > 0:
+            log_message("INFO", "Generating automated report...")
+            reporting_results = self.generate_automated_report(enriched_data)
+
         return {
             "raw_data": raw_data,
             "enriched_data": enriched_data,
             "enrichment_result": self.enrichment_result,
+            "plugin_results": plugin_results,
+            "distributed_results": distributed_results,
             "price_analysis": price_analysis,
+            "comparison_analysis": comparison_analysis,
+            "visualization_results": visualization_results,
+            "reporting_results": reporting_results,
             "site_profile": self.site_profile,
             "stats": self.stats,
             "timestamp": datetime.now().isoformat(),
         }
 
+    def cleanup(self):
+        """Cleanup resources and close connections."""
+        if hasattr(self, "stealth_manager"):
+            self.stealth_manager.cleanup()
+        if hasattr(self, "session"):
+            self.session.close()
+        log_message("INFO", "Scraper cleanup completed")
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.cleanup()
+
     def _fetch_raw_data(self):
         """
-        Fetch raw data from the URL with retry logic.
+        Fetch raw data from the URL with advanced stealth techniques.
 
         Returns:
             list: Extracted product information.
@@ -242,15 +339,19 @@ class Scraper:
             try:
                 self.stats["requests_made"] += 1
 
-                headers = self.get_headers()
-                proxies = self.get_proxy()
+                # Determine if we need browser automation
+                use_browser = False
+                if self.site_profile and self.site_profile.use_selenium:
+                    use_browser = True
+                elif "sahibinden.com" in self.url.lower():
+                    # Force browser automation for problematic sites
+                    use_browser = True
 
-                # Use site-specific settings if available
-                timeout = self.site_profile.wait_time if self.site_profile else 10
-
-                response = self.session.get(
-                    self.url, headers=headers, proxies=proxies, timeout=timeout
+                # Use stealth manager for advanced anti-bot evasion
+                response = self.stealth_manager.fetch_with_stealth(
+                    url=self.url, method="GET", use_browser=use_browser
                 )
+
                 response.raise_for_status()
 
                 self.stats["successful_requests"] += 1
@@ -272,6 +373,30 @@ class Scraper:
                     "WARNING",
                     f"Request failed: {str(e)}. Attempt {attempt + 1}/{self.max_retries}",
                 )
+
+                # Try different stealth strategies on failure
+                if attempt == 0:
+                    log_message("INFO", "Trying with browser automation...")
+                    try:
+                        response = self.stealth_manager.fetch_with_stealth(
+                            url=self.url, method="GET", use_browser=True
+                        )
+                        response.raise_for_status()
+
+                        self.stats["successful_requests"] += 1
+                        log_message(
+                            "INFO", f"Success with browser automation: {self.url}"
+                        )
+
+                        raw_data = self.parse_response(response.text)
+                        return raw_data
+
+                    except Exception as browser_error:
+                        log_message(
+                            "WARNING",
+                            f"Browser automation also failed: {browser_error}",
+                        )
+
                 # Exponential backoff
                 time.sleep(self.retry_delay * (2**attempt))
             except ProxyError as pe:
@@ -450,9 +575,11 @@ class Scraper:
 
     def save_data(self, data, file_name, format="csv"):
         """
-        Enhanced data saving with multiple format support.
+        Enhanced data saving with multiple format support and automatic export.
         """
+        # Save in original format
         save_data(data, file_name, format)
+        log_message("INFO", f"Data saved in {format} format: {file_name}")
 
         # Also save analysis results if available
         if self.enrichment_result:
@@ -468,6 +595,34 @@ class Scraper:
                 self.price_analysis, "json", analysis_filename
             )
             log_message("INFO", f"Price analysis saved to: {analysis_filename}")
+
+        # Auto-export in multiple formats using ExportManager
+        try:
+            # Export in JSON format
+            json_result = self.export_manager.export_data(
+                data, "json", f"{file_name.replace('.csv', '')}_export.json"
+            )
+            if json_result.success:
+                log_message("INFO", f"Auto-exported JSON: {json_result.file_path}")
+
+            # Export in Excel format
+            excel_result = self.export_manager.export_data(
+                data, "excel", f"{file_name.replace('.csv', '')}_export.xlsx"
+            )
+            if excel_result.success:
+                log_message("INFO", f"Auto-exported Excel: {excel_result.file_path}")
+
+            # Export comprehensive ZIP package
+            zip_result = self.export_manager.export_data(
+                data, "zip", f"{file_name.replace('.csv', '')}_complete_package.zip"
+            )
+            if zip_result.success:
+                log_message(
+                    "INFO", f"Auto-exported ZIP package: {zip_result.file_path}"
+                )
+
+        except Exception as e:
+            log_message("WARNING", f"Auto-export failed: {str(e)}")
 
     def _create_empty_result(self):
         """Create empty result structure."""
@@ -534,3 +689,237 @@ class Scraper:
         }
 
         return report
+
+    def perform_comparative_analysis(self, data):
+        """
+        Perform comparative analysis on scraped data.
+
+        Args:
+            data: List of scraped product data
+
+        Returns:
+            dict: Comparative analysis results
+        """
+        try:
+            log_message("INFO", "Starting comparative analysis...")
+
+            # Load historical data for comparison
+            historical_data = self.site_comparator.load_data(days_back=30)
+
+            # Add current data to historical data for analysis
+            all_data = historical_data + data
+
+            # Perform product matching
+            product_matches = self.site_comparator.match_products(all_data)
+            log_message("INFO", f"Found {len(product_matches)} product matches")
+
+            # Compare prices
+            price_comparisons = self.site_comparator.compare_prices(product_matches)
+            log_message("INFO", f"Generated {len(price_comparisons)} price comparisons")
+
+            # Analyze deals
+            deal_analyses = self.site_comparator.analyze_deals(price_comparisons)
+            log_message("INFO", f"Analyzed {len(deal_analyses)} deals")
+
+            # Generate comparison report
+            comparison_report = self.site_comparator.generate_comparison_report(
+                deal_analyses
+            )
+
+            # Get intelligent recommendations
+            recommendations = self.site_comparator.get_intelligent_recommendations(
+                deal_analyses
+            )
+
+            self.comparison_analysis = {
+                "product_matches": product_matches,
+                "price_comparisons": price_comparisons,
+                "deal_analyses": deal_analyses,
+                "comparison_report": comparison_report,
+                "recommendations": recommendations,
+                "timestamp": datetime.now().isoformat(),
+            }
+
+            log_message("INFO", "Comparative analysis completed successfully")
+            return self.comparison_analysis
+
+        except Exception as e:
+            log_message("ERROR", f"Comparative analysis failed: {str(e)}")
+            return None
+
+    def create_data_visualizations(self, data):
+        """
+        Create comprehensive data visualizations for scraped data.
+
+        Args:
+            data: List of scraped product data
+
+        Returns:
+            dict: Visualization results
+        """
+        try:
+            log_message("INFO", "Creating data visualizations...")
+
+            # Create price distribution histogram
+            price_chart = self.data_visualizer.create_price_distribution(data)
+
+            # Create price trend analysis
+            trend_chart = self.data_visualizer.create_price_trends(data)
+
+            # Create source comparison chart
+            source_chart = self.data_visualizer.create_source_comparison(data)
+
+            # Create comprehensive dashboard
+            dashboard = self.data_visualizer.create_comprehensive_dashboard(data)
+
+            # Create summary statistics table
+            summary_table = self.data_visualizer.create_summary_table(data)
+
+            self.visualization_results = {
+                "price_distribution": price_chart,
+                "price_trends": trend_chart,
+                "source_comparison": source_chart,
+                "comprehensive_dashboard": dashboard,
+                "summary_table": summary_table,
+                "timestamp": datetime.now().isoformat(),
+            }
+
+            log_message("INFO", "Data visualizations created successfully")
+            return self.visualization_results
+
+        except Exception as e:
+            log_message("ERROR", f"Data visualization failed: {str(e)}")
+            return None
+
+    def process_distributed(self, data):
+        """
+        Process data using distributed scraping capabilities.
+
+        Args:
+            data: List of scraped product data
+
+        Returns:
+            dict: Distributed processing results
+        """
+        try:
+            log_message("INFO", "Starting distributed processing...")
+
+            # Add jobs to queue for distributed processing
+            job_ids = []
+            for item in data:
+                job_id = self.job_queue.add_job(
+                    {"type": "data_processing", "data": item, "priority": "normal"}
+                )
+                job_ids.append(job_id)
+
+            # Start worker pool
+            self.worker_pool.start()
+
+            # Process jobs
+            processed_results = []
+            for job_id in job_ids:
+                result = self.job_queue.get_result(job_id, timeout=30)
+                if result:
+                    processed_results.append(result)
+
+            # Stop worker pool
+            self.worker_pool.stop()
+
+            self.distributed_results = {
+                "original_data": data,
+                "processed_results": processed_results,
+                "jobs_processed": len(job_ids),
+                "successful_jobs": len(processed_results),
+                "worker_stats": self.worker_pool.get_stats(),
+                "timestamp": datetime.now().isoformat(),
+            }
+
+            log_message(
+                "INFO",
+                f"Distributed processing completed: {len(processed_results)}/{len(job_ids)} jobs successful",
+            )
+            return self.distributed_results
+
+        except Exception as e:
+            log_message("ERROR", f"Distributed processing failed: {str(e)}")
+            return None
+
+    def process_with_plugins(self, data):
+        """
+        Process scraped data through available plugins.
+
+        Args:
+            data: List of scraped product data
+
+        Returns:
+            dict: Plugin processing results
+        """
+        try:
+            log_message("INFO", "Processing data through plugins...")
+
+            # Load available plugins
+            self.plugin_manager.load_plugins()
+
+            # Process data through data processor plugins
+            processed_data = self.plugin_manager.process_data(data)
+
+            # Validate data through validator plugins
+            validation_results = self.plugin_manager.validate_data(processed_data)
+
+            # Apply custom scraper plugins if available
+            enhanced_data = self.plugin_manager.apply_custom_scrapers(processed_data)
+
+            self.plugin_results = {
+                "original_data": data,
+                "processed_data": processed_data,
+                "validation_results": validation_results,
+                "enhanced_data": enhanced_data,
+                "active_plugins": self.plugin_manager.get_active_plugins(),
+                "timestamp": datetime.now().isoformat(),
+            }
+
+            log_message(
+                "INFO",
+                f"Plugin processing completed with {len(self.plugin_manager.get_active_plugins())} active plugins",
+            )
+            return self.plugin_results
+
+        except Exception as e:
+            log_message("ERROR", f"Plugin processing failed: {str(e)}")
+            return None
+
+    def generate_automated_report(self, data):
+        """
+        Generate automated reports and alerts for scraped data.
+
+        Args:
+            data: List of scraped product data
+
+        Returns:
+            dict: Reporting results
+        """
+        try:
+            log_message("INFO", "Generating automated report...")
+
+            # Generate comprehensive report
+            report_result = self.automated_reporter.generate_report(data)
+
+            # Check for alerts
+            alerts = self.automated_reporter.detect_alerts(data)
+
+            # Generate recommendations
+            recommendations = self.automated_reporter.generate_recommendations(data)
+
+            self.reporting_results = {
+                "report": report_result,
+                "alerts": alerts,
+                "recommendations": recommendations,
+                "timestamp": datetime.now().isoformat(),
+            }
+
+            log_message("INFO", f"Automated report generated with {len(alerts)} alerts")
+            return self.reporting_results
+
+        except Exception as e:
+            log_message("ERROR", f"Automated reporting failed: {str(e)}")
+            return None

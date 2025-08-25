@@ -1,13 +1,13 @@
-import sys
 import os
+import sys
 
 # Add the project root to the path for absolute imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from scraper.config import load_config
-from scraper.Scraper import Scraper
-from scraper.logging_manager.logging_manager import setup_logging, log_message
+from scraper.logging_manager.logging_manager import log_message, setup_logging
 from scraper.proxy_manager.proxy_rotator import ProxyRotator
+from scraper.Scraper import Scraper
 from scraper.user_agent_manager.user_agent_manager import UserAgentManager
 
 
@@ -38,14 +38,83 @@ def main():
     # Kazıyıcıyı başlatma
     try:
         scraper = Scraper(url, config)
-        product_data = scraper.fetch_data()
-        print("MAIN Try ilk")
+        print("🚀 Starting enhanced scraping with advanced features...")
+
+        # Fetch data with all advanced features enabled
+        result = scraper.fetch_data(
+            enable_smart_detection=True, enable_enrichment=True, enable_analysis=True
+        )
+
+        print("✅ Scraping completed with advanced analysis!")
+
+        # Extract the main data for saving
+        product_data = result.get("enriched_data", result.get("raw_data", []))
+
         # Eğer veri varsa kaydet
         if product_data:
             scraper.save_data(product_data, output_file)
+
+            # Display summary of advanced features
+            print("\n📊 Advanced Analysis Summary:")
+            print(f"   • Raw data items: {len(result.get('raw_data', []))}")
+            print(f"   • Enriched data items: {len(result.get('enriched_data', []))}")
+
+            if result.get("plugin_results"):
+                print(
+                    f"   • Active plugins: {len(result['plugin_results'].get('active_plugins', []))}"
+                )
+                print(
+                    f"   • Data validation: {len(result['plugin_results'].get('validation_results', []))}"
+                )
+
+            if result.get("distributed_results"):
+                print(
+                    f"   • Jobs processed: {result['distributed_results'].get('jobs_processed', 0)}"
+                )
+                print(
+                    f"   • Successful jobs: {result['distributed_results'].get('successful_jobs', 0)}"
+                )
+
+            if result.get("price_analysis"):
+                print(
+                    f"   • Price outliers detected: {len(result['price_analysis'].outliers)}"
+                )
+                print(
+                    f"   • Price recommendations: {len(result['price_analysis'].recommendations)}"
+                )
+
+            if result.get("comparison_analysis"):
+                print(
+                    f"   • Product matches found: {len(result['comparison_analysis'].get('product_matches', []))}"
+                )
+                print(
+                    f"   • Price comparisons: {len(result['comparison_analysis'].get('price_comparisons', []))}"
+                )
+                print(
+                    f"   • Deal analyses: {len(result['comparison_analysis'].get('deal_analyses', []))}"
+                )
+
+            if result.get("visualization_results"):
+                print(f"   • Charts created: {len(result['visualization_results'])}")
+                print(f"   • Visualizations saved to: data/visualizations/")
+
+            if result.get("reporting_results"):
+                print(
+                    f"   • Alerts generated: {len(result['reporting_results'].get('alerts', []))}"
+                )
+                print(
+                    f"   • Recommendations: {len(result['reporting_results'].get('recommendations', []))}"
+                )
+
+            print(f"\n💾 Data saved to: {output_file}")
+            print("📁 Additional exports available in 'exports/' directory")
+            print("📋 Reports available in 'reports/' directory")
+            print("📊 Visualizations available in 'data/visualizations/' directory")
+            print("🔌 Plugin results available in 'plugins/' directory")
+
             log_message(
                 "INFO",
-                f"Scraping completed successfully for URL: {url}. Total products: {len(product_data)}. Output file: {output_file}",
+                f"Enhanced scraping completed successfully for URL: {url}. Total products: {len(product_data)}. Output file: {output_file}",
             )
         else:
             log_message("WARNING", f"No products found for URL: {url}.")
