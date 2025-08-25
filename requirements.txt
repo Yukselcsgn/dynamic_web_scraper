@@ -2,8 +2,10 @@
 # All dependencies are version-pinned for reproducibility and stability.
 selenium==4.10.0
 webdriver-manager==4.0.1
+undetected-chromedriver==3.5.5
 requests==2.31.0
 beautifulsoup4==4.12.3
+urllib3==2.0.7
 
 # Data handling and analysis
 pandas==2.2.3
@@ -14,6 +16,8 @@ openpyxl==3.1.5
 scipy==1.11.4
 matplotlib==3.8.2
 seaborn==0.13.0
+plotly==5.18.0
+schedule==1.2.0
 
 # PDF and reporting
 fpdf==1.7.2
