@@ -1,8 +1,9 @@
+import json
 import os
 import sys
 import time
 from datetime import datetime
-from typing import Optional
+from typing import Any, Dict, List, Optional
 
 import requests
 from bs4 import BeautifulSoup
@@ -12,6 +13,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from requests.exceptions import HTTPError, Timeout
 
+from scraper.adaptive_config_manager import AdaptiveConfigManager
 from scraper.analytics import DataVisualizer
 from scraper.analytics.price_analyzer import PriceAnalyzer
 from scraper.anti_bot.stealth_manager import StealthManager
@@ -26,6 +28,7 @@ from scraper.plugins import PluginManager
 from scraper.proxy_manager.proxy_rotator import ProxyRotator
 from scraper.reporting import AlertConfig, AutomatedReporter, ReportConfig
 from scraper.site_detection.smart_detector import SiteProfile, SmartSiteDetector
+from scraper.universal_extractor import UniversalExtractor
 from scraper.user_agent_manager.user_agent_manager import UserAgentManager
 
 
@@ -46,7 +49,14 @@ class Scraper:
         self.retry_delay = retry_delay
 
         # Initialize managers
-        self.user_agent_manager = UserAgentManager(config.get("user_agents", []))
+        user_agents = config.get("user_agents", [])
+        log_message(
+            "INFO", f"Initializing UserAgentManager with {len(user_agents)} user agents"
+        )
+        log_message(
+            "INFO", f"User agents: {user_agents[:2] if user_agents else 'None'}"
+        )  # Show first 2 user agents
+        self.user_agent_manager = UserAgentManager(user_agents)
         self.proxy_rotator = ProxyRotator(config.get("proxies", []))
         self.session = requests.Session()
 
@@ -55,6 +65,8 @@ class Scraper:
         self.data_enricher = DataEnricher()
         self.price_analyzer = PriceAnalyzer()
         self.stealth_manager = StealthManager(config)
+        self.universal_extractor = UniversalExtractor()
+        self.adaptive_config_manager = AdaptiveConfigManager()
 
         # Initialize export manager
         export_config = ExportConfig(
@@ -76,7 +88,7 @@ class Scraper:
             price_increase_threshold=15.0,
             anomaly_threshold=2.0,
         )
-        self.automated_reporter = AutomatedReporter("data", report_config, alert_config)
+        self.automated_reporter = AutomatedReporter("data", alert_config, report_config)
 
         # Initialize data visualizer
         self.data_visualizer = DataVisualizer("data/visualizations")
@@ -86,7 +98,7 @@ class Scraper:
 
         # Initialize distributed scraping components
         self.job_queue = JobQueue()
-        self.worker_pool = WorkerPool(max_workers=3)
+        self.worker_pool = WorkerPool(self.job_queue, num_workers=3)
 
         # Site profile (will be detected automatically)
         self.site_profile: Optional[SiteProfile] = None
@@ -173,16 +185,20 @@ class Scraper:
 
         try:
             if not html_content:
-                # Fetch a small sample for detection
-                headers = self.get_headers()
-                proxies = self.get_proxy()
-                response = requests.get(
-                    self.url, headers=headers, proxies=proxies, timeout=10
+                # Fetch a small sample for detection using stealth manager
+                log_message(
+                    "INFO",
+                    "Fetching sample for site detection using stealth manager...",
+                )
+                response = self.stealth_manager.fetch_with_stealth(
+                    url=self.url, method="GET", use_browser=False
                 )
                 response.raise_for_status()
                 html_content = response.text
 
-            self.site_profile = self.smart_detector.detect_site(self.url, html_content)
+            self.site_profile = self.smart_detector.detect_site(
+                self.url, html_content, self.user_agent_manager
+            )
 
             log_message(
                 "INFO",
@@ -203,8 +219,47 @@ class Scraper:
             log_message(
                 "WARNING", f"Site detection failed: {e}. Using default profile."
             )
-            self.site_profile = self.smart_detector._get_default_profile()
+            # For sahibinden.com, create a specific profile even if detection fails
+            if "sahibinden.com" in self.url.lower():
+                log_message(
+                    "INFO",
+                    "Creating sahibinden-specific profile due to detection failure",
+                )
+                self.site_profile = self._create_sahibinden_profile()
+            else:
+                self.site_profile = self.smart_detector._get_default_profile()
             return self.site_profile
+
+    def _create_sahibinden_profile(self):
+        """
+        Create a specific profile for sahibinden.com when detection fails.
+        """
+        from scraper.site_detection.smart_detector import SiteProfile
+
+        # Create a profile specifically for sahibinden.com
+        profile = SiteProfile(
+            site_type="ecommerce",
+            confidence=0.8,
+            anti_bot_measures=["cloudflare", "rate_limiting"],
+            wait_time=3.0,
+            use_selenium=True,
+            selectors={
+                "product_container": "tr.searchResultsItem",
+                "product_title": "td.searchResultsTitleValue a",
+                "product_price": "td.searchResultsPriceValue",
+                "product_location": "td.searchResultsLocationValue",
+                "product_date": "td.searchResultsDateValue",
+            },
+            javascript_required=True,
+            dynamic_content=True,
+            pagination_type="next_page",
+            captcha_present=False,
+        )
+
+        log_message(
+            "INFO", "Created sahibinden-specific profile with enhanced settings"
+        )
+        return profile
 
     def fetch_data(
         self,
@@ -344,8 +399,9 @@ class Scraper:
                 if self.site_profile and self.site_profile.use_selenium:
                     use_browser = True
                 elif "sahibinden.com" in self.url.lower():
-                    # Force browser automation for problematic sites
+                    # Force browser automation for sahibinden.com
                     use_browser = True
+                    log_message("INFO", "Forcing browser automation for sahibinden.com")
 
                 # Use stealth manager for advanced anti-bot evasion
                 response = self.stealth_manager.fetch_with_stealth(
@@ -389,6 +445,14 @@ class Scraper:
                         )
 
                         raw_data = self.parse_response(response.text)
+
+                        # Check if we got actual data or still on Cloudflare page
+                        if not raw_data and "sahibinden.com" in self.url.lower():
+                            log_message(
+                                "WARNING",
+                                "Still no data after browser automation, may be Cloudflare challenge",
+                            )
+
                         return raw_data
 
                     except Exception as browser_error:
@@ -424,13 +488,103 @@ class Scraper:
             log_message("ERROR", "Invalid result during HTML parsing.")
             raise ValueError("HTML parsing returned invalid result.")
 
-        # Save HTML for debugging
+        # Save HTML for debugging with timestamp and URL info
         try:
-            with open("response.html", "w", encoding="utf-8") as file:
+            import os
+            from datetime import datetime
+
+            # Create debug directory if it doesn't exist
+            debug_dir = "debug_html"
+            if not os.path.exists(debug_dir):
+                os.makedirs(debug_dir)
+
+            # Generate filename with timestamp and domain
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            domain = self.url.split("/")[2].replace(".", "_")
+            filename = f"{debug_dir}/response_{domain}_{timestamp}.html"
+
+            with open(filename, "w", encoding="utf-8") as file:
+                file.write(f"<!-- URL: {self.url} -->\n")
+                file.write(f"<!-- Timestamp: {datetime.now().isoformat()} -->\n")
+                file.write(
+                    f"<!-- Content Length: {len(response_text)} characters -->\n"
+                )
                 file.write(response_text)
-            log_message("INFO", "HTML response successfully saved to 'response.html'.")
+
+            log_message(
+                "INFO",
+                f"HTML response saved to '{filename}' ({len(response_text)} characters)",
+            )
+
+            # Also save a copy as the latest response for easy access
+            with open("response.html", "w", encoding="utf-8") as file:
+                file.write(f"<!-- URL: {self.url} -->\n")
+                file.write(f"<!-- Timestamp: {datetime.now().isoformat()} -->\n")
+                file.write(
+                    f"<!-- Content Length: {len(response_text)} characters -->\n"
+                )
+                file.write(response_text)
+
+            # Analyze the content to help with debugging
+            self._analyze_html_content(response_text, filename)
+
         except Exception as e:
             log_message("ERROR", f"Error saving HTML file: {str(e)}")
+
+        # Try universal extractor first (works for any site)
+        log_message("INFO", "Attempting universal extraction...")
+        universal_result = self.universal_extractor.extract_data(
+            response_text, self.url
+        )
+
+        if universal_result.success and universal_result.data:
+            log_message(
+                "INFO",
+                f"Universal extraction successful: {len(universal_result.data)} items using {universal_result.method}",
+            )
+
+            # Record successful extraction for learning
+            self.adaptive_config_manager.record_extraction_result(
+                url=self.url,
+                selectors_used=universal_result.selectors_used,
+                success=True,
+                data_count=len(universal_result.data),
+                method=universal_result.method,
+            )
+
+            return universal_result.data
+
+        # Fallback to site-specific methods
+        log_message(
+            "INFO", "Universal extraction failed, trying site-specific methods..."
+        )
+
+        # Record failed universal extraction for learning
+        self.adaptive_config_manager.record_extraction_result(
+            url=self.url,
+            selectors_used=universal_result.selectors_used,
+            success=False,
+            data_count=0,
+            method=universal_result.method,
+        )
+
+        # Generate comprehensive extraction report for debugging
+        self._generate_comprehensive_extraction_report(response_text)
+
+        # Try adaptive configuration if available
+        adaptive_config = self.adaptive_config_manager.generate_adaptive_config(
+            self.url
+        )
+        if adaptive_config and adaptive_config.get("selectors"):
+            log_message(
+                "INFO",
+                f"Trying adaptive configuration with confidence {adaptive_config.get('confidence', 0):.2f}",
+            )
+            adaptive_result = self._extract_with_adaptive_config(
+                html_structure, adaptive_config
+            )
+            if adaptive_result:
+                return adaptive_result
 
         # Use smart selectors if available
         if self.site_profile and self.site_profile.selectors:
@@ -506,6 +660,10 @@ class Scraper:
         """
         products = []
 
+        # Special handling for sahibinden.com
+        if "sahibinden.com" in self.url.lower():
+            return self._extract_sahibinden_data(html)
+
         # Try multiple common selectors
         selectors_to_try = [
             ("span", {"class": "product-name"}),
@@ -560,6 +718,573 @@ class Scraper:
                 log_message("ERROR", f"Error extracting product info: {str(e)}")
 
         return products
+
+    def _extract_sahibinden_data(self, html):
+        """
+        Extract data specifically for sahibinden.com structure using configuration.
+        """
+        products = []
+
+        try:
+            # Check if we're on a Cloudflare challenge page
+            if self._is_cloudflare_challenge_page(html):
+                log_message(
+                    "WARNING", "Still on Cloudflare challenge page, cannot extract data"
+                )
+                return products
+
+            # Get sahibinden configuration from config
+            sahibinden_config = self.config.get("site_specific_configs", {}).get(
+                "sahibinden.com", {}
+            )
+            selectors = sahibinden_config.get("selectors", {})
+
+            # Fallback to hardcoded selectors if config not found
+            if not selectors:
+                log_message(
+                    "WARNING",
+                    "No sahibinden configuration found, using fallback selectors",
+                )
+                selectors = {
+                    "product_container": "tr.searchResultsItem",
+                    "product_title": "td.searchResultsTitleValue a",
+                    "product_price": "td.searchResultsPriceValue",
+                    "product_location": "td.searchResultsLocationValue",
+                    "product_date": "td.searchResultsDateValue",
+                }
+
+            # Try multiple approaches to find the results
+            containers = []
+
+            # Method 1: Look for the main results table first
+            results_table = html.find("table", {"id": "searchResultsTable"})
+            if results_table:
+                containers = results_table.find_all("tr", class_="searchResultsItem")
+                log_message(
+                    "INFO", f"Found {len(containers)} items in searchResultsTable"
+                )
+
+            # Method 2: Try direct container search
+            if not containers:
+                containers = html.select(
+                    selectors.get("product_container", "tr.searchResultsItem")
+                )
+                log_message(
+                    "INFO",
+                    f"Found {len(containers)} items using direct container search",
+                )
+
+            # Method 3: Try alternative table structures
+            if not containers:
+                # Look for any table with search results
+                tables = html.find_all("table")
+                for table in tables:
+                    rows = table.find_all("tr")
+                    if len(rows) > 1:  # Has header and data rows
+                        containers = rows[1:]  # Skip header row
+                        log_message(
+                            "INFO",
+                            f"Found {len(containers)} items in alternative table structure",
+                        )
+                        break
+
+            if not containers:
+                log_message(
+                    "WARNING", "Could not find any sahibinden product containers"
+                )
+                # Test selectors to help debug
+                self._test_sahibinden_selectors(html)
+                return products
+
+            for container in containers:
+                try:
+                    product_data = {}
+
+                    # Extract title and link using configuration
+                    title_selector = selectors.get(
+                        "product_title", "td.searchResultsTitleValue a"
+                    )
+                    title_elem = container.select_one(title_selector)
+                    if title_elem:
+                        product_data["title"] = title_elem.get_text(strip=True)
+                        product_data["url"] = title_elem.get("href", "")
+
+                    # Extract price using configuration
+                    price_selector = selectors.get(
+                        "product_price", "td.searchResultsPriceValue"
+                    )
+                    price_elem = container.select_one(price_selector)
+                    if price_elem:
+                        price_text = price_elem.get_text(strip=True)
+                        if price_text and price_text != "Fiyatı Sor":
+                            product_data["price"] = price_text
+
+                    # Extract location using configuration
+                    location_selector = selectors.get(
+                        "product_location", "td.searchResultsLocationValue"
+                    )
+                    location_elem = container.select_one(location_selector)
+                    if location_elem:
+                        product_data["location"] = location_elem.get_text(strip=True)
+
+                    # Extract date using configuration
+                    date_selector = selectors.get(
+                        "product_date", "td.searchResultsDateValue"
+                    )
+                    date_elem = container.select_one(date_selector)
+                    if date_elem:
+                        product_data["date"] = date_elem.get_text(strip=True)
+
+                    # Extract image using configuration
+                    image_selector = selectors.get(
+                        "product_image", "td.searchResultsImageValue img"
+                    )
+                    image_elem = container.select_one(image_selector)
+                    if image_elem:
+                        product_data["image_url"] = image_elem.get("src", "")
+
+                    # Add metadata
+                    product_data["source_url"] = self.url
+                    product_data["extraction_timestamp"] = datetime.now().isoformat()
+                    product_data["site"] = "sahibinden.com"
+
+                    # Only add if we have at least a title
+                    if product_data.get("title"):
+                        products.append(product_data)
+
+                except Exception as e:
+                    log_message(
+                        "ERROR", f"Error extracting sahibinden product: {str(e)}"
+                    )
+                    continue
+
+            log_message(
+                "INFO",
+                f"Successfully extracted {len(products)} products from sahibinden.com",
+            )
+
+        except Exception as e:
+            log_message("ERROR", f"Error in sahibinden extraction: {str(e)}")
+
+        return products
+
+    def _is_cloudflare_challenge_page(self, html):
+        """Check if the HTML content is a Cloudflare challenge page."""
+        try:
+            html_text = str(html).lower()
+            cloudflare_indicators = [
+                "cloudflare",
+                "checking your browser",
+                "ddos protection",
+                "olağandışı bir durum tespit ettik",
+                "unusual situation detected",
+                "challenge-platform",
+                "__cf$cv$params",
+                "security-icon",
+                "error-page-container",
+            ]
+
+            return any(indicator in html_text for indicator in cloudflare_indicators)
+        except Exception as e:
+            log_message("ERROR", f"Error checking for Cloudflare challenge page: {e}")
+            return False
+
+    def _analyze_html_content(self, html_content, filename):
+        """Analyze HTML content to help with debugging extraction issues."""
+        try:
+            from bs4 import BeautifulSoup
+
+            soup = BeautifulSoup(html_content, "html.parser")
+
+            # Basic content analysis
+            title = soup.find("title")
+            title_text = title.get_text(strip=True) if title else "No title found"
+
+            # Check for common indicators
+            is_cloudflare = self._is_cloudflare_challenge_page(soup)
+            has_search_results = bool(soup.find("table", {"id": "searchResultsTable"}))
+            has_product_containers = bool(
+                soup.find_all("tr", class_="searchResultsItem")
+            )
+
+            # Count various elements
+            tables = len(soup.find_all("table"))
+            divs = len(soup.find_all("div"))
+            links = len(soup.find_all("a"))
+            images = len(soup.find_all("img"))
+
+            # Look for specific sahibinden elements
+            sahibinden_elements = {
+                "searchResultsTable": len(
+                    soup.find_all("table", {"id": "searchResultsTable"})
+                ),
+                "searchResultsItem": len(
+                    soup.find_all("tr", class_="searchResultsItem")
+                ),
+                "searchResultsTitleValue": len(
+                    soup.find_all("td", class_="searchResultsTitleValue")
+                ),
+                "searchResultsPriceValue": len(
+                    soup.find_all("td", class_="searchResultsPriceValue")
+                ),
+                "searchResultsLocationValue": len(
+                    soup.find_all("td", class_="searchResultsLocationValue")
+                ),
+            }
+
+            # Create analysis report
+            analysis = f"""
+=== HTML CONTENT ANALYSIS ===
+File: {filename}
+URL: {self.url}
+Content Length: {len(html_content)} characters
+
+=== PAGE INFO ===
+Title: {title_text}
+Is Cloudflare Challenge: {is_cloudflare}
+Has Search Results Table: {has_search_results}
+Has Product Containers: {has_product_containers}
+
+=== ELEMENT COUNTS ===
+Tables: {tables}
+Divs: {divs}
+Links: {links}
+Images: {images}
+
+=== SAHIBINDEN SPECIFIC ELEMENTS ===
+searchResultsTable: {sahibinden_elements['searchResultsTable']}
+searchResultsItem: {sahibinden_elements['searchResultsItem']}
+searchResultsTitleValue: {sahibinden_elements['searchResultsTitleValue']}
+searchResultsPriceValue: {sahibinden_elements['searchResultsPriceValue']}
+searchResultsLocationValue: {sahibinden_elements['searchResultsLocationValue']}
+
+=== EXTRACTION DIAGNOSIS ===
+"""
+
+            # Add diagnosis
+            if is_cloudflare:
+                analysis += "❌ ISSUE: Cloudflare challenge page detected - need to wait for resolution\n"
+            elif not has_search_results:
+                analysis += "❌ ISSUE: No search results table found - may be wrong page or blocked\n"
+            elif sahibinden_elements["searchResultsItem"] == 0:
+                analysis += "❌ ISSUE: No product items found in search results\n"
+            else:
+                analysis += f"✅ SUCCESS: Found {sahibinden_elements['searchResultsItem']} product items\n"
+
+            # Save analysis to file
+            analysis_filename = filename.replace(".html", "_analysis.txt")
+            with open(analysis_filename, "w", encoding="utf-8") as f:
+                f.write(analysis)
+
+            log_message("INFO", f"Content analysis saved to '{analysis_filename}'")
+            log_message(
+                "INFO",
+                f"Analysis: {title_text[:50]}... | Cloudflare: {is_cloudflare} | Products: {sahibinden_elements['searchResultsItem']}",
+            )
+
+        except Exception as e:
+            log_message("ERROR", f"Error analyzing HTML content: {e}")
+
+    def _create_debug_summary(self, url):
+        """Create a debug summary when no products are found."""
+        try:
+            import os
+            from datetime import datetime
+
+            # Create debug directory if it doesn't exist
+            debug_dir = "debug_html"
+            if not os.path.exists(debug_dir):
+                os.makedirs(debug_dir)
+
+            # Create summary report
+            summary_filename = f"{debug_dir}/debug_summary_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+
+            with open(summary_filename, "w", encoding="utf-8") as f:
+                f.write(f"=== SCRAPING DEBUG SUMMARY ===\n")
+                f.write(f"URL: {url}\n")
+                f.write(f"Timestamp: {datetime.now().isoformat()}\n")
+                f.write(f"Status: No products extracted\n\n")
+
+                f.write(f"=== FILES TO CHECK ===\n")
+                f.write(f"1. response.html - Latest HTML response\n")
+                f.write(f"2. debug_html/response_*_*.html - Timestamped responses\n")
+                f.write(
+                    f"3. debug_html/browser_*_*.html - Browser automation responses\n"
+                )
+                f.write(f"4. debug_html/*_analysis.txt - Content analysis reports\n\n")
+
+                f.write(f"=== COMMON ISSUES ===\n")
+                f.write(
+                    f"1. Cloudflare Challenge: Look for 'Olağandışı bir durum tespit ettik' in HTML\n"
+                )
+                f.write(f"2. Wrong Page: Check if title contains expected content\n")
+                f.write(
+                    f"3. No Results: Search might return no results for the query\n"
+                )
+                f.write(f"4. Blocked: Site might be blocking automated requests\n\n")
+
+                f.write(f"=== NEXT STEPS ===\n")
+                f.write(f"1. Open response.html in browser to see what was received\n")
+                f.write(f"2. Check analysis files for detailed element counts\n")
+                f.write(f"3. Try different URL or wait and retry\n")
+                f.write(f"4. Consider using different user agents or proxies\n")
+
+            log_message("INFO", f"Debug summary saved to '{summary_filename}'")
+
+        except Exception as e:
+            log_message("ERROR", f"Error creating debug summary: {e}")
+
+    def _test_sahibinden_selectors(self, html):
+        """Test current selectors against the HTML to help debug extraction issues."""
+        try:
+            import os
+            from datetime import datetime
+
+            # Create debug directory if it doesn't exist
+            debug_dir = "debug_html"
+            if not os.path.exists(debug_dir):
+                os.makedirs(debug_dir)
+
+            # Get current selectors
+            sahibinden_config = self.config.get("site_specific_configs", {}).get(
+                "sahibinden.com", {}
+            )
+            selectors = sahibinden_config.get("selectors", {})
+
+            # Test each selector
+            selector_test_results = {}
+
+            for selector_name, selector_value in selectors.items():
+                try:
+                    elements = html.select(selector_value)
+                    selector_test_results[selector_name] = {
+                        "selector": selector_value,
+                        "count": len(elements),
+                        "found": len(elements) > 0,
+                        "sample_text": elements[0].get_text(strip=True)[:100]
+                        if elements
+                        else "None",
+                    }
+                except Exception as e:
+                    selector_test_results[selector_name] = {
+                        "selector": selector_value,
+                        "count": 0,
+                        "found": False,
+                        "error": str(e),
+                    }
+
+            # Create test report
+            test_filename = f"{debug_dir}/selector_test_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+
+            with open(test_filename, "w", encoding="utf-8") as f:
+                f.write(f"=== SAHIBINDEN SELECTOR TEST RESULTS ===\n")
+                f.write(f"URL: {self.url}\n")
+                f.write(f"Timestamp: {datetime.now().isoformat()}\n\n")
+
+                for selector_name, result in selector_test_results.items():
+                    f.write(f"=== {selector_name.upper()} ===\n")
+                    f.write(f"Selector: {result['selector']}\n")
+                    f.write(f"Found: {result['found']}\n")
+                    f.write(f"Count: {result['count']}\n")
+                    if "sample_text" in result:
+                        f.write(f"Sample: {result['sample_text']}\n")
+                    if "error" in result:
+                        f.write(f"Error: {result['error']}\n")
+                    f.write("\n")
+
+                # Overall assessment
+                f.write("=== OVERALL ASSESSMENT ===\n")
+                total_selectors = len(selector_test_results)
+                working_selectors = sum(
+                    1 for r in selector_test_results.values() if r["found"]
+                )
+
+                f.write(f"Working selectors: {working_selectors}/{total_selectors}\n")
+
+                if working_selectors == 0:
+                    f.write(
+                        "❌ CRITICAL: No selectors are working - site structure may have changed\n"
+                    )
+                elif working_selectors < total_selectors:
+                    f.write(
+                        "⚠️  WARNING: Some selectors are not working - partial extraction expected\n"
+                    )
+                else:
+                    f.write("✅ SUCCESS: All selectors are working\n")
+
+            log_message("INFO", f"Selector test results saved to '{test_filename}'")
+            log_message(
+                "INFO",
+                f"Selector test: {working_selectors}/{total_selectors} selectors working",
+            )
+
+        except Exception as e:
+            log_message("ERROR", f"Error testing selectors: {e}")
+
+    def _generate_comprehensive_extraction_report(self, html_content: str):
+        """Generate a comprehensive report of all extraction methods and their results."""
+        try:
+            import os
+            from datetime import datetime
+
+            # Create debug directory if it doesn't exist
+            debug_dir = "debug_html"
+            if not os.path.exists(debug_dir):
+                os.makedirs(debug_dir)
+
+            # Generate universal extractor report
+            report = self.universal_extractor.generate_selector_report(
+                html_content, self.url
+            )
+
+            # Save report
+            report_filename = f"{debug_dir}/extraction_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+            with open(report_filename, "w", encoding="utf-8") as f:
+                json.dump(report, f, indent=2, ensure_ascii=False)
+
+            log_message(
+                "INFO", f"Comprehensive extraction report saved to '{report_filename}'"
+            )
+
+            # Log summary
+            successful_strategies = [
+                s for s in report["strategies_tested"] if s["success"]
+            ]
+            log_message(
+                "INFO",
+                f"Extraction report: {len(successful_strategies)}/{len(report['strategies_tested'])} strategies successful",
+            )
+
+            if successful_strategies:
+                best_strategy = max(
+                    successful_strategies, key=lambda x: x["confidence"]
+                )
+                log_message(
+                    "INFO",
+                    f"Best strategy: {best_strategy['method']} (confidence: {best_strategy['confidence']:.2f})",
+                )
+
+        except Exception as e:
+            log_message("ERROR", f"Error generating extraction report: {e}")
+
+    def _extract_with_adaptive_config(
+        self, html, adaptive_config: Dict[str, Any]
+    ) -> List[Dict[str, Any]]:
+        """Extract data using adaptive configuration based on learning."""
+        try:
+            selectors = adaptive_config.get("selectors", {})
+            if not selectors:
+                return []
+
+            products = []
+
+            # Get container selector
+            container_selector = selectors.get("product_container", "div")
+            containers = html.select(container_selector)
+
+            if not containers:
+                log_message(
+                    "WARNING",
+                    f"No containers found with adaptive selector: {container_selector}",
+                )
+                return []
+
+            log_message(
+                "INFO",
+                f"Found {len(containers)} containers with adaptive configuration",
+            )
+
+            for container in containers:
+                try:
+                    product_data = {}
+
+                    # Extract title
+                    if "product_title" in selectors:
+                        title_elem = container.select_one(selectors["product_title"])
+                        if title_elem:
+                            product_data["title"] = title_elem.get_text(strip=True)
+                            if title_elem.name == "a":
+                                product_data["url"] = title_elem.get("href", "")
+
+                    # Extract price
+                    if "product_price" in selectors:
+                        price_elem = container.select_one(selectors["product_price"])
+                        if price_elem:
+                            price_text = price_elem.get_text(strip=True)
+                            if price_text and price_text != "Fiyatı Sor":
+                                product_data["price"] = price_text
+
+                    # Extract location
+                    if "product_location" in selectors:
+                        location_elem = container.select_one(
+                            selectors["product_location"]
+                        )
+                        if location_elem:
+                            product_data["location"] = location_elem.get_text(
+                                strip=True
+                            )
+
+                    # Extract date
+                    if "product_date" in selectors:
+                        date_elem = container.select_one(selectors["product_date"])
+                        if date_elem:
+                            product_data["date"] = date_elem.get_text(strip=True)
+
+                    # Extract image
+                    if "product_image" in selectors:
+                        img_elem = container.select_one(selectors["product_image"])
+                        if img_elem:
+                            product_data["image_url"] = img_elem.get("src", "")
+
+                    # Extract link
+                    if "product_link" in selectors and "url" not in product_data:
+                        link_elem = container.select_one(selectors["product_link"])
+                        if link_elem:
+                            product_data["url"] = link_elem.get("href", "")
+
+                    # Add metadata
+                    product_data["source_url"] = self.url
+                    product_data["extraction_timestamp"] = datetime.now().isoformat()
+                    product_data["extraction_method"] = "adaptive_config"
+                    product_data["confidence"] = adaptive_config.get("confidence", 0.0)
+
+                    # Only add if we have at least a title
+                    if product_data.get("title"):
+                        products.append(product_data)
+
+                except Exception as e:
+                    log_message("ERROR", f"Error extracting adaptive product: {str(e)}")
+                    continue
+
+            log_message(
+                "INFO",
+                f"Adaptive extraction successful: {len(products)} products extracted",
+            )
+
+            # Record successful adaptive extraction
+            self.adaptive_config_manager.record_extraction_result(
+                url=self.url,
+                selectors_used=selectors,
+                success=True,
+                data_count=len(products),
+                method="adaptive_config",
+            )
+
+            return products
+
+        except Exception as e:
+            log_message("ERROR", f"Error in adaptive extraction: {str(e)}")
+
+            # Record failed adaptive extraction
+            self.adaptive_config_manager.record_extraction_result(
+                url=self.url,
+                selectors_used=adaptive_config.get("selectors", {}),
+                success=False,
+                data_count=0,
+                method="adaptive_config",
+            )
+
+            return []
 
     def parse_html(self, response_text):
         """
@@ -718,7 +1443,10 @@ class Scraper:
             log_message("INFO", f"Generated {len(price_comparisons)} price comparisons")
 
             # Analyze deals
-            deal_analyses = self.site_comparator.analyze_deals(price_comparisons)
+            deal_analyses = []
+            for price_comparison in price_comparisons:
+                deal_analysis = self.site_comparator.analyze_deals([price_comparison])
+                deal_analyses.extend(deal_analysis)
             log_message("INFO", f"Analyzed {len(deal_analyses)} deals")
 
             # Generate comparison report
@@ -807,8 +1535,14 @@ class Scraper:
             # Add jobs to queue for distributed processing
             job_ids = []
             for item in data:
+                # Use the original URL for each job
                 job_id = self.job_queue.add_job(
-                    {"type": "data_processing", "data": item, "priority": "normal"}
+                    url=self.url,
+                    config={
+                        "type": "data_processing",
+                        "data": item,
+                        "priority": "normal",
+                    },
                 )
                 job_ids.append(job_id)
 

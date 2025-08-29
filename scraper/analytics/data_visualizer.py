@@ -956,3 +956,132 @@ class DataVisualizer:
             )
 
         return summary
+
+    def create_price_distribution(self, data: List[Dict[str, Any]]) -> str:
+        """
+        Create price distribution visualization (alias for create_price_distribution_chart).
+
+        Args:
+            data: List of scraped data items
+
+        Returns:
+            Path to the generated visualization file
+        """
+        return self.create_price_distribution_chart(data)
+
+    def create_price_trends(self, data: List[Dict[str, Any]]) -> str:
+        """
+        Create price trends visualization (alias for create_trend_analysis_chart).
+
+        Args:
+            data: List of scraped data items
+
+        Returns:
+            Path to the generated visualization file
+        """
+        return self.create_trend_analysis_chart(data)
+
+    def create_source_comparison(self, data: List[Dict[str, Any]]) -> str:
+        """
+        Create source comparison visualization (alias for create_comparative_analysis_chart).
+
+        Args:
+            data: List of scraped data items
+
+        Returns:
+            Path to the generated visualization file
+        """
+        return self.create_comparative_analysis_chart(data)
+
+    def create_comprehensive_dashboard(self, data: List[Dict[str, Any]]) -> str:
+        """
+        Create comprehensive dashboard (alias for create_summary_dashboard).
+
+        Args:
+            data: List of scraped data items
+
+        Returns:
+            Path to the generated visualization file
+        """
+        return self.create_summary_dashboard(data)
+
+    def create_summary_table(self, data: List[Dict[str, Any]]) -> str:
+        """
+        Create a summary table visualization.
+
+        Args:
+            data: List of scraped data items
+
+        Returns:
+            Path to the generated visualization file
+        """
+        try:
+            df = pd.DataFrame(data)
+
+            if df.empty:
+                self.logger.warning("No data available for summary table")
+                return ""
+
+            # Create summary statistics
+            summary_stats = {
+                "Total Items": len(df),
+                "Categories": len(df.get("category", pd.Series()).unique())
+                if "category" in df.columns
+                else 0,
+                "Sources": len(df.get("source", pd.Series()).unique())
+                if "source" in df.columns
+                else 0,
+                "Average Price": df.get("price", pd.Series())
+                .astype(str)
+                .str.replace(r"[^\d.]", "", regex=True)
+                .astype(float)
+                .mean()
+                if "price" in df.columns
+                else 0,
+                "Min Price": df.get("price", pd.Series())
+                .astype(str)
+                .str.replace(r"[^\d.]", "", regex=True)
+                .astype(float)
+                .min()
+                if "price" in df.columns
+                else 0,
+                "Max Price": df.get("price", pd.Series())
+                .astype(str)
+                .str.replace(r"[^\d.]", "", regex=True)
+                .astype(float)
+                .max()
+                if "price" in df.columns
+                else 0,
+            }
+
+            # Create table figure
+            fig = go.Figure(
+                data=[
+                    go.Table(
+                        header=dict(
+                            values=list(summary_stats.keys()),
+                            fill_color="paleturquoise",
+                            align="left",
+                        ),
+                        cells=dict(
+                            values=list(summary_stats.values()),
+                            fill_color="lavender",
+                            align="left",
+                        ),
+                    )
+                ]
+            )
+
+            fig.update_layout(title="Data Summary Table")
+
+            # Save the visualization
+            output_file = "summary_table.html"
+            output_path = self.output_directory / output_file
+            fig.write_html(str(output_path))
+
+            self.logger.info(f"Summary table saved to {output_path}")
+            return str(output_path)
+
+        except Exception as e:
+            self.logger.error(f"Error creating summary table: {e}")
+            return ""

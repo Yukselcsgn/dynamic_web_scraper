@@ -1,10 +1,13 @@
 import json
 import os
 import sqlite3
+
 import requests
 
-CONFIG_FILE = "config.json"
-DB_FILE = "scraper_data.db"
+# Get the project root directory (parent of scraper directory)
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CONFIG_FILE = os.path.join(PROJECT_ROOT, "config.json")
+DB_FILE = os.path.join(PROJECT_ROOT, "scraper_data.db")
 
 
 def load_config():
@@ -19,6 +22,12 @@ def load_config():
 
     with open(CONFIG_FILE, "r") as f:
         config = json.load(f)
+
+    # Debug logging
+    print(f"Loaded config with {len(config.get('user_agents', []))} user agents")
+    print(
+        f"User agents: {config.get('user_agents', [])[:2] if config.get('user_agents') else 'None'}"
+    )
 
     # Proxy kullanımı ayarını kontrol et
     if "use_proxy" in config and config["use_proxy"]:

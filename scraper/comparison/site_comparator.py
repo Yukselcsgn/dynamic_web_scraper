@@ -171,6 +171,297 @@ class SiteComparator:
             self.logger.error(f"Error loading comparison data: {e}")
             return []
 
+    def load_data(self, days_back: int = 30) -> List[Dict[str, Any]]:
+        """
+        Load data for comparison analysis (alias for load_comparison_data).
+
+        Args:
+            days_back: Number of days to look back
+
+        Returns:
+            List of data items for comparison
+        """
+        return self.load_comparison_data(days_back)
+
+    def match_products(self, data: List[Dict[str, Any]]) -> List[ProductMatch]:
+        """
+        Match products across different sites.
+
+        Args:
+            data: List of data items to match
+
+        Returns:
+            List of product matches
+        """
+        try:
+            product_matches = []
+            processed_products = set()
+
+            for i, product1 in enumerate(data):
+                if product1.get("id") in processed_products:
+                    continue
+
+                matches = [product1]
+                processed_products.add(product1.get("id"))
+
+                for j, product2 in enumerate(data[i + 1 :], i + 1):
+                    if product2.get("id") in processed_products:
+                        continue
+
+                    if self._are_products_similar(product1, product2):
+                        matches.append(product2)
+                        processed_products.add(product2.get("id"))
+
+                if len(matches) > 1:
+                    product_match = ProductMatch(
+                        product_id=product1.get("id", f"match_{len(product_matches)}"),
+                        title=product1.get("title", ""),
+                        category=product1.get("category", ""),
+                        brand=product1.get("brand"),
+                        model=product1.get("model"),
+                        confidence_score=0.8,
+                        sites=matches,
+                    )
+                    product_matches.append(product_match)
+
+            self.logger.info(f"Found {len(product_matches)} product matches")
+            return product_matches
+
+        except Exception as e:
+            self.logger.error(f"Error matching products: {e}")
+            return []
+
+    def compare_prices(
+        self, product_matches: List[ProductMatch]
+    ) -> List[PriceComparison]:
+        """
+        Compare prices for matched products.
+
+        Args:
+            product_matches: List of product matches
+
+        Returns:
+            List of price comparisons
+        """
+        try:
+            price_comparisons = []
+
+            for match in product_matches:
+                prices = []
+                for site in match.sites:
+                    price = site.get("price")
+                    if price and isinstance(price, (int, float)):
+                        prices.append(price)
+
+                if len(prices) > 1:
+                    price_comparison = PriceComparison(
+                        product_id=match.product_id,
+                        title=match.title,
+                        category=match.category,
+                        best_price=min(prices),
+                        worst_price=max(prices),
+                        average_price=sum(prices) / len(prices),
+                        price_range=max(prices) - min(prices),
+                        price_variance=np.var(prices) if len(prices) > 1 else 0,
+                        site_count=len(prices),
+                        price_distribution={},
+                        recommendations=[],
+                        last_updated=datetime.now(),
+                    )
+                    price_comparisons.append(price_comparison)
+
+            self.logger.info(f"Generated {len(price_comparisons)} price comparisons")
+            return price_comparisons
+
+        except Exception as e:
+            self.logger.error(f"Error comparing prices: {e}")
+            return []
+
+    def analyze_deals(
+        self, price_comparisons: List[PriceComparison]
+    ) -> List[DealAnalysis]:
+        """
+        Analyze deals based on price comparisons.
+
+        Args:
+            price_comparisons: List of price comparisons
+
+        Returns:
+            List of deal analyses
+        """
+        try:
+            deal_analyses = []
+
+            for comparison in price_comparisons:
+                savings_percentage = (
+                    comparison.worst_price - comparison.best_price
+                ) / comparison.worst_price
+
+                if savings_percentage >= self.excellent_deal_threshold:
+                    deal_type = "excellent"
+                elif savings_percentage >= self.good_deal_threshold:
+                    deal_type = "good"
+                elif savings_percentage >= self.fair_deal_threshold:
+                    deal_type = "fair"
+                else:
+                    deal_type = "poor"
+
+                deal_analysis = DealAnalysis(
+                    product_id=comparison.product_id,
+                    title=comparison.title,
+                    deal_score=min(100, savings_percentage * 100),
+                    deal_type=deal_type,
+                    savings_percentage=savings_percentage * 100,
+                    price_difference=comparison.price_range,
+                    best_site="",
+                    worst_site="",
+                    price_history=[],
+                    recommendations=[],
+                )
+                deal_analyses.append(deal_analysis)
+
+            self.logger.info(f"Generated {len(deal_analyses)} deal analyses")
+            return deal_analyses
+
+        except Exception as e:
+            self.logger.error(f"Error analyzing deals: {e}")
+            return []
+
+    def generate_comparison_report(
+        self,
+        product_matches: List[ProductMatch],
+        price_comparisons: List[PriceComparison],
+        deal_analyses: List[DealAnalysis],
+    ) -> Dict[str, Any]:
+        """
+        Generate a comprehensive comparison report.
+
+        Args:
+            product_matches: List of product matches
+            price_comparisons: List of price comparisons
+            deal_analyses: List of deal analyses
+
+        Returns:
+            Comparison report
+        """
+        try:
+            report = {
+                "summary": {
+                    "total_products": len(product_matches),
+                    "total_comparisons": len(price_comparisons),
+                    "total_deals": len(deal_analyses),
+                    "excellent_deals": len(
+                        [d for d in deal_analyses if d.deal_type == "excellent"]
+                    ),
+                    "good_deals": len(
+                        [d for d in deal_analyses if d.deal_type == "good"]
+                    ),
+                    "generated_at": datetime.now().isoformat(),
+                },
+                "product_matches": [
+                    self._product_match_to_dict(match) for match in product_matches
+                ],
+                "price_comparisons": [
+                    self._price_comparison_to_dict(comp) for comp in price_comparisons
+                ],
+                "deal_analyses": [
+                    self._deal_analysis_to_dict(deal) for deal in deal_analyses
+                ],
+            }
+
+            self.logger.info("Generated comparison report")
+            return report
+
+        except Exception as e:
+            self.logger.error(f"Error generating comparison report: {e}")
+            return {}
+
+    def get_intelligent_recommendations(
+        self, deal_analyses: List[DealAnalysis]
+    ) -> List[str]:
+        """
+        Generate intelligent recommendations based on deal analyses.
+
+        Args:
+            deal_analyses: List of deal analyses
+
+        Returns:
+            List of recommendations
+        """
+        try:
+            recommendations = []
+
+            excellent_deals = [d for d in deal_analyses if d.deal_type == "excellent"]
+            if excellent_deals:
+                recommendations.append(
+                    f"Found {len(excellent_deals)} excellent deals with savings up to {max(d.savings_percentage for d in excellent_deals):.1f}%"
+                )
+
+            good_deals = [d for d in deal_analyses if d.deal_type == "good"]
+            if good_deals:
+                recommendations.append(
+                    f"Found {len(good_deals)} good deals worth considering"
+                )
+
+            if not recommendations:
+                recommendations.append("No significant deals found in current data")
+
+            return recommendations
+
+        except Exception as e:
+            self.logger.error(f"Error generating recommendations: {e}")
+            return ["Error generating recommendations"]
+
+    def _are_products_similar(
+        self, product1: Dict[str, Any], product2: Dict[str, Any]
+    ) -> bool:
+        """Check if two products are similar."""
+        try:
+            title1 = product1.get("title", "").lower()
+            title2 = product2.get("title", "").lower()
+
+            # Simple similarity check
+            similarity = SequenceMatcher(None, title1, title2).ratio()
+            return similarity > self.title_similarity_threshold
+
+        except Exception as e:
+            self.logger.error(f"Error checking product similarity: {e}")
+            return False
+
+    def _product_match_to_dict(self, match: ProductMatch) -> Dict[str, Any]:
+        """Convert ProductMatch to dictionary."""
+        return {
+            "product_id": match.product_id,
+            "title": match.title,
+            "category": match.category,
+            "brand": match.brand,
+            "model": match.model,
+            "confidence_score": match.confidence_score,
+            "site_count": len(match.sites),
+        }
+
+    def _price_comparison_to_dict(self, comparison: PriceComparison) -> Dict[str, Any]:
+        """Convert PriceComparison to dictionary."""
+        return {
+            "product_id": comparison.product_id,
+            "title": comparison.title,
+            "best_price": comparison.best_price,
+            "worst_price": comparison.worst_price,
+            "average_price": comparison.average_price,
+            "price_range": comparison.price_range,
+            "site_count": comparison.site_count,
+        }
+
+    def _deal_analysis_to_dict(self, deal: DealAnalysis) -> Dict[str, Any]:
+        """Convert DealAnalysis to dictionary."""
+        return {
+            "product_id": deal.product_id,
+            "title": deal.title,
+            "deal_score": deal.deal_score,
+            "deal_type": deal.deal_type,
+            "savings_percentage": deal.savings_percentage,
+        }
+
     def extract_product_features(
         self, title: str, category: str = None
     ) -> Dict[str, Any]:

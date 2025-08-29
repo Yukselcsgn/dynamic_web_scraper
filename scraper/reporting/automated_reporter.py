@@ -46,6 +46,7 @@ class AlertConfig:
     email_from: str = ""
     email_password: str = ""
     email_to: List[str] = None
+    report_directory: str = "reports"  # Add missing report_directory attribute
 
     # Alert thresholds
     price_drop_threshold: float = 10.0  # percentage
@@ -1017,3 +1018,123 @@ class AutomatedReporter:
         except Exception as e:
             self.logger.error(f"Error running alert check: {e}")
             return []
+
+    def generate_report(self, data: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """
+        Generate a comprehensive report for the given data.
+
+        Args:
+            data: List of scraped data items
+
+        Returns:
+            Dictionary with report data
+        """
+        try:
+            if not data:
+                return {"error": "No data available for report"}
+
+            report = {
+                "report_type": "comprehensive",
+                "generated_at": datetime.now().isoformat(),
+                "data_summary": self._generate_data_summary(data),
+                "price_analysis": self._generate_price_analysis(data),
+                "trend_analysis": self._generate_trend_analysis(data),
+                "alerts": self.detect_alerts(data),
+                "recommendations": self.generate_recommendations(data),
+            }
+
+            self.logger.info("Comprehensive report generated successfully")
+            return report
+
+        except Exception as e:
+            self.logger.error(f"Error generating report: {e}")
+            return {"error": str(e)}
+
+    def detect_alerts(self, data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Detect alerts for the given data.
+
+        Args:
+            data: List of scraped data items
+
+        Returns:
+            List of alerts
+        """
+        try:
+            alerts = []
+
+            # Check for price changes
+            if self.alert_config.price_alerts:
+                price_alerts = self.detect_price_changes(data)
+                alerts.extend(price_alerts)
+
+            # Check for anomalies
+            if self.alert_config.anomaly_alerts:
+                anomaly_alerts = self.detect_anomalies(data)
+                alerts.extend(anomaly_alerts)
+
+            self.logger.info(f"Detected {len(alerts)} alerts")
+            return alerts
+
+        except Exception as e:
+            self.logger.error(f"Error detecting alerts: {e}")
+            return []
+
+    def generate_recommendations(self, data: List[Dict[str, Any]]) -> List[str]:
+        """
+        Generate recommendations based on the data.
+
+        Args:
+            data: List of scraped data items
+
+        Returns:
+            List of recommendations
+        """
+        try:
+            recommendations = []
+
+            if not data:
+                recommendations.append("No data available for analysis")
+                return recommendations
+
+            # Basic recommendations based on data
+            df = pd.DataFrame(data)
+
+            if len(df) < 10:
+                recommendations.append(
+                    "Consider collecting more data for better analysis"
+                )
+
+            if "price" in df.columns:
+                price_data = pd.to_numeric(
+                    df["price"].str.replace(r"[^\d.]", "", regex=True), errors="coerce"
+                )
+                if price_data.notna().sum() > 0:
+                    avg_price = price_data.mean()
+                    if avg_price > 1000:
+                        recommendations.append(
+                            "High average price detected - consider budget-friendly alternatives"
+                        )
+                    elif avg_price < 100:
+                        recommendations.append(
+                            "Low average price detected - good value for money"
+                        )
+
+            if "category" in df.columns:
+                category_counts = df["category"].value_counts()
+                if len(category_counts) > 5:
+                    recommendations.append(
+                        "Diverse product categories detected - good market coverage"
+                    )
+
+            if not recommendations:
+                recommendations.append(
+                    "Data looks good - continue monitoring for trends"
+                )
+
+            self.logger.info(f"Generated {len(recommendations)} recommendations")
+            return recommendations
+
+        except Exception as e:
+            self.logger.error(f"Error generating recommendations: {e}")
+            return ["Error generating recommendations"]

@@ -2,22 +2,23 @@
 Flask web dashboard for the Dynamic Web Scraper.
 """
 
-from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
-from flask_sqlalchemy import SQLAlchemy
+import datetime
 import json
 import os
-import datetime
-import threading
 import queue
 
 # Import scraper components
 import sys
+import threading
+
+from flask import Flask, flash, jsonify, redirect, render_template, request, url_for
+from flask_sqlalchemy import SQLAlchemy
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from scraper.Scraper import Scraper
 from scraper.config import load_config
 from scraper.css_selectors.dynamic_selector import DynamicSelector
+from scraper.Scraper import Scraper
 from scraper.site_detection.html_analyzer import analyze_html, detect_ecommerce_patterns
 
 app = Flask(__name__)
@@ -249,74 +250,75 @@ def process_job_queue():
 
 def process_scraping_job(job_data):
     """Process a single scraping job."""
-    job_id = job_data["job_id"]
-    url = job_data["url"]
-    output_format = job_data["output_format"]
+    with app.app_context():
+        job_id = job_data["job_id"]
+        url = job_data["url"]
+        output_format = job_data["output_format"]
 
-    # Update job status
-    job = ScrapingJob.query.get(job_id)
-    if not job:
-        return
+        # Update job status
+        job = ScrapingJob.query.get(job_id)
+        if not job:
+            return
 
-    job.status = "running"
-    active_jobs[job_id] = job
-    db.session.commit()
-
-    try:
-        # Load configuration
-        config = load_config()
-
-        # Create scraper instance
-        scraper = Scraper(url, config)
-
-        # Fetch data
-        data = scraper.fetch_data()
-
-        if data:
-            # Save results to database
-            for item in data:
-                result = ScrapingResult(
-                    job_id=job_id,
-                    product_title=item.get("title", ""),
-                    product_price=item.get("price", ""),
-                    product_image=item.get("image", ""),
-                    product_link=item.get("link", ""),
-                )
-                db.session.add(result)
-
-            # Save to file
-            output_file = f"data/scraped_data_{job_id}.{output_format}"
-            scraper.save_data(data, output_file, output_format)
-
-            # Update job status
-            job.status = "completed"
-            job.completed_at = datetime.datetime.utcnow()
-            job.results_count = len(data)
-            job.output_file = output_file
-
-            # Get site analysis
-            try:
-                analyze_html(data, url)
-                patterns = detect_ecommerce_patterns(data)
-                job.site_type = patterns.get("site_type", "unknown")
-                job.confidence_score = patterns.get("confidence_score", 0)
-            except:
-                pass
-
-        else:
-            job.status = "failed"
-            job.error_message = "No data found"
-            job.completed_at = datetime.datetime.utcnow()
-
-    except Exception as e:
-        job.status = "failed"
-        job.error_message = str(e)
-        job.completed_at = datetime.datetime.utcnow()
-
-    finally:
-        if job_id in active_jobs:
-            del active_jobs[job_id]
+        job.status = "running"
+        active_jobs[job_id] = job
         db.session.commit()
+
+        try:
+            # Load configuration
+            config = load_config()
+
+            # Create scraper instance
+            scraper = Scraper(url, config)
+
+            # Fetch data
+            data = scraper.fetch_data()
+
+            if data:
+                # Save results to database
+                for item in data:
+                    result = ScrapingResult(
+                        job_id=job_id,
+                        product_title=item.get("title", ""),
+                        product_price=item.get("price", ""),
+                        product_image=item.get("image", ""),
+                        product_link=item.get("link", ""),
+                    )
+                    db.session.add(result)
+
+                # Save to file
+                output_file = f"data/scraped_data_{job_id}.{output_format}"
+                scraper.save_data(data, output_file, output_format)
+
+                # Update job status
+                job.status = "completed"
+                job.completed_at = datetime.datetime.utcnow()
+                job.results_count = len(data)
+                job.output_file = output_file
+
+                # Get site analysis
+                try:
+                    analyze_html(data, url)
+                    patterns = detect_ecommerce_patterns(data)
+                    job.site_type = patterns.get("site_type", "unknown")
+                    job.confidence_score = patterns.get("confidence_score", 0)
+                except:
+                    pass
+
+            else:
+                job.status = "failed"
+                job.error_message = "No data found"
+                job.completed_at = datetime.datetime.utcnow()
+
+        except Exception as e:
+            job.status = "failed"
+            job.error_message = str(e)
+            job.completed_at = datetime.datetime.utcnow()
+
+        finally:
+            if job_id in active_jobs:
+                del active_jobs[job_id]
+            db.session.commit()
 
 
 @app.before_request

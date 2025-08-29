@@ -1,0 +1,27 @@
+
+=== HTML CONTENT ANALYSIS ===
+File: debug_html/response_www_vatanbilgisayar_com_20250829_172513.html
+URL: https://www.vatanbilgisayar.com/ekran-kartlari/?srt=PU
+Content Length: 65412 characters
+
+=== PAGE INFO ===
+Title: No title found
+Is Cloudflare Challenge: False
+Has Search Results Table: False
+Has Product Containers: False
+
+=== ELEMENT COUNTS ===
+Tables: 0
+Divs: 0
+Links: 1
+Images: 0
+
+=== SAHIBINDEN SPECIFIC ELEMENTS ===
+searchResultsTable: 0
+searchResultsItem: 0
+searchResultsTitleValue: 0
+searchResultsPriceValue: 0
+searchResultsLocationValue: 0
+
+=== EXTRACTION DIAGNOSIS ===
+❌ ISSUE: No search results table found - may be wrong page or blocked
