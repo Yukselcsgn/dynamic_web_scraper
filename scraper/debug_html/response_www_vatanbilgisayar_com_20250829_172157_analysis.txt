@@ -1,0 +1,27 @@
+
+=== HTML CONTENT ANALYSIS ===
+File: debug_html/response_www_vatanbilgisayar_com_20250829_172157.html
+URL: https://www.vatanbilgisayar.com/ekran-kartlari/?srt=PU
+Content Length: 827444 characters
+
+=== PAGE INFO ===
+Title: Ekran Kartı Fiyatları ve Modelleri - Vatan Bilgisayar
+Is Cloudflare Challenge: True
+Has Search Results Table: False
+Has Product Containers: False
+
+=== ELEMENT COUNTS ===
+Tables: 0
+Divs: 1183
+Links: 1152
+Images: 271
+
+=== SAHIBINDEN SPECIFIC ELEMENTS ===
+searchResultsTable: 0
+searchResultsItem: 0
+searchResultsTitleValue: 0
+searchResultsPriceValue: 0
+searchResultsLocationValue: 0
+
+=== EXTRACTION DIAGNOSIS ===
+❌ ISSUE: Cloudflare challenge page detected - need to wait for resolution

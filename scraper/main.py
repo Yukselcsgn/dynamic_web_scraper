@@ -1,6 +1,9 @@
 import os
 import sys
 
+print(">>> Python executable:", sys.executable)
+print(">>> sys.path:", sys.path[:3])
+
 # Add the project root to the path for absolute imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -118,7 +121,19 @@ def main():
             )
         else:
             log_message("WARNING", f"No products found for URL: {url}.")
+            # Create a summary report for debugging
+            scraper._create_debug_summary(url)
+            print(f"\n🔍 DEBUGGING INFO:")
+            print(f"   • Check 'debug_html/' directory for saved HTML content")
+            print(f"   • Check 'response.html' for the latest response")
+            print(f"   • Look for '*_analysis.txt' files for content analysis")
+            print(f"   • This will help identify why no products were extracted")
 
+    except KeyboardInterrupt:
+        log_message("WARNING", "Scraping interrupted by user")
+        print("\n⚠️  Scraping interrupted by user (Ctrl+C)")
+        print("🔄 You can run the scraper again when ready.")
+        sys.exit(0)
     except Exception as e:
         log_message(
             "ERROR", f"An error occurred during scraping for URL: {url}. Error: {e}"

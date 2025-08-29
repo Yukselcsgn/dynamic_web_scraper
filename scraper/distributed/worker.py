@@ -16,7 +16,6 @@ from datetime import datetime
 from typing import Any, Callable, Dict, Optional
 
 from ..config import load_config
-from ..Scraper import Scraper
 from .job_queue import JobQueue, JobStatus, ScrapingJob
 
 
@@ -63,9 +62,15 @@ class Worker:
             "last_job_time": None,
         }
 
-        # Setup signal handlers for graceful shutdown
-        signal.signal(signal.SIGINT, self._signal_handler)
-        signal.signal(signal.SIGTERM, self._signal_handler)
+        # Setup signal handlers for graceful shutdown (only in main thread)
+        try:
+            signal.signal(signal.SIGINT, self._signal_handler)
+            signal.signal(signal.SIGTERM, self._signal_handler)
+        except ValueError:
+            # Signal handlers can only be set in the main thread
+            logging.warning(
+                f"Worker {self.worker_id} cannot set signal handlers (not in main thread)"
+            )
 
         logging.info(f"Worker {self.worker_id} initialized")
 
@@ -103,19 +108,19 @@ class Worker:
         logging.info(f"Worker {self.worker_id} stopped")
 
     def _work_loop(self):
-        """Main work loop for processing jobs."""
+        """Main work loop for processing jobs in background."""
         while self.running and self.jobs_processed < self.max_jobs:
             try:
                 # Get next job
                 job = self.job_queue.get_job(self.worker_id)
 
                 if job is None:
-                    # No jobs available, wait a bit
-                    time.sleep(5)
+                    # No jobs available, wait a bit longer to reduce CPU usage
+                    time.sleep(10)
                     continue
 
-                # Process the job
-                self._process_job(job)
+                # Process the job in background thread to avoid blocking
+                self._process_job_background(job)
                 self.jobs_processed += 1
 
                 # Check if we've reached max jobs
@@ -127,10 +132,34 @@ class Worker:
 
             except Exception as e:
                 logging.error(f"Worker {self.worker_id} error in work loop: {e}")
-                time.sleep(10)
+                time.sleep(15)  # Longer wait on error
+
+    def _process_job_background(self, job: ScrapingJob):
+        """Process job in a separate background thread to avoid blocking."""
+
+        def background_worker():
+            try:
+                self._process_job(job)
+            except Exception as e:
+                logging.error(f"Background job processing failed for job {job.id}: {e}")
+
+        # Start background thread
+        thread = threading.Thread(target=background_worker, daemon=True)
+        thread.start()
+
+        # Wait for completion with timeout
+        thread.join(timeout=job.timeout)
+
+        if thread.is_alive():
+            logging.warning(f"Job {job.id} timed out in background processing")
+            # Mark job as failed due to timeout
+            self.job_queue.mark_job_failed(job.id, "Background processing timeout")
 
     def _process_job(self, job: ScrapingJob):
         """Process a single scraping job."""
+        # Import Scraper locally to avoid circular import
+        from ..Scraper import Scraper
+
         start_time = time.time()
         self.current_job = job
 

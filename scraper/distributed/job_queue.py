@@ -78,6 +78,15 @@ class ScrapingJob:
         """Create job from dictionary."""
         data["priority"] = JobPriority(data["priority"])
         data["status"] = JobStatus(data["status"])
+
+        # Convert datetime strings back to datetime objects
+        if isinstance(data.get("created_at"), str):
+            data["created_at"] = datetime.fromisoformat(data["created_at"])
+        if isinstance(data.get("started_at"), str):
+            data["started_at"] = datetime.fromisoformat(data["started_at"])
+        if isinstance(data.get("completed_at"), str):
+            data["completed_at"] = datetime.fromisoformat(data["completed_at"])
+
         return cls(**data)
 
 
@@ -131,20 +140,37 @@ class JobQueue:
                     jobs_data = json.load(f)
 
                 for job_data in jobs_data:
-                    job = ScrapingJob.from_dict(job_data)
-                    if job.status == JobStatus.PENDING:
-                        self.pending_jobs.put(
-                            (-job.priority.value, job.created_at.timestamp(), job)
+                    try:
+                        job = ScrapingJob.from_dict(job_data)
+                        if job.status == JobStatus.PENDING:
+                            self.pending_jobs.put(
+                                (-job.priority.value, job.created_at.timestamp(), job)
+                            )
+                        elif job.status == JobStatus.RUNNING:
+                            self.running_jobs[job.id] = job
+                        elif job.status == JobStatus.COMPLETED:
+                            self.completed_jobs[job.id] = job
+                        elif job.status == JobStatus.FAILED:
+                            self.failed_jobs[job.id] = job
+                    except Exception as job_error:
+                        logging.error(
+                            f"Failed to load job {job_data.get('id', 'unknown')}: {job_error}"
                         )
-                    elif job.status == JobStatus.RUNNING:
-                        self.running_jobs[job.id] = job
-                    elif job.status == JobStatus.COMPLETED:
-                        self.completed_jobs[job.id] = job
-                    elif job.status == JobStatus.FAILED:
-                        self.failed_jobs[job.id] = job
+                        continue
 
                 self._update_stats()
                 logging.info(f"Loaded {len(jobs_data)} jobs from storage")
+        except json.JSONDecodeError as e:
+            logging.error(f"Failed to parse jobs.json: {e}")
+            # Try to backup and recreate the file
+            try:
+                jobs_file = self.storage_path / "jobs.json"
+                backup_file = self.storage_path / "jobs.json.backup"
+                if jobs_file.exists():
+                    jobs_file.rename(backup_file)
+                    logging.info("Backed up corrupted jobs.json file")
+            except Exception as backup_error:
+                logging.error(f"Failed to backup corrupted file: {backup_error}")
         except Exception as e:
             logging.error(f"Failed to load jobs: {e}")
 
@@ -430,6 +456,33 @@ class JobQueue:
                 if job_id in job:
                     return job[job_id]
             return None
+
+    def get_result(self, job_id: str, timeout: int = 30) -> Optional[Dict[str, Any]]:
+        """
+        Get the result of a completed job.
+
+        Args:
+            job_id: Job ID to get result for
+            timeout: Timeout in seconds
+
+        Returns:
+            Job result or None if not found or timed out
+        """
+        start_time = time.time()
+
+        while time.time() - start_time < timeout:
+            with self.lock:
+                if job_id in self.completed_jobs:
+                    job = self.completed_jobs[job_id]
+                    return job.result
+                elif job_id in self.failed_jobs:
+                    job = self.failed_jobs[job_id]
+                    return {"error": getattr(job, "error_message", "Unknown error")}
+
+            time.sleep(1)  # Wait 1 second before checking again
+
+        logging.warning(f"Timeout waiting for job {job_id} result")
+        return None
 
     def get_stats(self) -> Dict[str, Any]:
         """Get queue statistics."""

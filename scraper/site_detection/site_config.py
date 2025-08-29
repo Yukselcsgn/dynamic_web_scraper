@@ -14,6 +14,14 @@ SITE_CONFIGURATIONS = {
         "price_selector": "span.s-item__price",
         "next_page_selector": "a.pagination__next",
     },
+    "sahibinden.com": {
+        "product_container": "tr.searchResultsItem",
+        "title_selector": "td.searchResultsTitleValue a",
+        "price_selector": "td.searchResultsPriceValue",
+        "location_selector": "td.searchResultsLocationValue",
+        "date_selector": "td.searchResultsDateValue",
+        "next_page_selector": "a.prevNextBut",
+    },
     # Daha fazla site eklenebilir
 }
 

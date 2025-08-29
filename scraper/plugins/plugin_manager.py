@@ -315,6 +315,15 @@ class PluginManager:
         elif isinstance(plugin, CustomScraperPlugin):
             self.custom_scrapers.append(plugin)
 
+    def load_plugins(self) -> List[PluginInfo]:
+        """
+        Load all discovered plugins (alias for load_all_plugins).
+
+        Returns:
+            List of loaded plugin info
+        """
+        return self.load_all_plugins()
+
     def load_all_plugins(self) -> List[PluginInfo]:
         """
         Load all discovered plugins.
@@ -696,6 +705,70 @@ class {plugin_name.replace(' ', '')}Plugin({self._get_base_class(plugin_type)}):
             "custom_scraper": "CustomScraperPlugin",
         }
         return type_map.get(plugin_type, "BasePlugin")
+
+    def process_data(self, data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Process data through all enabled data processor plugins.
+
+        Args:
+            data: Data to process
+
+        Returns:
+            Processed data
+        """
+        return self.process_data_with_plugins(data)
+
+    def validate_data(self, data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Validate data through all enabled validator plugins.
+
+        Args:
+            data: Data to validate
+
+        Returns:
+            Validation results
+        """
+        validation_results = []
+        for item in data:
+            is_valid, errors = self.validate_data_with_plugins(item)
+            validation_results.append(
+                {"item": item, "is_valid": is_valid, "errors": errors}
+            )
+        return validation_results
+
+    def apply_custom_scrapers(self, data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Apply custom scraper plugins to the data.
+
+        Args:
+            data: Data to process
+
+        Returns:
+            Enhanced data
+        """
+        enhanced_data = data.copy()
+
+        for scraper in self.custom_scrapers:
+            plugin_info = self.plugin_info.get(scraper.name)
+            if plugin_info and plugin_info.enabled:
+                try:
+                    self.logger.debug(f"Applying custom scraper: {scraper.name}")
+                    # Apply custom scraping logic if needed
+                    # For now, just return the data as is
+                    pass
+                except Exception as e:
+                    self.logger.error(f"Error in custom scraper {scraper.name}: {e}")
+
+        return enhanced_data
+
+    def get_active_plugins(self) -> List[str]:
+        """
+        Get list of active plugin names.
+
+        Returns:
+            List of active plugin names
+        """
+        return [name for name, info in self.plugin_info.items() if info.enabled]
 
     def shutdown(self):
         """Shutdown the plugin manager and cleanup all plugins."""

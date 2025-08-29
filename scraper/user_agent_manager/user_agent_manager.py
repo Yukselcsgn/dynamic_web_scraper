@@ -1,5 +1,5 @@
-import random
 import logging
+import random
 
 
 class UserAgentManager:
@@ -9,6 +9,10 @@ class UserAgentManager:
         logging.info(
             f"UserAgentManager başlatıldı. Toplam kullanıcı ajanı: {len(self.user_agents)}"
         )
+        if self.user_agents:
+            logging.info(f"User agents: {self.user_agents[:2]}")  # Show first 2
+        else:
+            logging.warning("No user agents provided to UserAgentManager")
 
     def get_user_agent(self):
         """Rastgele bir kullanıcı ajanı seçer ve döner."""

@@ -2,12 +2,13 @@
 """
 Smart Site Detector - Automatically analyzes websites and generates optimal scraping strategies.
 """
-import re
 import json
 import logging
-from typing import Dict, List, Any, Optional
+import re
 from dataclasses import dataclass
+from typing import Any, Dict, List, Optional
 from urllib.parse import urlparse
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -89,13 +90,16 @@ class SmartSiteDetector:
             "turn on javascript",
         ]
 
-    def detect_site(self, url: str, html_content: str = None) -> SiteProfile:
+    def detect_site(
+        self, url: str, html_content: str = None, user_agent_manager=None
+    ) -> SiteProfile:
         """
         Analyze a website and generate an optimal scraping profile.
 
         Args:
             url: The URL to analyze
             html_content: Optional HTML content (if not provided, will fetch)
+            user_agent_manager: Optional UserAgentManager instance
 
         Returns:
             SiteProfile with optimal scraping configuration
@@ -103,7 +107,7 @@ class SmartSiteDetector:
         try:
             # Fetch HTML if not provided
             if not html_content:
-                html_content = self._fetch_html(url)
+                html_content = self._fetch_html(url, user_agent_manager)
 
             # Parse HTML
             soup = BeautifulSoup(html_content, "html.parser")
@@ -141,11 +145,18 @@ class SmartSiteDetector:
             logging.error(f"Error detecting site {url}: {e}")
             return self._get_default_profile()
 
-    def _fetch_html(self, url: str) -> str:
+    def _fetch_html(self, url: str, user_agent_manager=None) -> str:
         """Fetch HTML content from URL."""
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-        }
+        if user_agent_manager:
+            try:
+                user_agent = user_agent_manager.get_user_agent()
+            except Exception as e:
+                logging.warning(f"Failed to get user agent: {e}")
+                user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        else:
+            user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+
+        headers = {"User-Agent": user_agent}
         response = requests.get(url, headers=headers, timeout=10)
         response.raise_for_status()
         return response.text
@@ -159,8 +170,13 @@ class SmartSiteDetector:
 
         # Check domain patterns
         for site_type, patterns in self.site_patterns.items():
-            for pattern in patterns:
-                if re.search(pattern, domain) or re.search(pattern, text_content):
+            if isinstance(patterns, list):
+                for pattern in patterns:
+                    if re.search(pattern, domain) or re.search(pattern, text_content):
+                        scores[site_type] += 1
+            else:
+                # Handle case where patterns might not be a list
+                if re.search(patterns, domain) or re.search(patterns, text_content):
                     scores[site_type] += 1
 
         # Check for specific indicators
