@@ -158,7 +158,7 @@ class Worker:
     def _process_job(self, job: ScrapingJob):
         """Process a single scraping job."""
         # Import Scraper locally to avoid circular import
-        from ..Scraper import Scraper
+        from ..core.scraper import Scraper
 
         start_time = time.time()
         self.current_job = job

@@ -17,8 +17,8 @@ from flask_sqlalchemy import SQLAlchemy
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from scraper.config import load_config
+from scraper.core.scraper import Scraper
 from scraper.css_selectors.dynamic_selector import DynamicSelector
-from scraper.Scraper import Scraper
 from scraper.site_detection.html_analyzer import analyze_html, detect_ecommerce_patterns
 
 app = Flask(__name__)

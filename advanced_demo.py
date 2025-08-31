@@ -9,18 +9,18 @@ This script demonstrates:
 4. Advanced Analytics
 5. Comprehensive Reporting
 """
-import sys
-import os
 import json
+import os
+import sys
 from datetime import datetime
 
 # Add the project root to the path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from scraper.Scraper import Scraper
 from scraper.config import load_config
-from scraper.logging_manager.logging_manager import setup_logging, log_message
+from scraper.core.scraper import Scraper
 from scraper.data_processing.data_enricher import DataEnricher
+from scraper.logging_manager.logging_manager import log_message, setup_logging
 
 
 def print_banner():

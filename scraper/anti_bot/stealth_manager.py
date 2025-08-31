@@ -30,6 +30,25 @@ except ImportError:
         logging.log(getattr(logging, level.upper(), logging.INFO), message)
 
 
+# Import Cloudflare bypass
+try:
+    from scraper.anti_bot.cloudflare_bypass import CloudflareBypass
+
+    CLOUDFLARE_BYPASS_AVAILABLE = True
+except ImportError:
+    CLOUDFLARE_BYPASS_AVAILABLE = False
+    log_message("WARNING", "Cloudflare bypass not available")
+
+# Import human behavior simulator
+try:
+    from scraper.anti_bot.human_behavior import HumanBehaviorSimulator
+
+    HUMAN_BEHAVIOR_AVAILABLE = True
+except ImportError:
+    HUMAN_BEHAVIOR_AVAILABLE = False
+    log_message("WARNING", "Human behavior simulator not available")
+
+
 # Selenium imports for advanced browser automation
 try:
     from selenium import webdriver
@@ -111,6 +130,18 @@ class StealthManager:
         # Anti-detection counters
         self.request_count = 0
         self.last_request_time = 0
+
+        # Initialize Cloudflare bypass
+        if CLOUDFLARE_BYPASS_AVAILABLE:
+            self.cloudflare_bypass = CloudflareBypass(config)
+        else:
+            self.cloudflare_bypass = None
+
+        # Initialize human behavior simulator
+        if HUMAN_BEHAVIOR_AVAILABLE:
+            self.human_behavior = HumanBehaviorSimulator(config)
+        else:
+            self.human_behavior = None
 
         # Setup advanced session
         self._setup_advanced_session()
@@ -392,6 +423,11 @@ class StealthManager:
     def _humanize_timing(self):
         """Add human-like timing delays."""
 
+        if self.human_behavior:
+            # Use human behavior simulator for more realistic timing
+            self.human_behavior.simulate_realistic_delay("general")
+            return
+
         if not self.current_profile:
             time.sleep(random.uniform(1, 3))
             return
@@ -487,12 +523,14 @@ class StealthManager:
                 import shutil
 
                 temp_dir = tempfile.mkdtemp()
-                options.add_argument(f"--user-data-dir={temp_dir}")
+                # Remove user-data-dir argument to avoid conflicts
+                # options.add_argument(f"--user-data-dir={temp_dir}")
 
-                options.add_experimental_option(
-                    "excludeSwitches", ["enable-automation", "enable-logging"]
-                )
-                options.add_experimental_option("useAutomationExtension", False)
+                # Remove problematic experimental options that cause Chrome startup issues
+                # options.add_experimental_option(
+                #     "excludeSwitches", ["enable-automation", "enable-logging"]
+                # )
+                # options.add_experimental_option("useAutomationExtension", False)
                 options.add_argument("--log-level=3")  # Suppress Chrome logs
 
                 # Add Turkish locale for sahibinden.com
@@ -537,16 +575,18 @@ class StealthManager:
                 options.add_argument(
                     "--window-size=1920,1080"
                 )  # Set window size for headless
-                options.add_argument(f"--user-data-dir={user_data_dir}")
+                # Remove user-data-dir argument to avoid conflicts
+                # options.add_argument(f"--user-data-dir={user_data_dir}")
                 options.add_argument("--disable-web-security")
                 options.add_argument("--disable-features=VizDisplayCompositor")
-                options.add_experimental_option(
-                    "excludeSwitches", ["enable-automation"]
-                )
-                options.add_experimental_option("useAutomationExtension", False)
+                # Remove problematic experimental options that cause Chrome startup issues
+                # options.add_experimental_option(
+                #     "excludeSwitches", ["enable-automation"]
+                # )
+                # options.add_experimental_option("useAutomationExtension", False)
                 # Disable logging to reduce noise
-                options.add_experimental_option("excludeSwitches", ["enable-logging"])
-                options.add_experimental_option("useAutomationExtension", False)
+                # options.add_experimental_option("excludeSwitches", ["enable-logging"])
+                # options.add_experimental_option("useAutomationExtension", False)
                 options.add_argument("--log-level=3")  # Suppress Chrome logs
 
                 self.driver = webdriver.Chrome(options=options)
@@ -645,7 +685,7 @@ class StealthManager:
         use_browser: bool = False,
     ) -> requests.Response:
         """
-        Fetch URL with advanced stealth techniques.
+        Fetch URL with advanced stealth techniques and Cloudflare bypass.
 
         Args:
             url: Target URL
@@ -666,6 +706,18 @@ class StealthManager:
 
         # Select appropriate profile
         self.select_profile(url)
+
+        # Try Cloudflare bypass first for protected sites
+        if self.cloudflare_bypass:
+            log_message("INFO", "Attempting Cloudflare bypass...")
+            response = self.cloudflare_bypass.bypass_cloudflare(url, method, data)
+            if response and response.status_code == 200:
+                log_message("INFO", "Successfully bypassed Cloudflare protection")
+                return response
+            else:
+                log_message(
+                    "WARNING", "Cloudflare bypass failed, trying other methods..."
+                )
 
         # Use browser automation if required or requested
         if use_browser or (
@@ -769,11 +821,80 @@ class StealthManager:
             # Humanize behavior
             self._humanize_browser_behavior()
 
-            # Wait for page to load with timeout
+            # Wait for page to load with timeout and JavaScript content
             try:
-                WebDriverWait(self.driver, 15).until(
+                # First wait for basic page structure
+                WebDriverWait(self.driver, 10).until(
                     EC.presence_of_element_located((By.TAG_NAME, "body"))
                 )
+
+                # Wait for JavaScript content to load - look for common content indicators
+                content_selectors = [
+                    "div",
+                    "main",
+                    "article",
+                    "section",
+                    "ul",
+                    "ol",
+                    "table",
+                    "[class*='content']",
+                    "[class*='main']",
+                    "[class*='container']",
+                    "[id*='content']",
+                    "[id*='main']",
+                    "[id*='container']",
+                ]
+
+                content_loaded = False
+                for selector in content_selectors:
+                    try:
+                        WebDriverWait(self.driver, 5).until(
+                            EC.presence_of_element_located((By.CSS_SELECTOR, selector))
+                        )
+                        content_loaded = True
+                        break
+                    except TimeoutException:
+                        continue
+
+                if not content_loaded:
+                    # Fallback: wait for any element with text content
+                    WebDriverWait(self.driver, 5).until(
+                        lambda driver: len(
+                            driver.find_elements(By.XPATH, "//*[text()]")
+                        )
+                        > 0
+                    )
+
+                # Additional wait for dynamic content
+                time.sleep(2)
+
+                # Special handling for VFS Global website
+                if "vfsglobal.com" in url.lower():
+                    try:
+                        # Wait for VFS-specific content to load
+                        vfs_selectors = [
+                            "[class*='appointment']",
+                            "[class*='booking']",
+                            "[class*='service']",
+                            "[class*='visa']",
+                            "[class*='application']",
+                            "form",
+                            "button",
+                        ]
+                        for selector in vfs_selectors:
+                            try:
+                                WebDriverWait(self.driver, 3).until(
+                                    EC.presence_of_element_located(
+                                        (By.CSS_SELECTOR, selector)
+                                    )
+                                )
+                                break
+                            except TimeoutException:
+                                continue
+                        time.sleep(1)  # Additional wait for VFS content
+                    except Exception as e:
+                        logging.debug(f"VFS-specific wait failed: {e}")
+
             except TimeoutException:
                 logging.warning("Page load timeout, proceeding with available content")
 
@@ -984,6 +1105,21 @@ class StealthManager:
 
                 if os.path.exists(self.temp_dir):
                     shutil.rmtree(self.temp_dir, ignore_errors=True)
+            except:
+                pass
+
+        # Cleanup Cloudflare bypass
+        if self.cloudflare_bypass:
+            try:
+                self.cloudflare_bypass.cleanup()
+            except:
+                pass
+
+        # Cleanup human behavior simulator
+        if self.human_behavior:
+            try:
+                # Human behavior simulator doesn't need explicit cleanup
+                pass
             except:
                 pass
 

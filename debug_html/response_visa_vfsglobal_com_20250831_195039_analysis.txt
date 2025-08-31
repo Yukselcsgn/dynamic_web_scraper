@@ -1,8 +1,8 @@
 
 === HTML CONTENT ANALYSIS ===
-File: debug_html/response_www_vatanbilgisayar_com_20250829_172513.html
-URL: https://www.vatanbilgisayar.com/ekran-kartlari/?srt=PU
-Content Length: 65412 characters
+File: debug_html/response_visa_vfsglobal_com_20250831_195039.html
+URL: https://visa.vfsglobal.com/tur/tr/fra/
+Content Length: 206 characters
 
 === PAGE INFO ===
 Title: No title found
@@ -12,8 +12,8 @@ Has Product Containers: False
 
 === ELEMENT COUNTS ===
 Tables: 0
-Divs: 0
-Links: 1
+Divs: 1
+Links: 0
 Images: 0
 
 === SAHIBINDEN SPECIFIC ELEMENTS ===
