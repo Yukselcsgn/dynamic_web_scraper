@@ -1,20 +1,20 @@
 
 === HTML CONTENT ANALYSIS ===
-File: debug_html/response_www_vatanbilgisayar_com_20250829_152634.html
-URL: https://www.vatanbilgisayar.com/ekran-kartlari/?srt=PU
-Content Length: 828008 characters
+File: debug_html/response_visa_vfsglobal_com_20250831_195550.html
+URL: https://visa.vfsglobal.com/tur/tr/fra/
+Content Length: 1005764 characters
 
 === PAGE INFO ===
-Title: Ekran Kartı Fiyatları ve Modelleri - Vatan Bilgisayar
+Title: Welcome to VFS Global| vfsglobal
 Is Cloudflare Challenge: True
 Has Search Results Table: False
 Has Product Containers: False
 
 === ELEMENT COUNTS ===
 Tables: 0
-Divs: 1188
-Links: 1152
-Images: 271
+Divs: 184
+Links: 43
+Images: 21
 
 === SAHIBINDEN SPECIFIC ELEMENTS ===
 searchResultsTable: 0

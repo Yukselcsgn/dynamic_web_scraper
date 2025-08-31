@@ -8,9 +8,9 @@ print(">>> sys.path:", sys.path[:3])
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from scraper.config import load_config
+from scraper.core.scraper import Scraper
 from scraper.logging_manager.logging_manager import log_message, setup_logging
 from scraper.proxy_manager.proxy_rotator import ProxyRotator
-from scraper.Scraper import Scraper
 from scraper.user_agent_manager.user_agent_manager import UserAgentManager
 
 

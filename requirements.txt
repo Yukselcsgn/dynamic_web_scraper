@@ -38,3 +38,8 @@ pytest==8.2.0
 filelock==3.18.0
 colorama==0.4.6
 click==8.2.1
+
+# Cloudflare bypass and advanced scraping
+cloudscraper==1.2.71
+requests-html==0.10.0
+playwright==1.40.0
