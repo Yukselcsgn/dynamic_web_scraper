@@ -11,6 +11,11 @@ Step-by-step guides for common tasks and workflows:
 - [Anti-Bot Evasion](guides/anti-bot-evasion.md) - Bypassing protections
 - [Data Analysis](guides/data-analysis.md) - Analyzing scraped data
 
+### ⭐ Quick Start Guides
+- **[User Guide](USER_GUIDE.md)** - Complete guide for end users
+- **[Developer Guide](DEVELOPER_GUIDE.md)** - For developers working on the codebase
+- **[Contributor Guide](CONTRIBUTOR_GUIDE.md)** - For GitHub contributors
+
 ### Tutorials (`tutorials/`)
 In-depth tutorials for specific use cases:
 - [Basic Scraping Tutorial](tutorials/basic-scraping.md) - Your first scraper
