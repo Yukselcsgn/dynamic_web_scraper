@@ -1,4 +1,27 @@
 Dynamic Web Scraper
 Copyright 2024 Yüksel Coşgun
 
-This product includes software licensed under the Apache License 2.0.
+This project includes third-party software components.
+Their licenses are preserved as required.
+
+Apache-2.0 licensed dependencies:
+- requests
+- tzdata
+- websocket-client
+
+BSD and BSD-3-Clause dependencies:
+- numpy
+- pandas
+- lxml
+- httpcore
+- httpx
+- pycparser
+- pygments
+- pyquery
+- pysocks
+- python-dotenv
+- w3lib
+- websockets
+- cssselect
+
+None of these dependencies provide additional NOTICE text.
