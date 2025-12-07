@@ -1,45 +1,10 @@
-# requirements.txt
-# All dependencies are version-pinned for reproducibility and stability.
-selenium==4.10.0
-webdriver-manager==4.0.1
-undetected-chromedriver==3.5.5
-requests==2.31.0
-beautifulsoup4==4.12.3
-urllib3==2.0.7
+# Production Dependencies
+# MIGRATED: This file now references the new requirements/ directory structure
+# For modular installation, see requirements/README.md
 
-# Data handling and analysis
-pandas==2.2.3
-numpy==1.26.4
-python-dateutil==2.9.0.post0
-pytz==2025.1
-openpyxl==3.1.5
-scipy==1.11.4
-matplotlib==3.8.2
-seaborn==0.13.0
-plotly==5.18.0
-schedule==1.2.0
-
-# PDF and reporting
-fpdf==1.7.2
-
-# Flask and web dashboard (if used)
-Flask==3.1.1
-Flask-SQLAlchemy==3.1.1
-SQLAlchemy==2.0.41
-Werkzeug==3.1.3
-Jinja2==3.1.6
-itsdangerous==2.2.0
-MarkupSafe==3.0.2
-
-# Testing
-pytest==8.2.0
-
-# Utilities
-filelock==3.18.0
-colorama==0.4.6
-click==8.2.1
-
-# Cloudflare bypass and advanced scraping
-cloudscraper==1.2.71
-requests-html==0.10.0
-playwright==1.40.0
+# Core functionality + extended features + optional data handling + advanced features + testing
+-r requirements/base.txt
+-r requirements/web.txt
+-r requirements/data.txt
+-r requirements/advanced.txt
+-r requirements/testing.txt

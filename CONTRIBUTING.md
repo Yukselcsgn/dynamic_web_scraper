@@ -48,21 +48,6 @@ We welcome contributions from the community! Here are the main ways you can cont
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/dynamic-web-scraper.git
-cd dynamic-web-scraper
-
-# Create a virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Install development dependencies
-pip install -r requirements-dev.txt
-
-# Run tests to verify setup
-python -m pytest tests/
-```
 
 ### Development Tools
 - **Code Formatting**: `black .`

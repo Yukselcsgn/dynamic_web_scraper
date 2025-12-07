@@ -1,0 +1,9 @@
+# Install all dependencies (base + web + data + advanced + testing + dev)
+# Use this for complete development environment setup
+
+-r base.txt
+-r web.txt
+-r data.txt
+-r advanced.txt
+-r testing.txt
+-r dev.txt
