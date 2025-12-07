@@ -50,7 +50,6 @@ xenon>=0.7.0
 
 # Performance testing
 locust>=2.15.0
-asyncio-test>=0.1.0
 
 # Utilities
 rich>=13.0.0
