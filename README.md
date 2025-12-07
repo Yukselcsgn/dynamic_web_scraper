@@ -121,8 +121,11 @@ python -m venv .venv
 # or
 source .venv/bin/activate  # Mac/Linux
 
-# Install production dependencies
+# Install production dependencies (backward compatible)
 pip install -r requirements.txt
+
+# Or install only core dependencies (minimal installation)
+pip install -r requirements/base.txt
 
 # Install development dependencies (optional)
 pip install -r requirements-dev.txt
@@ -131,10 +134,27 @@ pip install -r requirements-dev.txt
 python setup_and_test.py
 ```
 
+### **Modular Installation (Recommended)**
+```bash
+# Core scraping only (minimal installation)
+pip install -r requirements/base.txt
+
+# Core + data analysis and visualization
+pip install -r requirements/base.txt -r requirements/data.txt
+
+# Core + advanced features (Cloudflare bypass, Flask dashboard)
+pip install -r requirements/base.txt -r requirements/advanced.txt
+
+# Full development environment
+pip install -r requirements/all.txt
+```
+
+See `requirements/README.md` for detailed dependency documentation.
+
 ### **Development Setup**
 ```bash
 # Install all dependencies including development tools
-pip install -r requirements.txt -r requirements-dev.txt
+pip install -r requirements-dev.txt
 
 # Run the comprehensive test suite
 python tests/run_tests.py --all --coverage
@@ -328,8 +348,17 @@ dynamic_web_scraper/
 ├── data/                            # Output data storage
 ├── logs/                            # Log files
 ├── config.json                      # Configuration
-├── requirements.txt                 # Production dependencies
-├── requirements-dev.txt             # Development dependencies
+├── requirements/                    # Organized dependency files
+│   ├── base.txt                     # Core dependencies
+│   ├── web.txt                      # Scheduling features
+│   ├── data.txt                     # Data analysis (optional)
+│   ├── advanced.txt                 # Experimental features
+│   ├── testing.txt                  # Testing framework
+│   ├── dev.txt                      # Development tools
+│   ├── all.txt                      # All dependencies
+│   └── README.md                    # Dependency documentation
+├── requirements.txt                 # Backward compatibility wrapper
+├── requirements-dev.txt             # Backward compatibility wrapper
 ├── pytest.ini                      # Pytest configuration
 ├── run_dashboard.py                 # Dashboard launcher
 └── README.md                        # Documentation
@@ -549,6 +578,9 @@ mypy scraper/
 ```bash
 # Ensure all dependencies are installed
 pip install -r requirements.txt
+
+# Or install specific dependencies as needed
+pip install -r requirements/base.txt
 ```
 
 #### **Selenium Issues**

@@ -1,0 +1,7 @@
+# Web scraping dependencies - extended capabilities
+# Install when using scheduled scraping or advanced features
+
+-r base.txt
+
+# Scheduling
+schedule==1.2.0

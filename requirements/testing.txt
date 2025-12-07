@@ -1,0 +1,22 @@
+# Testing dependencies
+# Install for running tests and checking code coverage
+
+-r base.txt
+
+# Core testing framework
+pytest==8.2.0
+pytest-cov>=4.0.0
+pytest-mock>=3.10.0
+pytest-xdist>=3.0.0
+pytest-html>=3.1.0
+pytest-timeout>=2.1.0
+
+# Testing utilities
+responses>=0.23.0
+httpretty>=1.1.4
+freezegun>=1.2.0
+factory-boy>=3.2.0
+
+# Coverage reporting
+coverage>=7.0.0
+coveralls>=3.3.0
