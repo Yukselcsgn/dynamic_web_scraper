@@ -24,8 +24,9 @@ from typing import Dict, List, Optional
 import requests
 
 from scraper.adaptive_config_manager import AdaptiveConfigManager
-from scraper.analytics import DataVisualizer
-from scraper.analytics.price_analyzer import PriceAnalyzer
+
+# from scraper.analytics import DataVisualizer
+# from scraper.analytics.price_analyzer import PriceAnalyzer
 from scraper.anti_bot.stealth_manager import StealthManager
 from scraper.comparison import SiteComparator
 from scraper.data_processing.data_enricher import DataEnricher
@@ -96,7 +97,13 @@ class ScraperInitializer:
         """Initialize advanced scraper features."""
         self.smart_detector = SmartSiteDetector()
         self.data_enricher = DataEnricher()
-        self.price_analyzer = PriceAnalyzer()
+
+        self.price_analyzer = None
+        if self.config.get("analytics", {}).get("enabled", False):
+            from scraper.analytics.price_analyzer import PriceAnalyzer
+
+            self.price_analyzer = PriceAnalyzer()
+
         self.stealth_manager = StealthManager(self.config)
         self.universal_extractor = UniversalExtractor()
         self.adaptive_config_manager = AdaptiveConfigManager()
@@ -126,7 +133,12 @@ class ScraperInitializer:
         self.automated_reporter = AutomatedReporter("data", alert_config, report_config)
 
         # Initialize data visualizer
-        self.data_visualizer = DataVisualizer("data/visualizations")
+        self.data_visualizer = None
+
+        if self.config.get("analytics", {}).get("enabled", False):
+            from scraper.analytics import DataVisualizer
+
+            self.data_visualizer = DataVisualizer("data/visualizations")
 
         # Initialize plugin manager
         self.plugin_manager = PluginManager("plugins")

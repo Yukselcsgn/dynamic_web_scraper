@@ -150,9 +150,21 @@ class DataProcessor:
         try:
             log_message("INFO", "Creating data visualizations...")
 
-            # This would use the data visualizer to create charts and graphs
-            # For now, return a placeholder
             visualizations = []
+
+            # Only create visualizations if visualizer is available
+            if self.data_visualizer and data:
+                try:
+                    # Create comprehensive dashboard (primary visualization)
+                    dashboard = self.data_visualizer.create_comprehensive_dashboard(
+                        data
+                    )
+                    if dashboard:
+                        visualizations.append(dashboard)
+                except Exception as viz_error:
+                    log_message(
+                        "WARNING", f"Failed to create visualizations: {viz_error}"
+                    )
 
             log_message("INFO", f"Created {len(visualizations)} visualizations")
             return visualizations
