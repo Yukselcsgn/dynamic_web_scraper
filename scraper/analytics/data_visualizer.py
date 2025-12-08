@@ -1099,3 +1099,6 @@ class DataVisualizer:
         except Exception as e:
             self.logger.error(f"Error creating summary table: {e}")
             return ""
+
+    def plot_prices(self, data):
+        return self.create_price_distribution(data)
