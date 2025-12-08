@@ -162,11 +162,13 @@ class Scraper:
         if enable_smart_detection:
             self.detect_site_profile()
 
-        # Step 2: Fetch raw data
-        raw_data = self._fetch_raw_data()
+        # Step 2: Fetch raw data with automatic fallback
+        raw_data = self._fetch_raw_data_with_fallback()
 
         if not raw_data:
-            log_message("WARNING", "No data extracted from the page.")
+            log_message(
+                "WARNING", "No data extracted from the page after all attempts."
+            )
             return self._create_empty_result()
 
         # Step 3: Process the data
@@ -203,6 +205,133 @@ class Scraper:
         except Exception as e:
             log_message("ERROR", f"Error fetching raw data: {e}")
             return []
+
+    def _fetch_raw_data_with_fallback(self) -> List[Dict]:
+        """
+        Fetch raw data with automatic fallback to advanced methods when empty.
+
+        Fallback chain:
+        1. Try initial fetch (respects site_profile.use_selenium)
+        2. If empty, retry with forced browser automation
+        3. If empty, try Playwright (if available)
+        4. If empty, try requests-html (if available)
+
+        Returns:
+            list: Raw extracted data from the first successful method
+        """
+        # Step 1: Try initial fetch
+        log_message("INFO", "Attempting initial data fetch...")
+        raw_data = self._fetch_raw_data()
+
+        if raw_data:
+            log_message(
+                "INFO", f"Initial fetch successful: {len(raw_data)} items extracted"
+            )
+            return raw_data
+
+        log_message(
+            "INFO", "Initial fetch returned no data, trying fallback methods..."
+        )
+
+        # Step 2: Retry with forced browser automation (if not already used)
+        if not (self.site_profile and self.site_profile.use_selenium):
+            log_message("INFO", "Fallback 1: Trying browser automation (Selenium)...")
+            try:
+                response = self.initializer.stealth_manager.fetch_with_stealth(
+                    url=self.url, method="GET", use_browser=True  # Force browser usage
+                )
+
+                if response and response.text:
+                    raw_data = self.data_extractor.extract_data(
+                        response.text, self.site_profile
+                    )
+                    if raw_data:
+                        log_message(
+                            "INFO",
+                            f"Browser automation successful: {len(raw_data)} items extracted",
+                        )
+                        return raw_data
+            except Exception as e:
+                log_message("INFO", f"Browser automation fallback failed: {e}")
+        else:
+            log_message("INFO", "Skipping browser automation fallback (already tried)")
+
+        # Step 3: Try Playwright if available
+        if (
+            hasattr(self.initializer.stealth_manager, "cloudflare_bypass")
+            and self.initializer.stealth_manager.cloudflare_bypass
+        ):
+            # Check if Playwright is available
+            try:
+                from scraper.anti_bot.cloudflare_bypass import PLAYWRIGHT_AVAILABLE
+
+                if PLAYWRIGHT_AVAILABLE:
+                    log_message(
+                        "INFO", "Fallback 2: Trying Playwright browser automation..."
+                    )
+                    try:
+                        import asyncio
+
+                        # Use existing async wrapper pattern
+                        loop = asyncio.new_event_loop()
+                        asyncio.set_event_loop(loop)
+                        content = loop.run_until_complete(
+                            self.initializer.stealth_manager.cloudflare_bypass.bypass_with_playwright(
+                                self.url
+                            )
+                        )
+                        loop.close()
+
+                        if content:
+                            raw_data = self.data_extractor.extract_data(
+                                content, self.site_profile
+                            )
+                            if raw_data:
+                                log_message(
+                                    "INFO",
+                                    f"Playwright successful: {len(raw_data)} items extracted",
+                                )
+                                return raw_data
+                    except Exception as e:
+                        log_message("INFO", f"Playwright fallback failed: {e}")
+            except ImportError:
+                pass  # Playwright not available
+
+        # Step 4: Try requests-html if available
+        if (
+            hasattr(self.initializer.stealth_manager, "cloudflare_bypass")
+            and self.initializer.stealth_manager.cloudflare_bypass
+        ):
+            try:
+                from scraper.anti_bot.cloudflare_bypass import REQUESTS_HTML_AVAILABLE
+
+                if REQUESTS_HTML_AVAILABLE:
+                    log_message(
+                        "INFO", "Fallback 3: Trying requests-html (JS rendering)..."
+                    )
+                    try:
+                        response = self.initializer.stealth_manager.cloudflare_bypass.bypass_with_requests_html(
+                            self.url
+                        )
+
+                        if response and response.text:
+                            raw_data = self.data_extractor.extract_data(
+                                response.text, self.site_profile
+                            )
+                            if raw_data:
+                                log_message(
+                                    "INFO",
+                                    f"Requests-html successful: {len(raw_data)} items extracted",
+                                )
+                                return raw_data
+                    except Exception as e:
+                        log_message("INFO", f"Requests-html fallback failed: {e}")
+            except ImportError:
+                pass  # Requests-html not available
+
+        # All fallback methods exhausted
+        log_message("INFO", "All fallback methods exhausted, no data found")
+        return []
 
     def _process_data(
         self, raw_data: List[Dict], enable_enrichment: bool, enable_analysis: bool

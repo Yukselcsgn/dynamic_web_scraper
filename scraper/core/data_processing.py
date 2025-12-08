@@ -90,8 +90,13 @@ class DataProcessor:
             data: Data to analyze
 
         Returns:
-            Price analysis result
+            Price analysis result or None if analyzer is unavailable
         """
+        # Guard against None price_analyzer (when analytics are disabled)
+        if self.price_analyzer is None:
+            log_message("INFO", "Price analysis skipped (analytics not enabled)")
+            return None
+
         try:
             log_message("INFO", "Performing price analysis...")
 

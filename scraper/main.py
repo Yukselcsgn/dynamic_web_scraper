@@ -136,7 +136,7 @@ def main():
         else:
             log_message("WARNING", f"No products found for URL: {url}.")
             # Create a summary report for debugging
-            scraper._create_debug_summary(url)
+            scraper.create_debug_summary(url)
             print(f"\n🔍 DEBUGGING INFO:")
             print(f"   • Check 'debug_html/' directory for saved HTML content")
             print(f"   • Check 'response.html' for the latest response")
