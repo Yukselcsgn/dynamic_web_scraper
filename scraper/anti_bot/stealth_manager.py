@@ -721,7 +721,16 @@ class StealthManager:
         # Select appropriate profile
         self.select_profile(url)
 
-        # Try Cloudflare bypass first for protected sites
+        # If browser automation explicitly requested, skip Cloudflare bypass
+        # This allows fallback chain to work properly when initial fetch returns empty data
+        if use_browser:
+            log_message(
+                "INFO",
+                "Browser automation explicitly requested, skipping Cloudflare bypass",
+            )
+            return self._fetch_with_browser(url, method, data)
+
+        # Try Cloudflare bypass first for protected sites (only if browser not explicitly requested)
         if self.cloudflare_bypass:
             log_message("INFO", "Attempting Cloudflare bypass...")
             response = self.cloudflare_bypass.bypass_cloudflare(url, method, data)
@@ -733,10 +742,8 @@ class StealthManager:
                     "WARNING", "Cloudflare bypass failed, trying other methods..."
                 )
 
-        # Use browser automation if required or requested
-        if use_browser or (
-            self.current_profile and self.current_profile.browser_automation
-        ):
+        # Use browser automation if required by profile
+        if self.current_profile and self.current_profile.browser_automation:
             return self._fetch_with_browser(url, method, data)
 
         # For sahibinden.com, try browser automation if requests fail
