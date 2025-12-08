@@ -230,7 +230,7 @@ class Scraper:
             return raw_data
 
         log_message(
-            "INFO", "Initial fetch returned no data, trying fallback methods..."
+            "INFO", "Extracted 0 items from initial fetch → continuing fallback..."
         )
 
         # Step 2: Retry with forced browser automation (if not already used)
@@ -251,6 +251,11 @@ class Scraper:
                             f"Browser automation successful: {len(raw_data)} items extracted",
                         )
                         return raw_data
+                    else:
+                        log_message(
+                            "INFO",
+                            "Extracted 0 items from browser automation → continuing fallback...",
+                        )
             except Exception as e:
                 log_message("INFO", f"Browser automation fallback failed: {e}")
         else:
@@ -292,6 +297,11 @@ class Scraper:
                                     f"Playwright successful: {len(raw_data)} items extracted",
                                 )
                                 return raw_data
+                            else:
+                                log_message(
+                                    "INFO",
+                                    "Extracted 0 items from Playwright → continuing fallback...",
+                                )
                     except Exception as e:
                         log_message("INFO", f"Playwright fallback failed: {e}")
             except ImportError:
@@ -324,6 +334,11 @@ class Scraper:
                                     f"Requests-html successful: {len(raw_data)} items extracted",
                                 )
                                 return raw_data
+                            else:
+                                log_message(
+                                    "INFO",
+                                    "Extracted 0 items from requests-html → all fallbacks exhausted",
+                                )
                     except Exception as e:
                         log_message("INFO", f"Requests-html fallback failed: {e}")
             except ImportError:
