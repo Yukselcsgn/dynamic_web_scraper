@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.1] - 2025-12-09
+### Fixed
+- Restored backward compatibility for legacy Scraper parameters (`headless`, `timeout`)
+- Prevented crashes caused by unexpected keyword arguments
+
 All notable changes to the Dynamic Web Scraper project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),

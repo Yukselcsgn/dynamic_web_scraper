@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dynamic-web-scraper"
-version = "1.0.0"
+version = "1.0.1"
 description = "Advanced dynamic web scraper with Cloudflare bypass, JS rendering, Selenium, Playwright fallback and adaptive extraction."
 readme = "README.md"
 requires-python = ">=3.8"
@@ -35,7 +35,14 @@ dependencies = [
     "selenium>=4.15.2",
     "playwright>=1.40.0",
     "undetected-chromedriver>=3.5.5",
-    "requests-html>=0.10.0"
+    "requests-html>=0.10.0",
+    "numpy==1.26.4",
+    "pandas==2.2.3",
+    "scipy==1.11.4",
+    "matplotlib==3.9.2",
+    "seaborn==0.13.0",
+    "plotly==5.18.0",
+    "schedule==1.2.0"
 ]
 
 [project.urls]

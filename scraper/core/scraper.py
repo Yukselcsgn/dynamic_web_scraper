@@ -49,7 +49,12 @@ class Scraper:
     """
 
     def __init__(
-        self, url: str, config: Dict, max_retries: int = 3, retry_delay: int = 2
+        self,
+        url: str,
+        config: Dict,
+        max_retries: int = 3,
+        retry_delay: int = 2,
+        **kwargs,
     ):
         """
         Initialize the scraper with all its components.
@@ -59,7 +64,55 @@ class Scraper:
             config: Configuration dictionary
             max_retries: Maximum retry attempts
             retry_delay: Delay between retries in seconds
+            **kwargs: Legacy keyword arguments (deprecated)
         """
+        import warnings
+
+        # Handle legacy keyword arguments for backward compatibility
+        if kwargs:
+            # Map known legacy kwargs to config
+            if "headless" in kwargs:
+                warnings.warn(
+                    "The 'headless' parameter is deprecated and will be removed in v1.1.0. "
+                    "Please use config['selenium']['headless'] instead.",
+                    DeprecationWarning,
+                    stacklevel=2,
+                )
+                # Ensure selenium config exists
+                if "selenium" not in config:
+                    config["selenium"] = {}
+                if "driver" not in config["selenium"]:
+                    config["selenium"]["driver"] = {}
+                config["selenium"]["driver"]["headless"] = kwargs.pop("headless")
+
+            if "js_render" in kwargs:
+                warnings.warn(
+                    "The 'js_render' parameter is deprecated and will be removed in v1.1.0. "
+                    "Please use config settings instead.",
+                    DeprecationWarning,
+                    stacklevel=2,
+                )
+                # Log and ignore for now
+                log_message(
+                    "WARN",
+                    f"Legacy parameter 'js_render' ignored: {kwargs.pop('js_render')}",
+                )
+
+            if "timeout" in kwargs:
+                warnings.warn(
+                    "The 'timeout' parameter is deprecated and will be removed in v1.1.0. "
+                    "Please use config['timeout'] instead.",
+                    DeprecationWarning,
+                    stacklevel=2,
+                )
+                config["timeout"] = kwargs.pop("timeout")
+
+            # Log any unknown kwargs but don't crash
+            if kwargs:
+                log_message(
+                    "WARN", f"Unknown keyword arguments ignored: {list(kwargs.keys())}"
+                )
+
         self.url = url
         self.config = config
         self.max_retries = max_retries
