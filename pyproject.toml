@@ -1,19 +1,19 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "dynamic-web-scraper"
-version = "0.1.0"
+version = "1.0.0"
 description = "Advanced dynamic web scraper with Cloudflare bypass, JS rendering, Selenium, Playwright fallback and adaptive extraction."
 readme = "README.md"
 requires-python = ">=3.8"
 
 authors = [
-    { name="Yüksel Coşgun", email="yukselcosgun1@gmail.com" }
+    { name = "Yüksel Coşgun", email = "yukselcosgun1@gmail.com" }
 ]
 
-license = {file = "LICENSE"}
+license = "Apache-2.0"
 
 keywords = [
     "scraping",
@@ -35,10 +35,16 @@ dependencies = [
     "selenium>=4.15.2",
     "playwright>=1.40.0",
     "undetected-chromedriver>=3.5.5",
-    "requests-html>=0.10.0",
+    "requests-html>=0.10.0"
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/Yukselcsgn/dynamic_web_scraper"
+Homepage = "https://github.com/Yukselcsgn/dynamic_web_scraper"
 Source = "https://github.com/Yukselcsgn/dynamic_web_scraper"
 Issues = "https://github.com/Yukselcsgn/dynamic_web_scraper/issues"
+
+[tool.setuptools]
+license-files = ["LICENSE"]
+
+[tool.setuptools.packages.find]
+include = ["scraper*"]
