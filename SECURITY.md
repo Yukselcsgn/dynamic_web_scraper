@@ -20,7 +20,7 @@ We take security vulnerabilities seriously. If you discover a security vulnerabi
 Security vulnerabilities should be reported privately to prevent potential exploitation.
 
 ### 2. Email the security team
-Send an email to: [security@dynamic-web-scraper.com](mailto:security@dynamic-web-scraper.com)
+Send an email to: [yukselcosgun1@gmail.com](mailto:yukselcosgun1@gmail.com)
 
 ### 3. Include the following information in your report:
 - **Description**: A clear description of the vulnerability
