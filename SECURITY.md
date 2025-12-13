@@ -96,7 +96,7 @@ Security updates are released as patch versions (e.g., 2.3.1, 2.3.2) and are mar
 
 ## Contact Information
 
-- **Security Email**: [security@dynamic-web-scraper.com](mailto:security@dynamic-web-scraper.com)
+- **Security Email**: [yukselcosgun1@gmail.com](mailto:yukselcosgun1@gmail.com)
 - **PGP Key**: Available upon request
 - **Response Time**: Within 48 hours
 
