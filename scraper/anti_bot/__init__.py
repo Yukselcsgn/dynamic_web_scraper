@@ -20,5 +20,11 @@ This module provides advanced anti-bot evasion techniques to bypass
 """
 
 from .stealth_manager import StealthManager, StealthProfile
+from .strategy import AntiBotStrategy, body_suggests_bot_challenge
 
-__all__ = ["StealthManager", "StealthProfile"]
+__all__ = [
+    "StealthManager",
+    "StealthProfile",
+    "AntiBotStrategy",
+    "body_suggests_bot_challenge",
+]

@@ -247,6 +247,7 @@ class Scraper:
                 use_browser=self.site_profile.use_selenium
                 if self.site_profile
                 else False,
+                site_profile=self.site_profile,
             )
 
             if not response or not response.text:
@@ -291,7 +292,10 @@ class Scraper:
             log_message("INFO", "Fallback 1: Trying browser automation (Selenium)...")
             try:
                 response = self.initializer.stealth_manager.fetch_with_stealth(
-                    url=self.url, method="GET", use_browser=True  # Force browser usage
+                    url=self.url,
+                    method="GET",
+                    use_browser=True,
+                    site_profile=self.site_profile,
                 )
 
                 if response and response.text:

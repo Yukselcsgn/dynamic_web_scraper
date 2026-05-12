@@ -356,6 +356,8 @@ class SmartSiteDetector:
             "follow_redirects": True,
             "verify_ssl": True,
             "session_persistence": True,
+            "cloudflare_protection": "cloudflare" in anti_bot_measures,
+            "javascript_required": use_selenium,
             "rate_limiting": {
                 "requests_per_minute": 30 if anti_bot_measures else 60,
                 "delay_between_requests": 2 if anti_bot_measures else 1,

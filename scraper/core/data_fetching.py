@@ -120,22 +120,18 @@ class DataFetcher:
             try:
                 self.stats["requests_made"] += 1
 
-                # Determine if we need browser automation
-                use_browser = False
-                if (
+                # Respect site profile only (no hard-coded domains)
+                use_browser = bool(
                     hasattr(self, "site_profile")
                     and self.site_profile
                     and self.site_profile.use_selenium
-                ):
-                    use_browser = True
-                elif "sahibinden.com" in url.lower():
-                    # Force browser automation for sahibinden.com
-                    use_browser = True
-                    log_message("INFO", "Forcing browser automation for sahibinden.com")
+                )
 
-                # Use stealth manager for advanced anti-bot evasion
                 response = self.stealth_manager.fetch_with_stealth(
-                    url=url, method="GET", use_browser=use_browser
+                    url=url,
+                    method="GET",
+                    use_browser=use_browser,
+                    site_profile=getattr(self, "site_profile", None),
                 )
 
                 response.raise_for_status()

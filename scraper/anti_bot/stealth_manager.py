@@ -20,7 +20,7 @@ This module implements sophisticated techniques to bypass anti-bot measures
 including 403 Forbidden errors, CAPTCHAs, and other detection mechanisms.
 """
 
-import base64
+import copy
 import hashlib
 import json
 import logging
@@ -28,8 +28,10 @@ import random
 import threading
 import time
 from dataclasses import dataclass
-from typing import Dict, List, Optional, Tuple
-from urllib.parse import parse_qs, urlparse
+from typing import Any, Dict, List, Optional, Tuple
+from urllib.parse import urlparse
+
+from scraper.anti_bot.strategy import AntiBotStrategy, body_suggests_bot_challenge
 
 import requests
 from requests.adapters import HTTPAdapter
@@ -126,9 +128,11 @@ class StealthManager:
             config: Configuration dictionary
         """
         self.config = config or {}
+        self.strategy = AntiBotStrategy.from_config(self.config)
         self.session = requests.Session()
         self.driver = None
         self.current_profile = None
+        self._last_site_profile: Any = None
         self._request_count = 0
         self._max_requests_per_session = 50  # Limit requests per session
         self._session_start_time = time.time()
@@ -207,6 +211,26 @@ class StealthManager:
     def _initialize_profiles(self) -> Dict[str, StealthProfile]:
         """Initialize different stealth profiles for different scenarios."""
 
+        minimal_headers = {
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Accept-Encoding": "gzip, deflate",
+            "Connection": "keep-alive",
+        }
+
+        balanced_headers = {
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.5",
+            "Accept-Encoding": "gzip, deflate, br",
+            "DNT": "1",
+            "Connection": "keep-alive",
+            "Upgrade-Insecure-Requests": "1",
+            "Sec-Fetch-Dest": "document",
+            "Sec-Fetch-Mode": "navigate",
+            "Sec-Fetch-Site": "none",
+            "Cache-Control": "max-age=0",
+        }
+
         # Modern browser headers
         modern_headers = {
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
@@ -240,6 +264,40 @@ class StealthManager:
         }
 
         return {
+            "minimal": StealthProfile(
+                name="minimal",
+                user_agents=[
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                ],
+                headers=minimal_headers,
+                cookies={},
+                wait_times=(0.05, 0.35),
+                mouse_movements=False,
+                scroll_behavior=False,
+                fingerprint_spoofing=False,
+                proxy_rotation=False,
+                session_persistence=True,
+                captcha_solving=False,
+                browser_automation=False,
+            ),
+            "balanced": StealthProfile(
+                name="balanced",
+                user_agents=[
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                ],
+                headers=balanced_headers,
+                cookies={},
+                wait_times=(0.4, 1.2),
+                mouse_movements=False,
+                scroll_behavior=False,
+                fingerprint_spoofing=False,
+                proxy_rotation=False,
+                session_persistence=True,
+                captcha_solving=False,
+                browser_automation=False,
+            ),
             "stealth": StealthProfile(
                 name="stealth",
                 user_agents=[
@@ -249,14 +307,14 @@ class StealthManager:
                 ],
                 headers=modern_headers,
                 cookies={},
-                wait_times=(2.0, 5.0),
+                wait_times=(1.0, 3.0),
                 mouse_movements=True,
                 scroll_behavior=True,
                 fingerprint_spoofing=True,
                 proxy_rotation=True,
                 session_persistence=True,
-                captcha_solving=True,
-                browser_automation=True,
+                captcha_solving=False,
+                browser_automation=False,
             ),
             "mobile": StealthProfile(
                 name="mobile",
@@ -273,8 +331,8 @@ class StealthManager:
                 fingerprint_spoofing=True,
                 proxy_rotation=True,
                 session_persistence=True,
-                captcha_solving=True,
-                browser_automation=True,
+                captcha_solving=False,
+                browser_automation=False,
             ),
             "aggressive": StealthProfile(
                 name="aggressive",
@@ -291,7 +349,7 @@ class StealthManager:
                 fingerprint_spoofing=True,
                 proxy_rotation=True,
                 session_persistence=True,
-                captcha_solving=True,
+                captcha_solving=False,
                 browser_automation=True,
             ),
         }
@@ -314,48 +372,22 @@ class StealthManager:
         # Set default timeout
         self.session.timeout = 30
 
-    def select_profile(self, url: str, site_type: str = None) -> StealthProfile:
+    def select_profile(self, url: str, site_profile=None) -> StealthProfile:
         """
-        Select the most appropriate stealth profile based on URL and site type.
+        Select a fetch profile from ``anti_bot`` strategy + optional site profile.
 
-        Args:
-            url: Target URL
-            site_type: Type of website (e.g., 'ecommerce', 'news', 'social')
-
-        Returns:
-            Selected stealth profile
+        Uses a deep copy so per-request mutations never leak across hosts.
         """
+        key = self.strategy.profile_name_for_url(url, site_profile)
+        template = self.profiles.get(key) or self.profiles["minimal"]
+        self.current_profile = copy.deepcopy(template)
         domain = urlparse(url).netloc.lower()
-
-        # Site-specific profile selection
-        if "sahibinden.com" in domain:
-            # Turkish e-commerce site - use aggressive profile with enhanced anti-detection
-            profile = self.profiles["aggressive"]
-            # Add Turkish-specific headers
-            profile.headers.update(
-                {
-                    "Accept-Language": "tr-TR,tr;q=0.9,en;q=0.8",
-                    "Referer": "https://www.sahibinden.com/",
-                    "Origin": "https://www.sahibinden.com",
-                    "Sec-Fetch-Site": "same-origin",
-                    "Sec-Fetch-Mode": "navigate",
-                    "Sec-Fetch-User": "?1",
-                    "Sec-Fetch-Dest": "document",
-                }
-            )
-        elif any(site in domain for site in ["amazon", "ebay", "walmart"]):
-            # Major e-commerce - use stealth profile
-            profile = self.profiles["stealth"]
-        elif any(site in domain for site in ["facebook", "twitter", "instagram"]):
-            # Social media - use mobile profile
-            profile = self.profiles["mobile"]
-        else:
-            # Default to stealth profile
-            profile = self.profiles["stealth"]
-
-        self.current_profile = profile
-        logging.info(f"Selected stealth profile: {profile.name} for {domain}")
-        return profile
+        log_message(
+            "INFO",
+            f"anti_bot: profile '{self.current_profile.name}' "
+            f"(config mode={self.strategy.mode}, host={domain})",
+        )
+        return self.current_profile
 
     def _generate_fingerprint(self) -> Dict[str, str]:
         """Generate browser fingerprint to appear more human-like."""
@@ -405,58 +437,61 @@ class StealthManager:
         }
 
     def _add_stealth_headers(self, headers: Dict[str, str]) -> Dict[str, str]:
-        """Add stealth headers to appear more human-like."""
+        """Merge profile headers; optional client-hint / fingerprint layer."""
 
         if not self.current_profile:
             return headers
 
-        # Add fingerprint-based headers
-        fingerprint = self._generate_fingerprint()
-
         enhanced_headers = headers.copy()
         enhanced_headers.update(self.current_profile.headers)
 
-        # Add dynamic headers
-        enhanced_headers.update(
-            {
-                "Accept-Language": fingerprint["language"],
-                "DNT": fingerprint["do_not_track"],
-                "Sec-CH-UA": '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
-                "Sec-CH-UA-Mobile": "?0",
-                "Sec-CH-UA-Platform": f'"{fingerprint["platform"]}"',
-                "Sec-Fetch-Site": "none",
-                "Sec-Fetch-Mode": "navigate",
-                "Sec-Fetch-User": "?1",
-                "Sec-Fetch-Dest": "document",
-                "Upgrade-Insecure-Requests": "1",
-            }
-        )
+        if not self.current_profile.fingerprint_spoofing:
+            return enhanced_headers
+
+        fingerprint = self._generate_fingerprint()
+        enhanced_headers["Accept-Language"] = fingerprint["language"]
+        enhanced_headers["DNT"] = fingerprint["do_not_track"]
+
+        if self.strategy.use_client_hints:
+            enhanced_headers.update(
+                {
+                    "Sec-CH-UA": '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
+                    "Sec-CH-UA-Mobile": "?0",
+                    "Sec-CH-UA-Platform": f'"{fingerprint["platform"]}"',
+                    "Sec-Fetch-Site": "none",
+                    "Sec-Fetch-Mode": "navigate",
+                    "Sec-Fetch-User": "?1",
+                    "Sec-Fetch-Dest": "document",
+                    "Upgrade-Insecure-Requests": "1",
+                }
+            )
 
         return enhanced_headers
 
     def _humanize_timing(self):
-        """Add human-like timing delays."""
+        """Respect ``anti_bot.human_delay_style`` (none / light / full)."""
+
+        style = self.strategy.human_delay_style
+        if style == "none":
+            return
+
+        if style == "light":
+            time.sleep(random.uniform(0.1, 0.45))
+            return
 
         if self.human_behavior:
-            # Use human behavior simulator for more realistic timing
             self.human_behavior.simulate_realistic_delay("general")
             return
 
         if not self.current_profile:
-            time.sleep(random.uniform(1, 3))
+            time.sleep(random.uniform(0.5, 1.5))
             return
 
         min_wait, max_wait = self.current_profile.wait_times
-
-        # Add random delay
         delay = random.uniform(min_wait, max_wait)
-
-        # Add micro-delays for more human-like behavior
-        micro_delays = [random.uniform(0.1, 0.5) for _ in range(random.randint(1, 3))]
-
+        micro_delays = [random.uniform(0.05, 0.25) for _ in range(random.randint(1, 2))]
         for micro_delay in micro_delays:
             time.sleep(micro_delay)
-
         time.sleep(delay)
 
     def _rotate_user_agent(self) -> str:
@@ -466,6 +501,31 @@ class StealthManager:
             return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 
         return random.choice(self.current_profile.user_agents)
+
+    def _fetch_plain_http(
+        self, url: str, method: str, data: Optional[Dict]
+    ) -> Optional[requests.Response]:
+        """
+        Single lightweight HTTP request (minimal headers, no bypass stack).
+
+        Prefer ``config['user_agent']`` when set so the run matches a normal client.
+        """
+        try:
+            ua = self.config.get("user_agent") or self._rotate_user_agent()
+            accept_lang = self.config.get("accept_language", "en-US,en;q=0.9")
+            headers = {
+                "User-Agent": ua,
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                "Accept-Language": accept_lang,
+                "Accept-Encoding": "gzip, deflate",
+                "Connection": "keep-alive",
+            }
+            return self.session.request(
+                method=method, url=url, headers=headers, data=data, timeout=30
+            )
+        except requests.exceptions.RequestException as e:
+            log_message("WARNING", f"Plain HTTP request failed: {e}")
+            return None
 
     def _setup_browser_automation(self) -> bool:
         """Setup browser automation for sites that require JavaScript."""
@@ -697,61 +757,72 @@ class StealthManager:
         method: str = "GET",
         data: Dict = None,
         use_browser: bool = False,
+        site_profile=None,
     ) -> requests.Response:
         """
-        Fetch URL with advanced stealth techniques and Cloudflare bypass.
+        Fetch URL using modular anti-bot strategy (see config ``anti_bot``).
 
         Args:
             url: Target URL
             method: HTTP method
-            data: Request data
-            use_browser: Whether to use browser automation
-
-        Returns:
-            Response object
+            data: Request body for non-GET
+            use_browser: Force real browser (e.g. site profile requires JS)
+            site_profile: Optional detection profile for adaptive escalation
         """
 
-        # Check if session should be reset
         if self._should_reset_session():
             self._reset_session()
 
-        # Increment request counter
         self._request_count += 1
+        self._last_site_profile = site_profile
+        self.select_profile(url, site_profile=site_profile)
 
-        # Select appropriate profile
-        self.select_profile(url)
-
-        # If browser automation explicitly requested, skip Cloudflare bypass
-        # This allows fallback chain to work properly when initial fetch returns empty data
         if use_browser:
             log_message(
                 "INFO",
-                "Browser automation explicitly requested, skipping Cloudflare bypass",
+                "Browser automation explicitly requested (site-adaptive path)",
             )
             return self._fetch_with_browser(url, method, data)
 
-        # Try Cloudflare bypass first for protected sites (only if browser not explicitly requested)
-        if self.cloudflare_bypass:
-            log_message("INFO", "Attempting Cloudflare bypass...")
+        if self.strategy.cloudflare_first and self.cloudflare_bypass:
+            log_message("INFO", "anti_bot: cloudflare-first pipeline (aggressive mode)")
             response = self.cloudflare_bypass.bypass_cloudflare(url, method, data)
             if response and response.status_code == 200:
-                log_message("INFO", "Successfully bypassed Cloudflare protection")
-                return response
-            else:
+                if not body_suggests_bot_challenge(response.text):
+                    return response
                 log_message(
-                    "WARNING", "Cloudflare bypass failed, trying other methods..."
+                    "INFO",
+                    "Bypass returned 200 but challenge-like HTML; continuing escalation",
                 )
 
-        # Use browser automation if required by profile
+        if self.strategy.plain_http_first:
+            response = self._fetch_plain_http(url, method, data)
+            if response is not None and response.status_code == 200:
+                if not body_suggests_bot_challenge(response.text):
+                    log_message("INFO", "Plain HTTP succeeded; skipping heavier stacks")
+                    return response
+                log_message(
+                    "INFO",
+                    "Plain HTTP 200 with challenge-like body; trying stronger fetchers",
+                )
+
+        if not self.strategy.cloudflare_first and self.cloudflare_bypass:
+            log_message(
+                "INFO",
+                "anti_bot: trying TLS / Cloudflare-friendly tools after plain HTTP",
+            )
+            response = self.cloudflare_bypass.bypass_cloudflare(url, method, data)
+            if response and response.status_code == 200:
+                if not body_suggests_bot_challenge(response.text):
+                    return response
+
         if self.current_profile and self.current_profile.browser_automation:
+            log_message(
+                "INFO",
+                "anti_bot: profile tier requests browser automation",
+            )
             return self._fetch_with_browser(url, method, data)
 
-        # For sahibinden.com, try browser automation if requests fail
-        if "sahibinden.com" in url.lower():
-            log_message("INFO", "Attempting browser automation for sahibinden.com")
-            return self._fetch_with_browser(url, method, data)
-
-        # Use enhanced requests
         return self._fetch_with_requests(url, method, data)
 
     def _fetch_with_requests(
@@ -792,8 +863,9 @@ class StealthManager:
                         logging.error(
                             f"403 Forbidden after {max_retries} attempts. Site may be blocking requests."
                         )
-                        # Try browser automation as last resort
-                        return self._fetch_with_browser(url, method, data)
+                        if self.strategy.browser_on_forbidden:
+                            return self._fetch_with_browser(url, method, data)
+                        return response
 
                 # Store cookies for session persistence
                 if response.cookies:
