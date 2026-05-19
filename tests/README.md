@@ -2,8 +2,16 @@
 
 The `tests/` directory contains the full, enterprise-grade test
 architecture for the **Dynamic Web Scraper** project.\
-📌 *Note:* The structure is fully implemented, but most test files are
-currently **skeletons/placeholders** awaiting full test logic.
+📌 *Note:* The directory layout comes from `feature/test-setup`. Most files
+are still **skeletons**; the first implemented suites live under
+`unit/core`, `unit/anti_bot`, and `unit/site_detection`.
+
+### Quick run (implemented unit tests)
+
+```bash
+pip install -r requirements/testing.txt
+PYTHONPATH=. pytest -c tests/pytest.ini tests/unit/core tests/unit/anti_bot tests/unit/site_detection
+```
 
 This test suite is designed to support:
 

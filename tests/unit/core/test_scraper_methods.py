@@ -144,8 +144,10 @@ class TestScraperMethods:
         calls = (
             scraper_instance.initializer.stealth_manager.fetch_with_stealth.call_args_list
         )
-        assert calls[0].kwargs.get("use_browser") is False  # From site_profile
-        assert calls[1].kwargs.get("use_browser") is True  # Forced fallback
+        assert calls[0].kwargs.get("use_browser") is False
+        assert calls[0].kwargs.get("site_profile") is scraper_instance.site_profile
+        assert calls[1].kwargs.get("use_browser") is True
+        assert calls[1].kwargs.get("site_profile") is scraper_instance.site_profile
 
     def test_context_manager_cleanup(self, mock_initializer, mock_components):
         """Test context manager calls cleanup."""

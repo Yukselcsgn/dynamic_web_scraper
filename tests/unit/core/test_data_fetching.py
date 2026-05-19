@@ -139,24 +139,29 @@ class TestDataFetcher:
 
         # Assert
         mock_stealth_manager.fetch_with_stealth.assert_called_with(
-            url=url, method="GET", use_browser=True
+            url=url,
+            method="GET",
+            use_browser=True,
+            site_profile=mock_profile,
         )
 
-    def test_fetch_sahibinden_special_case(self, data_fetcher, mock_stealth_manager):
-        """Test forced browser automation for sahibinden.com."""
-        # Arrange
-        url = "https://www.sahibinden.com/test"
+    def test_fetch_without_site_profile_uses_plain_http_path(
+        self, data_fetcher, mock_stealth_manager
+    ):
+        """Without site_profile, browser automation is not forced."""
+        url = "https://www.example.com/list"
         mock_response = MagicMock()
         mock_response.text = "<html>content</html>"
         mock_stealth_manager.fetch_with_stealth.return_value = mock_response
         data_fetcher.parse_response = MagicMock(return_value=[{"a": 1}])
 
-        # Act
         data_fetcher.fetch_data(url)
 
-        # Assert
         mock_stealth_manager.fetch_with_stealth.assert_called_with(
-            url=url, method="GET", use_browser=True
+            url=url,
+            method="GET",
+            use_browser=False,
+            site_profile=None,
         )
 
     def test_parse_response_default(self, data_fetcher):

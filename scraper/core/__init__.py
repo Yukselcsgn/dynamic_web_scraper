@@ -19,6 +19,14 @@ Core scraper functionality package.
 This package contains the main scraper classes and core functionality.
 """
 
-from .scraper import Scraper
+from typing import Any
 
 __all__ = ["Scraper"]
+
+
+def __getattr__(name: str) -> Any:
+    if name == "Scraper":
+        from .scraper import Scraper
+
+        return Scraper
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
