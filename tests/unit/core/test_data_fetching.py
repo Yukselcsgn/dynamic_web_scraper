@@ -116,8 +116,9 @@ class TestDataFetcher:
         # Assert
         assert result["data_items_extracted"] == 0
         assert result["raw_data"] == []
-        # Checks retry behavior for empty data (it retries if no data extracted)
-        assert mock_stealth_manager.fetch_with_stealth.call_count == 2
+        # A successful request with an empty parse result is final: no re-request
+        assert mock_stealth_manager.fetch_with_stealth.call_count == 1
+        assert data_fetcher.stats["successful_requests"] == 1
 
     def test_fetch_with_site_profile_selenium(self, data_fetcher, mock_stealth_manager):
         """Test that use_browser is True when site_profile.use_selenium is True."""
@@ -164,8 +165,32 @@ class TestDataFetcher:
             site_profile=None,
         )
 
-    def test_parse_response_default(self, data_fetcher):
-        """Test the default parse_response method."""
-        # The default method just logs and returns [], assuming placeholder behavior
-        result = data_fetcher.parse_response("some html")
-        assert result == []
+    def test_parse_response_without_extractor_returns_empty(self, data_fetcher):
+        """Without an extractor nothing can be parsed; result is []."""
+        assert data_fetcher.parse_response("some html") == []
+
+    def test_parse_response_delegates_to_extractor(
+        self, mock_stealth_manager, mock_stats
+    ):
+        extractor = MagicMock()
+        extractor.extract_data.return_value = [{"title": "x"}]
+        profile = MagicMock()
+        fetcher = DataFetcher(
+            mock_stealth_manager, mock_stats, extractor=extractor, site_profile=profile
+        )
+
+        assert fetcher.parse_response("<html/>") == [{"title": "x"}]
+        extractor.extract_data.assert_called_once_with("<html/>", profile)
+
+    def test_parse_error_is_not_retried(self, mock_stealth_manager, mock_stats):
+        extractor = MagicMock()
+        extractor.extract_data.side_effect = ValueError("bad markup")
+        fetcher = DataFetcher(mock_stealth_manager, mock_stats, extractor=extractor)
+        response = MagicMock()
+        response.text = "<html>x</html>"
+        mock_stealth_manager.fetch_with_stealth.return_value = response
+
+        result = fetcher.fetch_data("http://example.com", max_retries=3)
+
+        assert result["raw_data"] == []
+        assert mock_stealth_manager.fetch_with_stealth.call_count == 1
