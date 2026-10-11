@@ -12,10 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""Dynamic Web Scraper package (lazy exports for faster submodule imports)."""
+
+from importlib import import_module
+from typing import Any
+
 from .config import load_config
-from .core.scraper import Scraper
 from .logging_manager.logging_manager import log_message
-from .main import main
 from .user_agent_manager.user_agent_manager import UserAgentManager
 
 __all__ = ["Scraper", "UserAgentManager", "log_message", "load_config", "main"]
+
+_LAZY_EXPORTS = {
+    "Scraper": (".core.scraper", "Scraper"),
+    "main": (".main", "main"),
+}
+
+
+def __getattr__(name: str) -> Any:
+    if name in _LAZY_EXPORTS:
+        module_name, attr = _LAZY_EXPORTS[name]
+        module = import_module(module_name, __package__)
+        return getattr(module, attr)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

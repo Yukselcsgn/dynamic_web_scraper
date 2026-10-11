@@ -17,6 +17,8 @@ import logging
 from .proxy_loader import load_proxies_from_api, load_proxies_from_file
 from .proxy_validator import test_proxies
 
+logger = logging.getLogger(__name__)
+
 
 class ProxyManager:
     def __init__(self, source="file", file_path=None, api_url=None):
@@ -32,8 +34,7 @@ class ProxyManager:
         self.api_url = api_url
         self.load_proxies()
 
-        logging.basicConfig(filename="logs/scraper.log", level=logging.INFO)
-        logging.info(f"ProxyManager başlatıldı: Kaynak - {self.source}")
+        logger.info(f"ProxyManager başlatıldı: Kaynak - {self.source}")
 
     def load_proxies(self):
         """
@@ -50,37 +51,37 @@ class ProxyManager:
             if not self.proxies:
                 raise ValueError("Yüklenen proxy listesi boş!")
 
-            logging.info(f"{len(self.proxies)} proxy başarıyla yüklendi.")
+            logger.info(f"{len(self.proxies)} proxy başarıyla yüklendi.")
             # Yüklenen proxy'lerin geçerliliğini kontrol edelim.
             self.proxies = test_proxies(self.proxies)
 
         except Exception as e:
-            logging.error(f"Proxy'ler yüklenirken hata: {e}")
+            logger.error(f"Proxy'ler yüklenirken hata: {e}")
             raise
 
     def manage_proxies(self):
         """
         Proxy havuzunu yönetir ve geçersiz olanları çıkarır.
         """
-        logging.info("Proxy havuzu yönetimi başlatıldı.")
+        logger.info("Proxy havuzu yönetimi başlatıldı.")
         try:
             self.proxies = test_proxies(self.proxies)
-            logging.info(f"{len(self.proxies)} geçerli proxy mevcut.")
+            logger.info(f"{len(self.proxies)} geçerli proxy mevcut.")
         except Exception as e:
-            logging.error(f"Proxy yönetimi sırasında hata: {e}")
+            logger.error(f"Proxy yönetimi sırasında hata: {e}")
 
     def remove_invalid_proxies(self):
         """
         Geçersiz proxy'leri havuzdan çıkarır.
         """
-        logging.info("Geçersiz proxy'ler çıkarılıyor.")
+        logger.info("Geçersiz proxy'ler çıkarılıyor.")
         try:
             valid_proxies = test_proxies(self.proxies)
             invalid_count = len(self.proxies) - len(valid_proxies)
             self.proxies = valid_proxies
-            logging.info(
+            logger.info(
                 f"{invalid_count} geçersiz proxy çıkarıldı. Kalan geçerli proxy sayısı: {len(self.proxies)}"
             )
         except Exception as e:
-            logging.error(f"Geçersiz proxy'ler çıkarılırken hata: {e}")
+            logger.error(f"Geçersiz proxy'ler çıkarılırken hata: {e}")
             raise

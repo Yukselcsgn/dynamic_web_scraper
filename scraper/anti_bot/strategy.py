@@ -2,141 +2,156 @@
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 """
-Modular anti-bot / fetch strategy.
+Anti-bot strategy selection.
 
-Defaults favor polite, site-adaptive behavior: plain HTTP first, escalation
-only when the site profile or HTTP response indicates stronger measures.
+Decides *how hard* the scraper should try for a given URL / site profile:
+
+* ``minimal``    - plain HTTP only, escalate only when a challenge is detected
+* ``balanced``   - plain HTTP first, Cloudflare bypass on challenge
+* ``stealth``    - browser automation allowed
+* ``aggressive`` - Cloudflare bypass first, browser automation allowed
+
+The tiers are ordered (see ``MODE_ORDER``); a detected site profile can only
+*raise* the configured tier, never lower it.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Mapping, Optional
+from urllib.parse import urlparse
 
-MODE_ORDER = {"minimal": 0, "balanced": 1, "stealth": 2, "aggressive": 3}
-ORDER_TO_MODE = {v: k for k, v in MODE_ORDER.items()}
+MODE_ORDER = ("minimal", "balanced", "stealth", "aggressive")
+DEFAULT_MODE = "minimal"
+
+# Lower-case fragments that indicate a bot-challenge / interstitial page.
+_CHALLENGE_MARKERS = (
+    "checking your browser",
+    "just a moment",
+    "cf-challenge",
+    "cf-browser-verification",
+    "challenge-platform",
+    "enable javascript",
+)
 
 
-def _tier_from_site(site_profile: Any) -> int:
-    """How strongly we should escalate based on detection alone (0 = none)."""
-    if site_profile is None:
-        return 0
-    tier = 0
-    if getattr(site_profile, "use_selenium", False):
-        tier = max(tier, MODE_ORDER["stealth"])
-    measures = getattr(site_profile, "anti_bot_measures", None) or []
-    rs = getattr(site_profile, "recommended_settings", None) or {}
-    if rs.get("cloudflare_protection") or "cloudflare" in measures:
-        tier = max(tier, MODE_ORDER["balanced"])
-    if any(m in ("captcha", "recaptcha") for m in measures):
-        tier = max(tier, MODE_ORDER["balanced"])
-    return tier
+def _tier(mode: str) -> int:
+    return MODE_ORDER.index(mode)
+
+
+def raise_tier(mode: str, minimum: str) -> str:
+    """Return the higher of two tiers."""
+    return mode if _tier(mode) >= _tier(minimum) else minimum
+
+
+def body_suggests_bot_challenge(body: Optional[str]) -> bool:
+    """
+    Heuristic: does ``body`` look like a bot challenge instead of real content?
+
+    An empty body is treated as a challenge, since blocked requests frequently
+    return 200 with no content.
+    """
+    if not body or not body.strip():
+        return True
+    lowered = body.lower()
+    return any(marker in lowered for marker in _CHALLENGE_MARKERS)
+
+
+def _host_matches(host: str, domain: str) -> bool:
+    domain = domain.lower().lstrip(".")
+    return host == domain or host.endswith(f".{domain}")
 
 
 @dataclass
 class AntiBotStrategy:
-    """
-    User-tunable fetch / anti-bot behavior.
+    """Resolved anti-bot behaviour (built from ``config["anti_bot"]``)."""
 
-    ``mode`` is the baseline; when ``adapt_to_site`` is True, the effective tier
-    is max(mode, site-suggested tier) so simple sites stay light while protected
-    sites still get stronger tools.
-    """
-
-    mode: str = "minimal"
-    adapt_to_site: bool = True
+    mode: str = DEFAULT_MODE
     plain_http_first: bool = True
     cloudflare_first: bool = False
-    use_client_hints: bool = False
-    human_delay_style: str = "light"  # none | light | full
+    adapt_to_site: bool = True
+    human_delay_style: str = "default"
+    browser_on_forbidden: bool = False
     domain_profile_overrides: Dict[str, str] = field(default_factory=dict)
-    browser_on_forbidden: bool = False  # if True, 403 may trigger browser (stealth+)
 
     @classmethod
-    def from_config(cls, config: Optional[Dict]) -> AntiBotStrategy:
-        cfg = config or {}
-        ab = cfg.get("anti_bot") or {}
-        raw_mode = (ab.get("mode") or "minimal").lower()
-        if raw_mode not in MODE_ORDER:
-            raw_mode = "minimal"
+    def from_config(cls, config: Optional[Mapping[str, Any]]) -> "AntiBotStrategy":
+        """
+        Build a strategy from a scraper config dict.
 
-        cloudflare_first = bool(ab.get("cloudflare_first", raw_mode == "aggressive"))
-        plain_http_first = bool(
-            ab.get("plain_http_first", raw_mode != "aggressive")
-        )
+        Unknown modes fall back to ``minimal``. ``plain_http_first`` and
+        ``cloudflare_first`` default from the mode unless set explicitly.
+        """
+        section = (config or {}).get("anti_bot") or {}
 
-        if "use_client_hints" in ab:
-            use_client_hints = bool(ab["use_client_hints"])
-        else:
-            use_client_hints = raw_mode in ("stealth", "aggressive")
+        mode = section.get("mode", DEFAULT_MODE)
+        if mode not in MODE_ORDER:
+            mode = DEFAULT_MODE
 
-        if "human_delay_style" in ab:
-            human_delay_style = str(ab["human_delay_style"])
-        else:
-            if raw_mode == "minimal":
-                human_delay_style = "none"
-            elif raw_mode == "aggressive":
-                human_delay_style = "full"
-            else:
-                human_delay_style = "light"
+        overrides = {
+            str(domain).lower(): name
+            for domain, name in (section.get("domain_profile_overrides") or {}).items()
+            if name in MODE_ORDER
+        }
 
-        domain_profile_overrides = dict(ab.get("domain_profile_overrides") or {})
-
-        browser_on_forbidden = bool(
-            ab.get(
-                "browser_on_forbidden",
-                MODE_ORDER[raw_mode] >= MODE_ORDER["stealth"],
-            )
-        )
-
+        aggressive = mode == "aggressive"
         return cls(
-            mode=raw_mode,
-            adapt_to_site=bool(ab.get("adapt_to_site", True)),
-            plain_http_first=plain_http_first,
-            cloudflare_first=cloudflare_first,
-            use_client_hints=use_client_hints,
-            human_delay_style=human_delay_style,
-            domain_profile_overrides=domain_profile_overrides,
-            browser_on_forbidden=browser_on_forbidden,
+            mode=mode,
+            plain_http_first=bool(section.get("plain_http_first", not aggressive)),
+            cloudflare_first=bool(section.get("cloudflare_first", aggressive)),
+            adapt_to_site=bool(section.get("adapt_to_site", True)),
+            human_delay_style=str(section.get("human_delay_style", "default")),
+            browser_on_forbidden=bool(
+                section.get("browser_on_forbidden", mode in ("stealth", "aggressive"))
+            ),
+            domain_profile_overrides=overrides,
         )
 
-    def effective_mode(self, site_profile: Any) -> str:
-        base = MODE_ORDER.get(self.mode, 0)
-        if not self.adapt_to_site:
-            return ORDER_TO_MODE[base]
-        merged = max(base, _tier_from_site(site_profile))
-        return ORDER_TO_MODE[merged]
+    def effective_mode(self, site_profile: Any = None) -> str:
+        """
+        Tier to use for ``site_profile``.
 
-    def profile_name_for_url(self, url: str, site_profile: Any) -> str:
-        """Resolve StealthProfile dict key (minimal|balanced|stealth|aggressive)."""
-        from urllib.parse import urlparse
+        With ``adapt_to_site`` the tier is raised to at least ``balanced`` for
+        Cloudflare-protected sites and ``stealth`` for sites needing a browser.
+        """
+        mode = self.mode
+        if site_profile is None or not self.adapt_to_site:
+            return mode
 
-        host = urlparse(url).netloc.lower()
-        for domain_fragment, profile_name in self.domain_profile_overrides.items():
-            if domain_fragment.lower() in host and profile_name in MODE_ORDER:
-                return profile_name
-        name = self.effective_mode(site_profile)
-        return name if name in MODE_ORDER else "minimal"
+        measures = getattr(site_profile, "anti_bot_measures", None)
+        settings = getattr(site_profile, "recommended_settings", None)
+        cloudflare = (
+            isinstance(measures, (list, tuple, set)) and "cloudflare" in measures
+        ) or (
+            isinstance(settings, dict) and settings.get("cloudflare_protection") is True
+        )
+        if cloudflare:
+            mode = raise_tier(mode, "balanced")
 
+        if getattr(site_profile, "use_selenium", False) is True:
+            mode = raise_tier(mode, "stealth")
 
-def body_suggests_bot_challenge(text: str) -> bool:
-    """Heuristic: HTML looks like a challenge / empty shell, not real content."""
-    if not text:
-        return True
-    lower = text.lower()
-    needles: List[str] = [
-        "checking your browser",
-        "ddos protection by cloudflare",
-        "just a moment",
-        "enable javascript",
-        "turn javascript on",
-        "cf-challenge",
-        "challenge-platform",
-        "attention required! | cloudflare",
-        "unusual traffic from your computer",
-        "robot check",
-        "pardon our interruption",
-    ]
-    return any(n in lower for n in needles)
+        return mode
+
+    def domain_override(self, url: str) -> Optional[str]:
+        """Profile name forced for ``url``'s domain, if any."""
+        host = (urlparse(url).hostname or "").lower()
+        for domain, name in self.domain_profile_overrides.items():
+            if _host_matches(host, domain):
+                return name
+        return None
+
+    def profile_name_for_url(self, url: str, site_profile: Any = None) -> str:
+        """Profile name for ``url``: a domain override wins over adaptation."""
+        return self.domain_override(url) or self.effective_mode(site_profile)

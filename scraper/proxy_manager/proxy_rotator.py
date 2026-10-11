@@ -15,6 +15,10 @@
 import logging
 import random
 
+from .proxy_formatter import mask_proxy
+
+logger = logging.getLogger(__name__)
+
 
 class ProxyRotator:
     def __init__(self, proxies=None, retries=3):
@@ -38,9 +42,9 @@ class ProxyRotator:
                 if not self.proxies:
                     raise ValueError("Proxy listesi boş!")
                 self.current_proxy = random.choice(self.proxies)
-                logging.info(f"Yeni proxy seçildi: {self.current_proxy}")
+                logger.info(f"Yeni proxy seçildi: {mask_proxy(self.current_proxy)}")
                 return self.current_proxy
             except Exception as e:
-                logging.error(f"Proxy seçimi başarısız oldu: {e}")
+                logger.error(f"Proxy seçimi başarısız oldu: {e}")
                 attempt += 1
         raise RuntimeError("Proxy rotasyonunda tüm denemeler başarısız oldu.")
