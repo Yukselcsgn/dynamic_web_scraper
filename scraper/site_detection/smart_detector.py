@@ -360,6 +360,8 @@ class SmartSiteDetector:
                 "requests_per_minute": 30 if anti_bot_measures else 60,
                 "delay_between_requests": 2 if anti_bot_measures else 1,
             },
+            "cloudflare_protection": "cloudflare" in anti_bot_measures,
+            "javascript_required": bool(use_selenium),
         }
 
         if use_selenium:

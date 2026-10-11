@@ -15,6 +15,16 @@
     "127.0.0.1:8082"
   ],
 
+  "anti_bot": {
+    "mode": "minimal",
+    "adapt_to_site": true,
+    "plain_http_first": true,
+    "cloudflare_first": false,
+    "human_delay_style": "default",
+    "browser_on_forbidden": false,
+    "domain_profile_overrides": {}
+  },
+
    "urls":[
       "https://www.teknosa.com/akilli-saat-c-100004001",
       "https://www.teknosa.com/akilli-saat-c-100004001",

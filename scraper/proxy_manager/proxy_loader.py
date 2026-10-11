@@ -17,6 +17,8 @@ import os
 
 import requests
 
+logger = logging.getLogger(__name__)
+
 
 def load_proxies_from_file(file_path):
     """
@@ -26,16 +28,16 @@ def load_proxies_from_file(file_path):
     """
     try:
         if not os.path.exists(file_path):
-            logging.warning(f"Proxy dosyası bulunamadı: {file_path}")
+            logger.warning(f"Proxy dosyası bulunamadı: {file_path}")
             return []
 
         with open(file_path, "r", encoding="utf-8") as file:
             proxies = [line.strip() for line in file if line.strip()]
 
-        logging.info(f"{len(proxies)} proxy dosyadan yüklendi: {file_path}")
+        logger.info(f"{len(proxies)} proxy dosyadan yüklendi: {file_path}")
         return proxies
     except Exception as e:
-        logging.error(f"Proxy dosyası yüklenirken hata: {e}")
+        logger.error(f"Proxy dosyası yüklenirken hata: {e}")
         return []
 
 
@@ -50,11 +52,11 @@ def load_proxies_from_api(api_url, timeout=10):
         response = requests.get(api_url, timeout=timeout)
         response.raise_for_status()  # Hata kodu varsa raise eder
         proxies = response.text.splitlines()
-        logging.info(f"{len(proxies)} proxy API'den yüklendi.")
+        logger.info(f"{len(proxies)} proxy API'den yüklendi.")
         return proxies
     except requests.Timeout:
-        logging.error("API isteği zaman aşımına uğradı.")
+        logger.error("API isteği zaman aşımına uğradı.")
         return []
     except requests.RequestException as e:
-        logging.error(f"API isteği sırasında hata: {e}")
+        logger.error(f"API isteği sırasında hata: {e}")
         return []

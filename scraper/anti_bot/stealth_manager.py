@@ -25,15 +25,31 @@ import hashlib
 import json
 import logging
 import random
+import shutil
+import tempfile
 import threading
 import time
-from dataclasses import dataclass
+import uuid
+from dataclasses import dataclass, replace
 from typing import Dict, List, Optional, Tuple
 from urllib.parse import parse_qs, urlparse
 
 import requests
+import urllib3
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
+
+from scraper.anti_bot.strategy import (
+    AntiBotStrategy,
+    body_suggests_bot_challenge,
+    raise_tier,
+)
+from scraper.proxy_manager.proxy_formatter import (
+    mask_proxy,
+    parse_proxy,
+    redact_proxy_credentials,
+)
+from scraper.proxy_manager.proxy_rotator import ProxyRotator
 
 # Import log_message for consistent logging
 try:
@@ -77,6 +93,12 @@ try:
 except ImportError:
     SELENIUM_AVAILABLE = False
     logging.warning("Selenium not available. Advanced browser automation disabled.")
+
+    class WebDriverException(Exception):  # type: ignore[no-redef]
+        """Placeholder so except-clauses stay valid without Selenium."""
+
+    class TimeoutException(WebDriverException):  # type: ignore[no-redef]
+        """Placeholder so except-clauses stay valid without Selenium."""
 
 # Undetected ChromeDriver for better stealth
 try:
@@ -126,6 +148,7 @@ class StealthManager:
             config: Configuration dictionary
         """
         self.config = config or {}
+        self.strategy = AntiBotStrategy.from_config(self.config)
         self.session = requests.Session()
         self.driver = None
         self.current_profile = None
@@ -160,26 +183,72 @@ class StealthManager:
         # Setup advanced session
         self._setup_advanced_session()
 
+        # Proxy rotation (requests / Selenium / Playwright share the same proxy)
+        self.current_proxy: Optional[str] = None
+        self._requests_proxies: Optional[Dict[str, str]] = None
+        proxies = self.config.get("proxies") or []
+        self.proxy_rotator = ProxyRotator(proxies) if proxies else None
+        self._apply_proxy(rotate=True)
+
     @classmethod
-    def _get_browser_from_pool(cls):
-        """Get a browser instance from the pool or create a new one."""
+    def _get_browser_from_pool(cls, proxy: Optional[str] = None):
+        """Get a live pooled browser bound to ``proxy``, or None."""
         with cls._pool_lock:
-            if cls._browser_pool:
-                return cls._browser_pool.pop()
+            for driver in list(cls._browser_pool):
+                if getattr(driver, "_dws_proxy", None) != proxy:
+                    continue
+                cls._browser_pool.remove(driver)
+                if cls._is_driver_alive(driver):
+                    return driver
+                cls._quit_driver(driver)  # dead browser: release it, keep looking
             return None
 
     @classmethod
     def _return_browser_to_pool(cls, driver):
-        """Return a browser instance to the pool."""
+        """Return a browser instance to the pool (or quit it if the pool is full)."""
         with cls._pool_lock:
             if len(cls._browser_pool) < cls._max_browsers:
                 cls._browser_pool.append(driver)
-            else:
-                # Pool is full, quit the browser
-                try:
-                    driver.quit()
-                except:
-                    pass
+                return
+        # Pool is full: quit outside the lock (can be slow)
+        cls._quit_driver(driver)
+
+    def _apply_proxy(self, rotate: bool = True) -> None:
+        """
+        Select the active proxy and push it to requests and Cloudflare bypass.
+
+        The browser picks it up on the next ``_setup_browser_automation`` call
+        (a driver bound to a different proxy is never reused).
+        """
+        if self.proxy_rotator is None:
+            return
+
+        if rotate or self.current_proxy is None:
+            try:
+                self.current_proxy = self.proxy_rotator.rotate_proxy()
+            except RuntimeError as e:
+                logging.error(f"Proxy rotation failed, using direct connection: {e}")
+                self.current_proxy = None
+
+        try:
+            self._requests_proxies = (
+                parse_proxy(self.current_proxy).requests_proxies()
+                if self.current_proxy
+                else None
+            )
+        except ValueError as e:
+            logging.error(f"Invalid proxy ignored: {e}")
+            self.current_proxy = None
+            self._requests_proxies = None
+
+        self.session.proxies.clear()
+        if self._requests_proxies:
+            self.session.proxies.update(self._requests_proxies)
+
+        if self.cloudflare_bypass:
+            self.cloudflare_bypass.set_proxy(self.current_proxy)
+
+        logging.info(f"Active proxy: {mask_proxy(self.current_proxy)}")
 
     def _should_reset_session(self):
         """Check if session should be reset due to request limit or timeout."""
@@ -191,17 +260,16 @@ class StealthManager:
 
     def _reset_session(self):
         """Reset the session to prevent unlimited requests."""
-        try:
-            if self.driver:
-                self._return_browser_to_pool(self.driver)
-                self.driver = None
-        except:
-            pass
+        if self.driver:
+            self._return_browser_to_pool(self.driver)
+            self.driver = None
 
         self.session.close()
         self.session = requests.Session()
+        self._setup_advanced_session()
         self._request_count = 0
         self._session_start_time = time.time()
+        self._apply_proxy(rotate=True)
         logging.info("Session reset to prevent unlimited requests")
 
     def _initialize_profiles(self) -> Dict[str, StealthProfile]:
@@ -240,6 +308,39 @@ class StealthManager:
         }
 
         return {
+            "minimal": StealthProfile(
+                name="minimal",
+                user_agents=[
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                ],
+                headers=modern_headers,
+                cookies={},
+                wait_times=(0.5, 1.5),
+                mouse_movements=False,
+                scroll_behavior=False,
+                fingerprint_spoofing=False,
+                proxy_rotation=False,
+                session_persistence=True,
+                captcha_solving=False,
+                browser_automation=False,
+            ),
+            "balanced": StealthProfile(
+                name="balanced",
+                user_agents=[
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                ],
+                headers=modern_headers,
+                cookies={},
+                wait_times=(1.0, 3.0),
+                mouse_movements=False,
+                scroll_behavior=False,
+                fingerprint_spoofing=True,
+                proxy_rotation=True,
+                session_persistence=True,
+                captcha_solving=False,
+                browser_automation=False,
+            ),
             "stealth": StealthProfile(
                 name="stealth",
                 user_agents=[
@@ -314,26 +415,44 @@ class StealthManager:
         # Set default timeout
         self.session.timeout = 30
 
-    def select_profile(self, url: str, site_type: str = None) -> StealthProfile:
+    def select_profile(
+        self, url: str, site_type: str = None, site_profile=None
+    ) -> StealthProfile:
         """
-        Select the most appropriate stealth profile based on URL and site type.
+        Select the stealth profile for ``url``.
+
+        Resolution order: per-domain override, sahibinden.com special case,
+        then the strategy tier (raised by ``site_profile`` when
+        ``adapt_to_site`` is on). Known marketplaces / social networks only
+        raise the tier, never lower it.
 
         Args:
             url: Target URL
             site_type: Type of website (e.g., 'ecommerce', 'news', 'social')
+            site_profile: Optional detected site profile
 
         Returns:
-            Selected stealth profile
+            Selected stealth profile (also stored as ``current_profile``)
         """
         domain = urlparse(url).netloc.lower()
+        name = self.strategy.profile_name_for_url(url, site_profile)
 
-        # Site-specific profile selection
+        if self.strategy.domain_override(url) is None:
+            if "sahibinden.com" in domain:
+                name = "aggressive"
+            elif self.strategy.adapt_to_site:
+                if any(site in domain for site in ["amazon", "ebay", "walmart"]):
+                    name = raise_tier(name, "stealth")
+                elif any(site in domain for site in ["facebook", "twitter", "instagram"]):
+                    name = "mobile"
+
+        profile = self.profiles[name]
         if "sahibinden.com" in domain:
-            # Turkish e-commerce site - use aggressive profile with enhanced anti-detection
-            profile = self.profiles["aggressive"]
-            # Add Turkish-specific headers
-            profile.headers.update(
-                {
+            # Copy so Turkish-specific headers don't leak into the shared profile
+            profile = replace(
+                profile,
+                headers={
+                    **profile.headers,
                     "Accept-Language": "tr-TR,tr;q=0.9,en;q=0.8",
                     "Referer": "https://www.sahibinden.com/",
                     "Origin": "https://www.sahibinden.com",
@@ -341,17 +460,8 @@ class StealthManager:
                     "Sec-Fetch-Mode": "navigate",
                     "Sec-Fetch-User": "?1",
                     "Sec-Fetch-Dest": "document",
-                }
+                },
             )
-        elif any(site in domain for site in ["amazon", "ebay", "walmart"]):
-            # Major e-commerce - use stealth profile
-            profile = self.profiles["stealth"]
-        elif any(site in domain for site in ["facebook", "twitter", "instagram"]):
-            # Social media - use mobile profile
-            profile = self.profiles["mobile"]
-        else:
-            # Default to stealth profile
-            profile = self.profiles["stealth"]
 
         self.current_profile = profile
         logging.info(f"Selected stealth profile: {profile.name} for {domain}")
@@ -437,6 +547,9 @@ class StealthManager:
     def _humanize_timing(self):
         """Add human-like timing delays."""
 
+        if self.strategy.human_delay_style == "none":
+            return
+
         if self.human_behavior:
             # Use human behavior simulator for more realistic timing
             self.human_behavior.simulate_realistic_delay("general")
@@ -467,6 +580,123 @@ class StealthManager:
 
         return random.choice(self.current_profile.user_agents)
 
+    @staticmethod
+    def _quit_driver(driver, temp_dir: Optional[str] = None) -> None:
+        """
+        Quit a driver and remove its profile directory.
+
+        Never raises: browser shutdown errors are logged at debug level so
+        cleanup paths cannot mask the original exception.
+        """
+        if temp_dir is None and driver is not None:
+            temp_dir = getattr(driver, "_dws_temp_dir", None)
+
+        if driver is not None:
+            try:
+                driver.quit()
+            except (WebDriverException, OSError, AttributeError, urllib3.exceptions.HTTPError) as e:
+                logging.debug(f"driver.quit() failed: {e}")
+
+        if temp_dir:
+            shutil.rmtree(temp_dir, ignore_errors=True)
+
+    @staticmethod
+    def _is_driver_alive(driver) -> bool:
+        """Cheap liveness probe for pooled / cached drivers."""
+        try:
+            _ = driver.current_url
+            return True
+        except (WebDriverException, OSError, AttributeError, urllib3.exceptions.HTTPError):
+            return False
+
+    def _create_driver(self, user_data_dir: str, proxy: Optional[str], minimal: bool = False):
+        """
+        Build a Chrome driver (undetected if available, else standard Selenium).
+
+        Args:
+            user_data_dir: Unique profile directory owned by the returned driver.
+            proxy: Proxy string or None. Passed to Chrome via ``--proxy-server``.
+            minimal: Use the reduced option set (second-chance fallback).
+        """
+        endpoint = parse_proxy(proxy) if proxy else None
+        if endpoint and endpoint.has_auth:
+            # Chrome silently ignores credentials in --proxy-server.
+            logging.warning(
+                f"Selenium cannot authenticate to {endpoint.masked()}; "
+                "use an IP-whitelisted proxy or the Playwright path for this proxy"
+            )
+
+        options = uc.ChromeOptions() if UNDETECTED_AVAILABLE else Options()
+        options.add_argument(f"--user-data-dir={user_data_dir}")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--disable-gpu")
+        options.add_argument("--remote-debugging-port=0")
+        if endpoint:
+            options.add_argument(endpoint.chrome_argument())
+
+        if minimal:
+            options.add_argument("--headless")
+        elif UNDETECTED_AVAILABLE:
+            for arg in (
+                "--disable-extensions",
+                "--disable-plugins",
+                "--disable-blink-features=AutomationControlled",
+                "--window-size=1920,1080",
+                "--disable-web-security",
+                "--disable-features=VizDisplayCompositor",
+                "--disable-infobars",
+                "--disable-notifications",
+                "--disable-popup-blocking",
+                "--disable-client-side-phishing-detection",
+                "--disable-sync",
+                "--disable-translate",
+                "--hide-scrollbars",
+                "--mute-audio",
+                "--no-first-run",
+                "--disable-default-apps",
+                "--disable-background-timer-throttling",
+                "--disable-backgrounding-occluded-windows",
+                "--disable-renderer-backgrounding",
+                "--disable-background-networking",
+                "--disable-crash-reporter",
+                "--disable-oopr-debug-crash-dump",
+                "--no-crash-upload",
+                "--disable-gpu-sandbox",
+                "--disable-software-rasterizer",
+                "--log-level=3",
+                "--lang=tr-TR",
+            ):
+                options.add_argument(arg)
+            options.add_experimental_option(
+                "prefs",
+                {
+                    "profile.default_content_setting_values": {
+                        "notifications": 2,
+                        "geolocation": 2,
+                        "media_stream": 2,
+                    },
+                    "profile.managed_default_content_settings": {"images": 1},
+                },
+            )
+        else:
+            for arg in (
+                "--headless",
+                "--disable-extensions",
+                "--disable-plugins",
+                "--disable-images",
+                "--disable-blink-features=AutomationControlled",
+                "--window-size=1920,1080",
+                "--disable-web-security",
+                "--disable-features=VizDisplayCompositor",
+                "--log-level=3",
+            ):
+                options.add_argument(arg)
+
+        if UNDETECTED_AVAILABLE:
+            return uc.Chrome(options=options, version_main=None)
+        return webdriver.Chrome(options=options)
+
     def _setup_browser_automation(self) -> bool:
         """Setup browser automation for sites that require JavaScript."""
 
@@ -474,176 +704,53 @@ class StealthManager:
             logging.warning("Selenium not available for browser automation")
             return False
 
-        # Try to get browser from pool first
-        self.driver = self._get_browser_from_pool()
-        if self.driver:
-            logging.info("Reusing browser from pool")
-            return True
-
-        try:
-            # Create unique user data directory for each browser instance
-            import tempfile
-            import uuid
-
-            user_data_dir = tempfile.mkdtemp(
-                prefix=f"chrome_profile_{uuid.uuid4().hex[:8]}_"
-            )
-
-            if UNDETECTED_AVAILABLE:
-                # Use undetected ChromeDriver for better stealth
-                options = uc.ChromeOptions()
-
-                # Critical fixes for DevToolsActivePort error
-                options.add_argument("--no-sandbox")
-                options.add_argument("--disable-dev-shm-usage")
-                options.add_argument("--disable-gpu")
-                options.add_argument("--disable-extensions")
-                options.add_argument("--disable-plugins")
-                options.add_argument("--disable-blink-features=AutomationControlled")
-                options.add_argument("--window-size=1920,1080")
-                options.add_argument("--disable-web-security")
-                options.add_argument("--disable-features=VizDisplayCompositor")
-                options.add_argument("--disable-infobars")
-                options.add_argument("--disable-notifications")
-                options.add_argument("--disable-popup-blocking")
-
-                # Additional anti-detection arguments
-                options.add_argument("--disable-client-side-phishing-detection")
-                options.add_argument("--disable-sync")
-                options.add_argument("--disable-translate")
-                options.add_argument("--hide-scrollbars")
-                options.add_argument("--mute-audio")
-                options.add_argument("--no-first-run")
-                options.add_argument("--disable-default-apps")
-                options.add_argument("--disable-background-timer-throttling")
-                options.add_argument("--disable-backgrounding-occluded-windows")
-                options.add_argument("--disable-renderer-backgrounding")
-
-                # Fix for DevToolsActivePort error
-                options.add_argument("--remote-debugging-port=0")
-                options.add_argument("--disable-background-networking")
-                options.add_argument("--disable-background-timer-throttling")
-                options.add_argument("--disable-renderer-backgrounding")
-                options.add_argument("--disable-backgrounding-occluded-windows")
-                options.add_argument("--disable-client-side-phishing-detection")
-                options.add_argument("--disable-crash-reporter")
-                options.add_argument("--disable-oopr-debug-crash-dump")
-                options.add_argument("--no-crash-upload")
-                options.add_argument("--disable-gpu-sandbox")
-                options.add_argument("--disable-software-rasterizer")
-
-                # Use a more stable user data directory approach
-                import os
-                import shutil
-
-                temp_dir = tempfile.mkdtemp()
-                # Remove user-data-dir argument to avoid conflicts
-                # options.add_argument(f"--user-data-dir={temp_dir}")
-
-                # Remove problematic experimental options that cause Chrome startup issues
-                # options.add_experimental_option(
-                #     "excludeSwitches", ["enable-automation", "enable-logging"]
-                # )
-                # options.add_experimental_option("useAutomationExtension", False)
-                options.add_argument("--log-level=3")  # Suppress Chrome logs
-
-                # Add Turkish locale for sahibinden.com
-                options.add_argument("--lang=tr-TR")
-
-                # Add prefs to make browser look more natural
-                prefs = {
-                    "profile.default_content_setting_values": {
-                        "notifications": 2,
-                        "geolocation": 2,
-                        "media_stream": 2,
-                    },
-                    "profile.managed_default_content_settings": {"images": 1},
-                }
-                options.add_experimental_option("prefs", prefs)
-
-                # Add timeout and retry logic
-                try:
-                    self.driver = uc.Chrome(options=options, version_main=None)
-                    # Store temp directory for cleanup
-                    self.temp_dir = temp_dir
-                except Exception as e:
-                    logging.error(f"Failed to create undetected Chrome: {e}")
-                    # Cleanup temp directory
-                    if os.path.exists(temp_dir):
-                        shutil.rmtree(temp_dir, ignore_errors=True)
-                    raise
-            else:
-                # Use standard ChromeDriver
-                options = Options()
-                options.add_argument("--headless")  # Run in headless mode
-                options.add_argument("--no-sandbox")
-                options.add_argument("--disable-dev-shm-usage")
-                options.add_argument("--disable-gpu")  # Disable GPU for headless
-                options.add_argument("--disable-extensions")
-                options.add_argument("--disable-plugins")
-                options.add_argument(
-                    "--disable-images"
-                )  # Don't load images for faster performance
-                options.add_argument("--disable-javascript")  # Disable JS if not needed
-                options.add_argument("--disable-blink-features=AutomationControlled")
-                options.add_argument(
-                    "--window-size=1920,1080"
-                )  # Set window size for headless
-                # Remove user-data-dir argument to avoid conflicts
-                # options.add_argument(f"--user-data-dir={user_data_dir}")
-                options.add_argument("--disable-web-security")
-                options.add_argument("--disable-features=VizDisplayCompositor")
-                # Remove problematic experimental options that cause Chrome startup issues
-                # options.add_experimental_option(
-                #     "excludeSwitches", ["enable-automation"]
-                # )
-                # options.add_experimental_option("useAutomationExtension", False)
-                # Disable logging to reduce noise
-                # options.add_experimental_option("excludeSwitches", ["enable-logging"])
-                # options.add_experimental_option("useAutomationExtension", False)
-                options.add_argument("--log-level=3")  # Suppress Chrome logs
-
-                self.driver = webdriver.Chrome(options=options)
-
-            # Execute stealth script
-            self.driver.execute_script(
-                "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"
-            )
-
-            logging.info("Browser automation setup successful")
-            return True
-
-        except Exception as e:
-            logging.error(f"Failed to setup browser automation: {e}")
-            # Clean up the temporary directory if it was created
-            try:
-                if "user_data_dir" in locals():
-                    import shutil
-
-                    shutil.rmtree(user_data_dir, ignore_errors=True)
-            except:
-                pass
-
-            # Try fallback with minimal options
-            try:
-                logging.info("Attempting fallback browser setup...")
-                options = uc.ChromeOptions() if UNDETECTED_AVAILABLE else Options()
-                options.add_argument("--headless")
-                options.add_argument("--no-sandbox")
-                options.add_argument("--disable-dev-shm-usage")
-                options.add_argument("--disable-gpu")
-                options.add_argument("--remote-debugging-port=0")
-
-                if UNDETECTED_AVAILABLE:
-                    self.driver = uc.Chrome(options=options, version_main=None)
-                else:
-                    self.driver = webdriver.Chrome(options=options)
-
-                logging.info("Fallback browser setup successful")
+        # Reuse the current driver only if it is alive and bound to the active proxy
+        if self.driver is not None:
+            if (
+                getattr(self.driver, "_dws_proxy", None) == self.current_proxy
+                and self._is_driver_alive(self.driver)
+            ):
                 return True
-            except Exception as fallback_error:
-                logging.error(f"Fallback browser setup also failed: {fallback_error}")
-                return False
+            self._quit_driver(self.driver)
+            self.driver = None
+
+        # Try to get a matching browser from the pool first
+        pooled = self._get_browser_from_pool(self.current_proxy)
+        if pooled:
+            logging.info("Reusing browser from pool")
+            self.driver = pooled
+            return True
+
+        # First the full option set, then the minimal one as second chance
+        for minimal in (False, True):
+            if minimal:
+                logging.info("Attempting fallback browser setup...")
+
+            temp_dir = tempfile.mkdtemp(prefix=f"chrome_profile_{uuid.uuid4().hex[:8]}_")
+            driver = None
+            ready = False
+            try:
+                driver = self._create_driver(temp_dir, self.current_proxy, minimal)
+                driver.execute_script(
+                    "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"
+                )
+                # The driver owns its profile dir and proxy binding
+                driver._dws_temp_dir = temp_dir
+                driver._dws_proxy = self.current_proxy
+                self.driver = driver
+                ready = True
+                logging.info("Browser automation setup successful")
+                return True
+            except (WebDriverException, OSError, RuntimeError, ValueError) as e:
+                logging.error(
+                    f"Failed to setup browser automation (minimal={minimal}): "
+                    f"{redact_proxy_credentials(e)}"
+                )
+            finally:
+                if not ready:
+                    self._quit_driver(driver, temp_dir)
+
+        return False
 
     def _humanize_browser_behavior(self):
         """Add human-like behavior to browser automation."""
@@ -697,15 +804,22 @@ class StealthManager:
         method: str = "GET",
         data: Dict = None,
         use_browser: bool = False,
+        site_profile=None,
     ) -> requests.Response:
         """
-        Fetch URL with advanced stealth techniques and Cloudflare bypass.
+        Fetch URL with the strategy configured under ``config["anti_bot"]``.
+
+        Order (default ``minimal`` mode): plain HTTP -> Cloudflare bypass when
+        the response is a block/challenge -> browser (only if the selected
+        profile allows it). ``cloudflare_first`` (aggressive) swaps the first
+        two steps.
 
         Args:
             url: Target URL
             method: HTTP method
             data: Request data
-            use_browser: Whether to use browser automation
+            use_browser: Force browser automation (skips plain HTTP and bypass)
+            site_profile: Detected site profile; may raise the strategy tier
 
         Returns:
             Response object
@@ -718,11 +832,11 @@ class StealthManager:
         # Increment request counter
         self._request_count += 1
 
-        # Select appropriate profile
-        self.select_profile(url)
+        # Select appropriate profile (strategy + site profile + domain rules)
+        profile = self.select_profile(url, site_profile=site_profile)
 
-        # If browser automation explicitly requested, skip Cloudflare bypass
-        # This allows fallback chain to work properly when initial fetch returns empty data
+        # Browser explicitly requested: skip plain HTTP and Cloudflare bypass.
+        # This lets the caller's fallback chain escalate when extraction was empty.
         if use_browser:
             log_message(
                 "INFO",
@@ -730,34 +844,98 @@ class StealthManager:
             )
             return self._fetch_with_browser(url, method, data)
 
-        # Try Cloudflare bypass first for protected sites (only if browser not explicitly requested)
-        if self.cloudflare_bypass:
-            log_message("INFO", "Attempting Cloudflare bypass...")
-            response = self.cloudflare_bypass.bypass_cloudflare(url, method, data)
-            if response and response.status_code == 200:
-                log_message("INFO", "Successfully bypassed Cloudflare protection")
-                return response
-            else:
-                log_message(
-                    "WARNING", "Cloudflare bypass failed, trying other methods..."
-                )
-
-        # Use browser automation if required by profile
-        if self.current_profile and self.current_profile.browser_automation:
-            return self._fetch_with_browser(url, method, data)
-
-        # For sahibinden.com, try browser automation if requests fail
+        # sahibinden.com always needs a real browser
         if "sahibinden.com" in url.lower():
             log_message("INFO", "Attempting browser automation for sahibinden.com")
             return self._fetch_with_browser(url, method, data)
 
-        # Use enhanced requests
-        return self._fetch_with_requests(url, method, data)
+        steps = (
+            ("cloudflare", "plain")
+            if self.strategy.cloudflare_first or not self.strategy.plain_http_first
+            else ("plain", "cloudflare")
+        )
 
-    def _fetch_with_requests(
+        last_response = None
+        last_error: Optional[requests.exceptions.RequestException] = None
+        for step in steps:
+            if step == "cloudflare":
+                if not self.cloudflare_bypass:
+                    continue
+                log_message("INFO", "Attempting Cloudflare bypass...")
+                response = self.cloudflare_bypass.bypass_cloudflare(url, method, data)
+                if response is not None and response.status_code == 200:
+                    log_message("INFO", "Successfully bypassed Cloudflare protection")
+                    return response
+                log_message(
+                    "WARNING", "Cloudflare bypass failed, trying other methods..."
+                )
+                continue
+
+            try:
+                response = self._fetch_plain_http(url, method, data)
+            except requests.exceptions.RequestException as e:
+                last_error = e
+                continue
+            if not self._needs_escalation(response):
+                return response
+            last_response = response
+            logging.info(
+                f"Plain HTTP blocked ({response.status_code}); escalating for {url}"
+            )
+
+        # Use browser automation if the profile allows it
+        if profile.browser_automation:
+            return self._fetch_with_browser(url, method, data)
+
+        if last_response is not None:
+            return last_response
+        if last_error is not None:
+            raise last_error
+        raise requests.exceptions.RequestException(
+            f"All fetch strategies failed for {url}"
+        )
+
+    @staticmethod
+    def _needs_escalation(response) -> bool:
+        """True when a response looks like a block or a bot challenge."""
+        if response.status_code in (403, 429, 503):
+            return True
+        return response.status_code == 200 and body_suggests_bot_challenge(
+            getattr(response, "text", "")
+        )
+
+    def _fetch_plain_http(
         self, url: str, method: str, data: Dict
     ) -> requests.Response:
-        """Fetch using enhanced requests with stealth techniques."""
+        """Plain HTTP request; never falls back to the browser by itself."""
+        return self._fetch_with_requests(
+            url, method, data, allow_browser_fallback=False
+        )
+
+    def _browser_fallback_enabled(self) -> bool:
+        """Whether a final 403 may be retried in a real browser."""
+        return self.strategy.browser_on_forbidden or bool(
+            self.current_profile and self.current_profile.browser_automation
+        )
+
+    def _sleep_range(self, low: float, high: float) -> None:
+        """Sleep a random time unless delays are disabled by config."""
+        if self.strategy.human_delay_style == "none":
+            return
+        time.sleep(random.uniform(low, high))
+
+    def _fetch_with_requests(
+        self,
+        url: str,
+        method: str,
+        data: Dict,
+        allow_browser_fallback: bool = True,
+    ) -> requests.Response:
+        """Fetch using enhanced requests with stealth techniques.
+
+        Fallback direction is strictly requests -> browser -> requests(terminal);
+        the browser path passes ``allow_browser_fallback=False`` to prevent loops.
+        """
 
         max_retries = 3
         for attempt in range(max_retries):
@@ -775,7 +953,12 @@ class StealthManager:
 
                 # Make request
                 response = self.session.request(
-                    method=method, url=url, headers=headers, data=data, timeout=30
+                    method=method,
+                    url=url,
+                    headers=headers,
+                    data=data,
+                    timeout=30,
+                    proxies=self._requests_proxies,
                 )
 
                 # Handle 403 Forbidden with retry strategy
@@ -786,14 +969,17 @@ class StealthManager:
                         )
                         # Try different approach: reset session, change user agent, add delay
                         self._reset_session()
-                        time.sleep(random.uniform(5, 10))  # Longer delay for 403
+                        self._sleep_range(5, 10)  # Longer delay for 403
                         continue
                     else:
                         logging.error(
                             f"403 Forbidden after {max_retries} attempts. Site may be blocking requests."
                         )
-                        # Try browser automation as last resort
-                        return self._fetch_with_browser(url, method, data)
+                        if allow_browser_fallback and self._browser_fallback_enabled():
+                            # Try browser automation as last resort (one-way:
+                            # the browser path calls us with allow_browser_fallback=False)
+                            return self._fetch_with_browser(url, method, data)
+                        return response
 
                 # Store cookies for session persistence
                 if response.cookies:
@@ -805,14 +991,19 @@ class StealthManager:
                 return response
 
             except requests.exceptions.RequestException as e:
+                safe_error = redact_proxy_credentials(e)
+                if isinstance(e, requests.exceptions.ProxyError):
+                    self._apply_proxy(rotate=True)
                 if attempt < max_retries - 1:
                     logging.warning(
-                        f"Request failed on attempt {attempt + 1}: {e}, retrying..."
+                        f"Request failed on attempt {attempt + 1}: {safe_error}, retrying..."
                     )
-                    time.sleep(random.uniform(2, 5))
+                    self._sleep_range(2, 5)
                     continue
                 else:
-                    logging.error(f"Request failed after {max_retries} attempts: {e}")
+                    logging.error(
+                        f"Request failed after {max_retries} attempts: {safe_error}"
+                    )
                     raise
 
     def _fetch_with_browser(
@@ -821,9 +1012,12 @@ class StealthManager:
         """Fetch using browser automation for JavaScript-heavy sites."""
 
         if not self._setup_browser_automation():
-            # Fallback to requests
-            return self._fetch_with_requests(url, method, data)
+            # One-way fallback: browser -> requests (never back to browser)
+            return self._fetch_with_requests(
+                url, method, data, allow_browser_fallback=False
+            )
 
+        succeeded = False
         try:
             # Navigate to URL with retry logic
             max_retries = 3
@@ -831,7 +1025,7 @@ class StealthManager:
                 try:
                     self.driver.get(url)
                     break
-                except Exception as nav_error:
+                except WebDriverException as nav_error:
                     if attempt == max_retries - 1:
                         raise nav_error
                     logging.warning(
@@ -913,7 +1107,7 @@ class StealthManager:
                             except TimeoutException:
                                 continue
                         time.sleep(1)  # Additional wait for VFS content
-                    except Exception as e:
+                    except WebDriverException as e:
                         logging.debug(f"VFS-specific wait failed: {e}")
 
             except TimeoutException:
@@ -958,7 +1152,7 @@ class StealthManager:
                     f"Browser content saved to '{filename}' ({len(page_source)} characters)",
                 )
 
-            except Exception as e:
+            except OSError as e:
                 log_message("WARNING", f"Could not save browser content: {e}")
 
             # Create mock response object
@@ -974,19 +1168,21 @@ class StealthManager:
                     if self.status_code >= 400:
                         raise requests.HTTPError(f"HTTP {self.status_code}")
 
+            succeeded = True
             return MockResponse(page_source)
 
-        except Exception as e:
-            logging.error(f"Browser automation failed: {e}")
-            # Clean up browser resources
-            try:
-                if self.driver:
-                    self.driver.quit()
-                    self.driver = None
-            except:
-                pass
-            # Fallback to requests
-            return self._fetch_with_requests(url, method, data)
+        except (WebDriverException, TimeoutException, OSError) as e:
+            logging.error(f"Browser automation failed: {redact_proxy_credentials(e)}")
+        finally:
+            if not succeeded:
+                # Always release the browser and its profile directory on failure
+                self._quit_driver(self.driver)
+                self.driver = None
+
+        # One-way fallback: browser -> requests (never back to browser)
+        return self._fetch_with_requests(
+            url, method, data, allow_browser_fallback=False
+        )
 
     def solve_captcha(self, response_text: str) -> Optional[str]:
         """
@@ -1111,38 +1307,20 @@ class StealthManager:
     def cleanup(self):
         """Cleanup resources."""
         if self.driver:
-            try:
-                # Return browser to pool instead of quitting
-                self._return_browser_to_pool(self.driver)
-            except:
-                pass
+            # Return browser to pool instead of quitting (pool quits it if full/dead)
+            self._return_browser_to_pool(self.driver)
             self.driver = None
-
-        # Cleanup temp directory
-        if hasattr(self, "temp_dir") and self.temp_dir:
-            try:
-                import os
-                import shutil
-
-                if os.path.exists(self.temp_dir):
-                    shutil.rmtree(self.temp_dir, ignore_errors=True)
-            except:
-                pass
 
         # Cleanup Cloudflare bypass
         if self.cloudflare_bypass:
             try:
                 self.cloudflare_bypass.cleanup()
-            except:
-                pass
+            except (requests.exceptions.RequestException, OSError, AttributeError) as e:
+                logging.warning(
+                    f"Cloudflare bypass cleanup failed: {redact_proxy_credentials(e)}"
+                )
 
-        # Cleanup human behavior simulator
-        if self.human_behavior:
-            try:
-                # Human behavior simulator doesn't need explicit cleanup
-                pass
-            except:
-                pass
+        # Human behavior simulator doesn't need explicit cleanup
 
         if self.session:
             self.session.close()
@@ -1152,12 +1330,10 @@ class StealthManager:
         """Cleanup all browsers in the pool."""
         with cls._pool_lock:
             for driver in cls._browser_pool:
-                try:
-                    driver.quit()
-                except:
-                    pass
+                cls._quit_driver(driver)
             cls._browser_pool.clear()
             logging.info("All browser instances cleaned up")
+
 
     def __enter__(self):
         return self

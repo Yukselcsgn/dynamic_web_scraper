@@ -32,6 +32,8 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
+from scraper.proxy_manager.proxy_formatter import parse_proxy, redact_proxy_credentials
+
 # Import log_message for consistent logging
 try:
     from scraper.logging_manager.logging_manager import log_message
@@ -95,10 +97,33 @@ class CloudflareBypass:
         self.session = None
         self.playwright_browser = None
         self.playwright_context = None
+        self._requests_proxies: Optional[Dict[str, str]] = None
+        self._playwright_proxy: Optional[Dict[str, str]] = None
 
         # Initialize different bypass methods
         self._init_cloudscraper()
         self._init_requests_session()
+
+    def set_proxy(self, proxy: Optional[str]) -> None:
+        """
+        Route all bypass techniques through ``proxy`` (None = direct).
+
+        Args:
+            proxy: Proxy string, e.g. ``http://user:pass@host:port``.
+        """
+        if proxy:
+            endpoint = parse_proxy(proxy)
+            self._requests_proxies = endpoint.requests_proxies()
+            self._playwright_proxy = endpoint.playwright_proxy()
+        else:
+            self._requests_proxies = None
+            self._playwright_proxy = None
+
+        for session in (getattr(self, "cloudscraper_session", None), self.session):
+            if session is not None:
+                session.proxies.clear()
+                if self._requests_proxies:
+                    session.proxies.update(self._requests_proxies)
 
     def _init_cloudscraper(self):
         """Initialize cloudscraper session."""
@@ -123,10 +148,12 @@ class CloudflareBypass:
                 adapter = HTTPAdapter(max_retries=retry_strategy)
                 self.cloudscraper_session.mount("http://", adapter)
                 self.cloudscraper_session.mount("https://", adapter)
+                if self._requests_proxies:
+                    self.cloudscraper_session.proxies.update(self._requests_proxies)
 
                 log_message("INFO", "Cloudscraper session initialized successfully")
             except Exception as e:
-                log_message("ERROR", f"Failed to initialize cloudscraper: {e}")
+                log_message("ERROR", f"Failed to initialize cloudscraper: {redact_proxy_credentials(e)}")
                 self.cloudscraper_session = None
         else:
             self.cloudscraper_session = None
@@ -134,6 +161,8 @@ class CloudflareBypass:
     def _init_requests_session(self):
         """Initialize enhanced requests session."""
         self.session = requests.Session()
+        if self._requests_proxies:
+            self.session.proxies.update(self._requests_proxies)
 
         # Configure retry strategy
         retry_strategy = Retry(
@@ -285,7 +314,7 @@ class CloudflareBypass:
 
             except Exception as e:
                 log_message(
-                    "ERROR", f"Cloudscraper bypass failed (attempt {attempt + 1}): {e}"
+                    "ERROR", f"Cloudscraper bypass failed (attempt {attempt + 1}): {redact_proxy_credentials(e)}"
                 )
                 if attempt < max_retries - 1:
                     time.sleep(random.uniform(3, 7))
@@ -325,10 +354,10 @@ class CloudflareBypass:
                         "--disable-extensions",
                         "--disable-plugins",
                         "--disable-images",
-                        "--disable-javascript",  # Disable JS for faster loading
                         "--window-size=1920,1080",
                         "--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
                     ],
+                    proxy=self._playwright_proxy,
                 )
 
                 # Create context with realistic settings
@@ -377,7 +406,7 @@ class CloudflareBypass:
                     except Exception as e:
                         log_message(
                             "ERROR",
-                            f"Playwright bypass failed (attempt {attempt + 1}): {e}",
+                            f"Playwright bypass failed (attempt {attempt + 1}): {redact_proxy_credentials(e)}",
                         )
                         if attempt < max_retries - 1:
                             await page.wait_for_timeout(random.randint(3000, 7000))
@@ -388,7 +417,7 @@ class CloudflareBypass:
                 return None
 
         except Exception as e:
-            log_message("ERROR", f"Playwright initialization failed: {e}")
+            log_message("ERROR", f"Playwright initialization failed: {redact_proxy_credentials(e)}")
             return None
 
     def bypass_with_requests_html(
@@ -409,6 +438,8 @@ class CloudflareBypass:
 
         try:
             session = HTMLSession()
+            if self._requests_proxies:
+                session.proxies.update(self._requests_proxies)
 
             for attempt in range(max_retries):
                 try:
@@ -456,7 +487,7 @@ class CloudflareBypass:
                 except Exception as e:
                     log_message(
                         "ERROR",
-                        f"Requests-HTML bypass failed (attempt {attempt + 1}): {e}",
+                        f"Requests-HTML bypass failed (attempt {attempt + 1}): {redact_proxy_credentials(e)}",
                     )
                     if attempt < max_retries - 1:
                         time.sleep(random.uniform(3, 7))
@@ -466,7 +497,7 @@ class CloudflareBypass:
             return None
 
         except Exception as e:
-            log_message("ERROR", f"Requests-HTML initialization failed: {e}")
+            log_message("ERROR", f"Requests-HTML initialization failed: {redact_proxy_credentials(e)}")
             return None
 
     def bypass_with_enhanced_requests(
@@ -539,7 +570,7 @@ class CloudflareBypass:
             except Exception as e:
                 log_message(
                     "ERROR",
-                    f"Enhanced requests bypass failed (attempt {attempt + 1}): {e}",
+                    f"Enhanced requests bypass failed (attempt {attempt + 1}): {redact_proxy_credentials(e)}",
                 )
                 if attempt < max_retries - 1:
                     time.sleep(random.uniform(3, 7))
@@ -586,7 +617,7 @@ class CloudflareBypass:
                     return response
 
             except Exception as e:
-                log_message("ERROR", f"Bypass method {method_name} failed: {e}")
+                log_message("ERROR", f"Bypass method {method_name} failed: {redact_proxy_credentials(e)}")
                 continue
 
         # Try Playwright as last resort (async)
@@ -618,7 +649,7 @@ class CloudflareBypass:
                     return MockResponse(content)
 
             except Exception as e:
-                log_message("ERROR", f"Playwright bypass failed: {e}")
+                log_message("ERROR", f"Playwright bypass failed: {redact_proxy_credentials(e)}")
 
         log_message("ERROR", "All Cloudflare bypass methods failed")
         return None

@@ -16,6 +16,10 @@ import logging
 
 import requests
 
+from .proxy_formatter import mask_proxy
+
+logger = logging.getLogger(__name__)
+
 
 def validate_proxy(proxy, timeout=5):
     """
@@ -30,13 +34,13 @@ def validate_proxy(proxy, timeout=5):
             "http://www.google.com", proxies=proxies, timeout=timeout
         )
         if response.status_code == 200:
-            logging.info(f"Proxy geçerli: {proxy}")
+            logger.info(f"Proxy geçerli: {mask_proxy(proxy)}")
             return True
         else:
-            logging.info(f"Proxy geçersiz: {proxy}")
+            logger.info(f"Proxy geçersiz: {mask_proxy(proxy)}")
             return False
     except requests.RequestException:
-        logging.info(f"Proxy geçersiz: {proxy}")
+        logger.info(f"Proxy geçersiz: {mask_proxy(proxy)}")
         return False
 
 
@@ -52,5 +56,5 @@ def test_proxies(proxies, max_threads=10):
         if validate_proxy(proxy):
             valid_proxies.append(proxy)
 
-    logging.info(f"{len(valid_proxies)} geçerli proxy bulundu.")
+    logger.info(f"{len(valid_proxies)} geçerli proxy bulundu.")
     return valid_proxies

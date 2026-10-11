@@ -140,7 +140,9 @@ class Scraper:
 
         # Initialize data fetcher
         self.data_fetcher = DataFetcher(
-            self.initializer.stealth_manager, self.initializer.stats
+            self.initializer.stealth_manager,
+            self.initializer.stats,
+            extractor=self.data_extractor,
         )
 
         # Initialize data processor
@@ -191,6 +193,7 @@ class Scraper:
         self.site_profile = self.site_detector.detect_site_profile(
             self.url, html_content
         )
+        self.data_fetcher.site_profile = self.site_profile
 
     def fetch_data(
         self,
@@ -247,6 +250,7 @@ class Scraper:
                 use_browser=self.site_profile.use_selenium
                 if self.site_profile
                 else False,
+                site_profile=self.site_profile,
             )
 
             if not response or not response.text:
@@ -291,7 +295,10 @@ class Scraper:
             log_message("INFO", "Fallback 1: Trying browser automation (Selenium)...")
             try:
                 response = self.initializer.stealth_manager.fetch_with_stealth(
-                    url=self.url, method="GET", use_browser=True  # Force browser usage
+                    url=self.url,
+                    method="GET",
+                    use_browser=True,  # Force browser usage
+                    site_profile=self.site_profile,
                 )
 
                 if response and response.text:
